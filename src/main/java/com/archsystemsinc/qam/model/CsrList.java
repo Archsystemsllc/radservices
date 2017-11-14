@@ -12,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.archsystemsinc.qam.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * @author PrakashTotta
  *
@@ -33,6 +36,7 @@ public class CsrList {
 	
 	private String status;
 	
+	@JsonSerialize(using=DateSerializer.class)
 	private Date createdDate;
 	
 	@Id
