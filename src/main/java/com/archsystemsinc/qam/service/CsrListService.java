@@ -3,6 +3,7 @@
  */
 package com.archsystemsinc.qam.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -34,5 +35,9 @@ public class CsrListService {
 	public void uploadFileData(MultipartFile uploadedFile){
 		List<CsrList> data = PoiUtils.parseCsrListFile(uploadedFile);		
 		createCsrList(data);
+	}
+	
+	public List<CsrList> getCsrList(Date from, Date to){
+		return csrListRepository.findByCreatedDateBetween(from, to);
 	}
 }

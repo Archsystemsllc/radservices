@@ -5,6 +5,7 @@ package com.archsystemsinc.qam.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +20,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.archsystemsinc.exception.FileUploadException;
-import com.archsystemsinc.logging.monitor.Monitor;
 import com.archsystemsinc.logging.monitor.StageMonitor;
 import com.archsystemsinc.qam.model.Address;
 import com.archsystemsinc.qam.model.Category;
@@ -282,6 +282,7 @@ public class PoiUtils {
 						}
 
 					}
+					data.setCreatedDate(new Date());
 					data.setUserId(100l);
 					data.setMacLookupId(453l);
 					dataList.add(data);
