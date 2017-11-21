@@ -13,11 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author PrakashTotta
+ * @author Prakash T
  *
  */
 @Entity
-@Table(name = "USERDUMMY")
+@Table(name = "user")
 public class RadUser {
 
 	private Long id;
@@ -28,9 +28,17 @@ public class RadUser {
 	private String updatedBy;
 	private Date createdDate;
 	private Date updateDate;
-	
 	private String emailId;
-	private String status;
+	
+	private String firstName;
+	private String middleName;
+	private String lastName;
+	
+	private Long macId;
+
+	private Long status;
+	private Long jurId;
+	private Long orgId;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -116,13 +124,68 @@ public class RadUser {
 		this.emailId = emailId;
 	}
 
-	@Column(name = "STATUS")
-	public String getStatus() {
+	@Column(name = "RECORD_STATUS")
+	public Long getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Long status) {
 		this.status = status;
 	}
 
+	@Column(name = "FIRST_NAME")
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	@Column(name = "MIDDLE_NAME")
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	@Column(name = "LAST_NAME")
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@Column(name = "MAC_ID")
+	public Long getMacId() {
+		return macId;
+	}
+
+	public void setMacId(Long macId) {
+		this.macId = macId;
+	}
+	
+	@Column(name = "JUR_ID")
+	public Long getJurId() {
+		return jurId;
+	}
+
+	public void setJurId(Long jurId) {
+		this.jurId = jurId;
+	}
+
+	@Column(name = "ORG_ID")
+	public Long getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(Long orgId) {
+		this.orgId = orgId;
+	}
+
+	
 }

@@ -3,20 +3,19 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.archsystemsinc.qam.model.CsrList;
+import com.archsystemsinc.qam.model.CsrLists;
 import com.archsystemsinc.qam.service.CsrListService;
+import com.archsystemsinc.qam.utils.UploadResponse;
 	
 	/**
  * @author Prakash T
@@ -31,20 +30,28 @@ public class CsrListRestService {
 	private CsrListService csrListService;
 	
 	@RequestMapping(value = "/uploadCsrList", method = RequestMethod.POST)
-	public String uploadFileData(@RequestParam("file") MultipartFile uploadedFile){
+	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("keepCurrentList") String keepCurrentList){
 		log.debug("--> uploadFileData:");
-		csrListService.uploadFileData(uploadedFile);
+		UploadResponse response = new UploadResponse();
+		
+		try {
+			csrListService.uploadFileData(uploadedFile,userId,keepCurrentList);
+			response.setStatus("SUCCESS");
+		} catch (Exception e) {
+			log.error("Error while uploading data",e);
+			response.setStatus("ERROR");
+			response.setErroMessage(e.getMessage());
+		}
 		log.debug("<-- uploadFileData");
-		return "SUCCESS";
+		return response;
 	}
 	
 	@RequestMapping(value = "/csrList", method = RequestMethod.GET)
-	public List<CsrList> getCsrList(@RequestParam("fromDate") @DateTimeFormat(pattern="MMddyyyy") Date from, @RequestParam("toDate") @DateTimeFormat(pattern="MMddyyyy") Date to){
+	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to){
 		log.debug("--> getCsrList:");
-		List<CsrList> data = csrListService.getCsrList(from, to);
+		List<CsrLists> data = csrListService.getCsrList(from, to);
 		log.debug("<-- getCsrList");
 		return data;
-	}
-	
+	}	
 	
 }

@@ -27,6 +27,7 @@ import com.google.common.base.Preconditions;
 @EnableJpaRepositories(basePackages = "com.archsystemsinc.qam.repository")
 public class PersistenceConfig {
 
+	
 	@Value("${jdbc.driverClassName}")
     String driverClassName;
 	@Value("${jdbc.url}")
