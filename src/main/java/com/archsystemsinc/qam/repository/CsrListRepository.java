@@ -19,6 +19,10 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 	
 	@Query("SELECT c FROM CsrLists c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear and c.recordStatus = 1")
     public List<CsrLists> findByMonthYearRange(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear);
+	
+	@Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year FROM CsrLists c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear and c.recordStatus = 1 "
+			+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate)")
+    public List<Object[]> findMonthsByMonthYearRange(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear);
 
 	@Query("SELECT c FROM CsrLists c WHERE c.userId = :userId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
     public List<CsrLists> existingCsrListByUserMonthYear(@Param("userId") Long userId,@Param("monthYear") Integer monthYear);

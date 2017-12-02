@@ -6,6 +6,7 @@ package com.archsystemsinc.qam.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -44,6 +45,7 @@ public class CsrListService {
 		csrListRepository.save(data);
 	}
 	
+
 	/**
 	 * 
 	 * @param uploadedFile
@@ -144,5 +146,23 @@ public class CsrListService {
 		log.debug("fromYear::"+toYear);
 		
 		return csrListRepository.findByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
+	}
+	
+	public List<Object[]> getCsrListMonths(String from, String to) {
+		String[] fromMonthyear = from.split("-");
+		
+		String fromYear = fromMonthyear[0];
+		String fromMonth = fromMonthyear[1];
+		log.debug("fromMonth::"+fromMonth);
+		log.debug("fromYear::"+fromYear);
+		
+		String[] toMonthyear = to.split("-");
+		
+		String toYear = toMonthyear[0];
+		String toMonth = toMonthyear[1];
+		log.debug("toMonth::"+toMonth);
+		log.debug("fromYear::"+toYear);
+		
+		return csrListRepository.findMonthsByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
 	}
 }

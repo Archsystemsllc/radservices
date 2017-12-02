@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.archsystemsinc.qam.utils.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -49,6 +50,8 @@ public class CsrLists {
 	public Long getId() {
 		return id;
 	}
+	
+	
 
 	public void setId(Long id) {
 		this.id = id;

@@ -34,6 +34,7 @@ public class CsrList {
 	private Long userId;
 	private Long macLookupId;
 	
+	
 	private String status;
 	
 	@JsonSerialize(using=DateSerializer.class)
