@@ -65,6 +65,23 @@ public class CsrListRestService {
 		return response;
 	}
 	
+	@RequestMapping(value = "/keepCurrentList", method = RequestMethod.POST)
+	public UploadResponse keepCurrentList(@RequestParam("userId") Long userId ){
+		log.debug("--> keepCurrentList:");
+		UploadResponse response = new UploadResponse();
+		String keepCurrentList = "true";
+		try {
+			csrListService.uploadFileData(null,userId,keepCurrentList);
+			response.setStatus("SUCCESS");
+		} catch (Exception e) {
+			log.error("Error while uploading data",e);
+			response.setStatus("ERROR");
+			response.setErroMessage(e.getMessage());
+		}
+		log.debug("<-- keepCurrentList");
+		return response;
+	}
+	
 	@RequestMapping(value = "/csrList", method = RequestMethod.GET)
 	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to){
 		log.debug("--> getCsrList:");
