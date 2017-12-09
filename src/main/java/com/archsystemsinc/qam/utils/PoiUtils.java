@@ -39,13 +39,13 @@ public class PoiUtils {
 	private static final Logger log = Logger.getLogger(PoiUtils.class);
 
 
-	public List<CsrLists> parseCsrListFile(MultipartFile uploadedFile, Long userId) throws Exception {
+	public List<CsrLists> parseCsrListFile(MultipartFile uploadedFile, Long userId, Long macId) throws Exception {
 		log.debug("--> parseCsrListFile");	
 		List<CsrLists> dataList = null;
 		try {
 			RadUser radUser = radUserRepository.findOne(userId);
 			if(radUser == null) throw new Exception("No User Found for the Id:"+userId);
-			Long macId = radUser.getMacId();
+			//Long macId = radUser.getMacId();
 			String userName = radUser.getUserName();
 			dataList = new ArrayList<CsrLists>();
 			Workbook providersFileWorkbook = null;
@@ -69,7 +69,7 @@ public class PoiUtils {
 							int cellIndex = hssfCell.getColumnIndex();
 							switch (cellIndex) {
 							case 0:
-								data.setFisrtName(hssfCell.getStringCellValue());
+								data.setFirstName(hssfCell.getStringCellValue());
 								break;
 							case 1:
 								data.setLastName(hssfCell.getStringCellValue());

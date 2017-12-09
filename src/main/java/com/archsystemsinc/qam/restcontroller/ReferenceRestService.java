@@ -9,13 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.archsystemsinc.qam.model.CsrLists;
-import com.archsystemsinc.qam.service.CsrListService;
-import com.archsystemsinc.qam.utils.UploadResponse;
+import com.archsystemsinc.qam.model.Jurisdiction;
+import com.archsystemsinc.qam.model.MacLookup;
+import com.archsystemsinc.qam.service.JurisdictionService;
+import com.archsystemsinc.qam.service.MacLookupService;
 	
 	/**
  * @author Abdul Nissar S
@@ -27,13 +26,24 @@ public class ReferenceRestService {
 	private static final Logger log = Logger.getLogger(ReferenceRestService.class);
 	
 	@Autowired
-	private CsrListService csrListService;
+	private MacLookupService macLookupService;
+	
+	@Autowired
+	private JurisdictionService jurisdictionService;
 	
 	@RequestMapping(value = "/macList", method = RequestMethod.GET)
-	public List<CsrLists> getMACList(){
-		log.debug("--> getCsrList:");
-		List<CsrLists> data = null;
-		log.debug("<-- getCsrList");
+	public List<MacLookup> getMACList(){
+		log.debug("--> getMacLookupList:");
+		List<MacLookup> data = macLookupService.findAll();
+		log.debug("<-- getMacLookupList");
+		return data;
+	}
+	
+	@RequestMapping(value = "/jurisdictionList", method = RequestMethod.GET)
+	public List<Jurisdiction> getJurisdictionList(){
+		log.debug("--> getJurisdictionList:");
+		List<Jurisdiction> data = jurisdictionService.findAll();
+		log.debug("<-- getJurisdictionList");
 		return data;
 	}
 	

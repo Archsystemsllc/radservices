@@ -31,31 +31,13 @@ public class CsrListRestService {
 	@Autowired
 	private CsrListService csrListService;
 	
-	
-	@RequestMapping(value = "/uploadCsrList", method = RequestMethod.POST)
-	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId){
-		log.debug("--> uploadFileData:");
-		UploadResponse response = new UploadResponse();
-		
-		try {
-			csrListService.uploadFileData(uploadedFile,userId,null);
-			response.setStatus("SUCCESS");
-		} catch (Exception e) {
-			log.error("Error while uploading data",e);
-			response.setStatus("ERROR");
-			response.setErroMessage(e.getMessage());
-		}
-		log.debug("<-- uploadFileData");
-		return response;
-	}
-	
 	@RequestMapping(value = "/keepCurrentList", method = RequestMethod.POST)
-	public UploadResponse keepCurrentList(@RequestParam("userId") Long userId ){
+	public UploadResponse keepCurrentList(@RequestParam("userId") Long userId,@RequestParam("macIdK") Long macId ){
 		log.debug("--> keepCurrentList:");
 		UploadResponse response = new UploadResponse();
 		String keepCurrentList = "true";
 		try {
-			csrListService.uploadFileData(null,userId,keepCurrentList);
+			csrListService.uploadFileData(null,userId,keepCurrentList,macId);
 			response.setStatus("SUCCESS");
 		} catch (Exception e) {
 			log.error("Error while uploading data",e);
@@ -66,22 +48,36 @@ public class CsrListRestService {
 		return response;
 	}
 	
+	@RequestMapping(value = "/uploadCsrList", method = RequestMethod.POST)
+	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macid") Long macId,@RequestParam("jurisdiction") String jurisdictionList){
+		log.debug("--> uploadFileData:");
+		UploadResponse response = new UploadResponse();
+		
+		try {
+			csrListService.uploadFileData(uploadedFile,userId,null,macId);
+			response.setStatus("SUCCESS");
+		} catch (Exception e) {
+			log.error("Error while uploading data",e);
+			response.setStatus("ERROR");
+			response.setErroMessage(e.getMessage());
+		}
+		log.debug("<-- uploadFileData");
+		return response;
+	}
+	
 	@RequestMapping(value = "/csrList", method = RequestMethod.GET)
-	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to){
+	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurissearch") String jurisdictionList){
 		log.debug("--> getCsrList:");
-		List<CsrLists> data = csrListService.getCsrList(from, to);
+		List<CsrLists> data = csrListService.getCsrList(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
 		log.debug("<-- getCsrList");
 		return data;
 	}	
 	
 	@RequestMapping(value = "/csrListMonths", method = RequestMethod.GET)
-	public List<Object[]> getCsrListMonths(@RequestParam("fromDate") String from, @RequestParam("toDate") String to){
+	public List<Object[]> getCsrListMonths(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
 		log.debug("--> getCsrListMonths:");
-		List<Object[]> data = csrListService.getCsrListMonths(from, to);
+		List<Object[]> data = csrListService.getCsrListMonths(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
 		log.debug("<-- getCsrListMonths");
 		return data;
-	}	
-	
-	
-	
+	}		
 }

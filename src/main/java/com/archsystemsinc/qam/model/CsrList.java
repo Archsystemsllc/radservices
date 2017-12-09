@@ -1,6 +1,6 @@
 /**
  * 
- */
+ *//*
 package com.archsystemsinc.qam.model;
 
 import java.util.Date;
@@ -15,10 +15,10 @@ import javax.persistence.Table;
 import com.archsystemsinc.qam.utils.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-/**
+*//**
  * @author PrakashTotta
  *
- */
+ *//*
 @Entity
 @Table(name = "csr_listsdummy")
 public class CsrList {
@@ -153,3 +153,4 @@ public class CsrList {
 
 	
 }
+*/

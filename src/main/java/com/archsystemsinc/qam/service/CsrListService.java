@@ -6,7 +6,6 @@ package com.archsystemsinc.qam.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -53,22 +52,23 @@ public class CsrListService {
 	 * @param keepCurrentList 
 	 * @throws Exception
 	 */
-	public void uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList) throws FileUploadException,Exception{
+	public void uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList, Long macId) throws FileUploadException,Exception{
 		List<CsrLists> data;
 		CsrLog clog = constructCsrLog(userId);
 		try {
 			Integer yearMonth = CommonUtils.getCurrentYearMonth();
 			if("true".equals(keepCurrentList)) {
-				List<CsrLists> existingRows = existingCsrListByUserMonthYear(userId,yearMonth-1);
+				//List<CsrLists> existingRows = existingCsrListByUserMonthYear(userId,yearMonth-1);
+				List<CsrLists> existingRows = existingCsrListByMacMonthYear(macId,yearMonth-1);
 				if(existingRows.size() == 0) {
 					throw new FileUploadException("For previous month there is no CSR Lists data available!");
 				}else {
 					data = copyCsrLists(existingRows);
-					processCsrLists(userId, data, yearMonth);
+					processCsrLists(userId, data, yearMonth,macId);
 				}
 			}else {
-				data = poiUtils.parseCsrListFile(uploadedFile,userId);
-				processCsrLists(userId, data, yearMonth);
+				data = poiUtils.parseCsrListFile(uploadedFile,userId,macId);
+				processCsrLists(userId, data, yearMonth,macId);
 			}	
 			
 			clog.setUploadStatus(1l);
@@ -84,10 +84,10 @@ public class CsrListService {
 		
 	}
 
-	private void processCsrLists(Long userId, List<CsrLists> data, Integer yearMonth) {
-		List<CsrLists> existingRows1 = existingCsrListByUserMonthYear(userId,yearMonth);
+	private void processCsrLists(Long userId, List<CsrLists> data, Integer yearMonth,Long macId) {
+		List<CsrLists> existingRows1 = existingCsrListByMacMonthYear(macId,yearMonth);
 		if(existingRows1.size() > 0) {
-			int count = csrListRepository.markStatusDeleted(0l, userId, yearMonth, new Date());
+			int count = csrListRepository.markStatusDeletedForAdmin(0l, macId, yearMonth, new Date());
 			log.debug("updated count:"+count);
 		}
 		createCsrList(data);
@@ -100,7 +100,7 @@ public class CsrListService {
 			list = new CsrLists();
 			list.setCreatedBy(lists.getCreatedBy());
 			list.setCreatedDate(new Date());
-			list.setFisrtName(lists.getFisrtName());
+			list.setFirstName(lists.getFirstName());
 			list.setJurisdiction(lists.getJurisdiction());
 			list.setLastName(lists.getLastName());
 			list.setLevel(lists.getLevel());
@@ -131,38 +131,138 @@ public class CsrListService {
 		log.debug("countCsrListByUserMonthYear::"+userId+","+yearMonth);
 		return csrListRepository.existingCsrListByUserMonthYear(userId, yearMonth);
 	}
-
-	public List<CsrLists> getCsrList(String from, String to) {
-		String[] fromMonthyear = from.split(" ");
-		String fromMonth = CommonUtils.monthMap.get(fromMonthyear[0]);
-		String fromYear = fromMonthyear[1];
-		log.debug("fromMonth::"+fromMonth);
-		log.debug("fromYear::"+fromYear);
-		
-		String[] toMonthyear = to.split(" ");
-		String toMonth = CommonUtils.monthMap.get(toMonthyear[0]);
-		String toYear = toMonthyear[1];
-		log.debug("toMonth::"+toMonth);
-		log.debug("fromYear::"+toYear);
-		
-		return csrListRepository.findByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
-	}
 	
-	public List<Object[]> getCsrListMonths(String from, String to) {
-		String[] fromMonthyear = from.split("-");
+	public List<CsrLists> existingCsrListByMacMonthYear(Long macId, Integer yearMonth){
+		log.debug("existingCsrListByMacMonthYear::"+macId+","+yearMonth);
+		return csrListRepository.existingCsrListByMacMonthYear(macId, yearMonth);
+	}
+
+	public List<CsrLists> getCsrList(String from, String to,String macLookupIds,String jurisdictions) {
 		
+		List<CsrLists> resultsList = null;
+		String[] fromMonthyear = from.split("-");
 		String fromYear = fromMonthyear[0];
 		String fromMonth = fromMonthyear[1];
 		log.debug("fromMonth::"+fromMonth);
 		log.debug("fromYear::"+fromYear);
 		
 		String[] toMonthyear = to.split("-");
-		
 		String toYear = toMonthyear[0];
 		String toMonth = toMonthyear[1];
 		log.debug("toMonth::"+toMonth);
 		log.debug("fromYear::"+toYear);
 		
-		return csrListRepository.findMonthsByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
+		String[] macLookupIdStringList = macLookupIds.split(",");
+		ArrayList<Long> macLookupIdArrayList = new ArrayList<Long>();
+		
+		boolean macAllFlag = false;
+		if(macLookupIdStringList.length != 0) {
+			
+			for(String macLookupIdString: macLookupIdStringList) {
+				macLookupIdString = macLookupIdString.substring(1,macLookupIdString.length()-1);
+				if(macLookupIdString.equalsIgnoreCase("ALL")) {
+					macAllFlag = true;
+					break;
+				} else {
+					macLookupIdArrayList.add (Long.valueOf(macLookupIdString));
+					
+				}
+			}
+		}
+		
+		String[] jurisdictionStringList = jurisdictions.split(",");
+		ArrayList<String> jurisdictionArrayList = new ArrayList<String>();
+		
+		boolean jurisdictionAllFlag = false;
+		if(jurisdictionStringList.length != 0) {
+			
+			for(String jurisdictionString: jurisdictionStringList) {
+				jurisdictionString=jurisdictionString.substring(1,jurisdictionString.length()-1);
+				if(jurisdictionString.equalsIgnoreCase("ALL")) {
+					jurisdictionAllFlag = true;
+					break;
+				} else {
+					jurisdictionArrayList.add(jurisdictionString);
+					
+				}
+			}
+		}
+		
+		if(macAllFlag && jurisdictionAllFlag) {
+			resultsList = csrListRepository.findByMonthYearRangeAll(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
+		} else if (macAllFlag) {
+			resultsList = csrListRepository.findByMonthYearRangeAllMac(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), jurisdictionArrayList);
+		} else if (jurisdictionAllFlag) {
+			resultsList = csrListRepository.findByMonthYearRangeAllJuris(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList);
+		} else {
+			resultsList = csrListRepository.findByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList, jurisdictionArrayList);
+		}
+		
+		return resultsList;
+	}
+	
+	public List<Object[]> getCsrListMonths(String from, String to, String macLookupIds,String jurisdictions) {
+		
+		List<Object[]> resultsList = null;
+		
+		String[] fromMonthyear = from.split("-");
+		String fromYear = fromMonthyear[0];
+		String fromMonth = fromMonthyear[1];
+		log.debug("fromMonth::"+fromMonth);
+		log.debug("fromYear::"+fromYear);
+		
+		String[] toMonthyear = to.split("-");
+		String toYear = toMonthyear[0];
+		String toMonth = toMonthyear[1];
+		log.debug("toMonth::"+toMonth);
+		log.debug("fromYear::"+toYear);
+		
+		String[] macLookupIdStringList = macLookupIds.split(",");
+		ArrayList<Long> macLookupIdArrayList = new ArrayList<Long>();
+		
+		boolean macAllFlag = false;
+		if(macLookupIdStringList.length != 0) {
+			
+			for(String macLookupIdString: macLookupIdStringList) {
+				macLookupIdString = macLookupIdString.substring(1,macLookupIdString.length()-1);
+				if(macLookupIdString.equalsIgnoreCase("ALL")) {
+					macAllFlag = true;
+					break;
+				} else {
+					macLookupIdArrayList.add (Long.valueOf(macLookupIdString));
+					
+				}
+			}
+		}
+		
+		String[] jurisdictionStringList = jurisdictions.split(",");
+		ArrayList<String> jurisdictionArrayList = new ArrayList<String>();
+		
+		boolean jurisdictionAllFlag = false;
+		if(jurisdictionStringList.length != 0) {
+			
+			for(String jurisdictionString: jurisdictionStringList) {
+				jurisdictionString=jurisdictionString.substring(1,jurisdictionString.length()-1);
+				if(jurisdictionString.equalsIgnoreCase("ALL")) {
+					jurisdictionAllFlag = true;
+					break;
+				} else {
+					jurisdictionArrayList.add(jurisdictionString);
+					
+				}
+			}
+		}
+		
+		if(macAllFlag && jurisdictionAllFlag) {
+			resultsList = csrListRepository.findMonthsByMonthYearRangeAll(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
+		} else if (macAllFlag) {
+			resultsList = csrListRepository.findMonthsByMonthYearRangeAllMac(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), jurisdictionArrayList);
+		} else if (jurisdictionAllFlag) {
+			resultsList = csrListRepository.findMonthsByMonthYearRangeAllJuris(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList);
+		} else {
+			resultsList = csrListRepository.findMonthsByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList, jurisdictionArrayList);
+		}
+		
+		return resultsList;
 	}
 }

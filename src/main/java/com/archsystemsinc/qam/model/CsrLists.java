@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.archsystemsinc.qam.utils.DateSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class CsrLists {
 
 	private Long id;
-	private String fisrtName;
+	private String firstName;
 	private String middleName;
 	private String lastName;
 	private String location;
@@ -58,12 +57,12 @@ public class CsrLists {
 	}
 
 	@Column(name = "CSR_FIRST_NAME")
-	public String getFisrtName() {
-		return fisrtName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFisrtName(String fisrtName) {
-		this.fisrtName = fisrtName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	@Column(name = "CSR_MIDDLE_NAME")
