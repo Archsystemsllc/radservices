@@ -49,6 +49,7 @@ public class PoiUtils {
 			String userName = radUser.getUserName();
 			dataList = new ArrayList<CsrLists>();
 			Workbook providersFileWorkbook = null;
+			String resultString ="";
 			try {
 				providersFileWorkbook = WorkbookFactory.create(uploadedFile.getInputStream());
 				Sheet providersFileSheet = providersFileWorkbook.getSheetAt(0);
@@ -72,11 +73,12 @@ public class PoiUtils {
 								data.setFirstName(hssfCell.getStringCellValue());
 								break;
 							case 1:
-								data.setLastName(hssfCell.getStringCellValue());
+								
+								data.setMiddleName(hssfCell.getStringCellValue());
 								break;
 								
 							case 2:
-								data.setMiddleName(hssfCell.getStringCellValue());
+								data.setLastName(hssfCell.getStringCellValue());
 								break;
 							case 3:
 								data.setLocation(hssfCell.getStringCellValue());

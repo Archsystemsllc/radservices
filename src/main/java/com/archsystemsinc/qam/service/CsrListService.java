@@ -52,9 +52,10 @@ public class CsrListService {
 	 * @param keepCurrentList 
 	 * @throws Exception
 	 */
-	public void uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList, Long macId) throws FileUploadException,Exception{
+	public String uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList, Long macId) throws FileUploadException,Exception{
 		List<CsrLists> data;
 		CsrLog clog = constructCsrLog(userId);
+		String validationResult = "";
 		try {
 			Integer yearMonth = CommonUtils.getCurrentYearMonth();
 			if("true".equals(keepCurrentList)) {
@@ -68,10 +69,13 @@ public class CsrListService {
 				}
 			}else {
 				data = poiUtils.parseCsrListFile(uploadedFile,userId,macId);
-				processCsrLists(userId, data, yearMonth,macId);
-			}	
-			
-			clog.setUploadStatus(1l);
+				validationResult = validateCsrLists(data);
+				if (validationResult.equalsIgnoreCase("ValidationSuccessful")) {
+					processCsrLists(userId, data, yearMonth,macId);
+					clog.setUploadStatus(1l);
+					validationResult ="CSR List Uploaded Successfully";
+				}				
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FileUploadException(e.getMessage());
@@ -81,7 +85,36 @@ public class CsrListService {
 			}
 			csrLogRepository.save(clog);
 		}
+		return validationResult;		
+	}
+	
+	private String validateCsrLists(List<CsrLists> data) {
+		String lastNameValidation = "Missing Value in Last Name at Row/s:";
+		String programValidation = "Missing Value in Program at Row/s:";
+		String validationResult = "";
+		int rowNum = 1;
+		for (CsrLists csrList: data) {
+			if(csrList.getLastName().equalsIgnoreCase("")) {
+				lastNameValidation+=rowNum+":";
+			}
+			if(csrList.getProgram().equalsIgnoreCase("")) {
+				programValidation+=rowNum+":";
+			}
+			rowNum ++;			
+		}
 		
+		if(!lastNameValidation.equalsIgnoreCase("Missing Value in Last Name at Row/s:")) {
+			validationResult = lastNameValidation;
+		}
+		if(!programValidation.equalsIgnoreCase("Missing Value in Program at Row/s:")) {
+			validationResult += programValidation;
+		}
+		if(validationResult.equalsIgnoreCase("")) {
+			validationResult ="ValidationSuccessful";
+		} else {
+			validationResult+="Please upload a new file after fixing the issues";
+		}
+		return validationResult;
 	}
 
 	private void processCsrLists(Long userId, List<CsrLists> data, Integer yearMonth,Long macId) {
