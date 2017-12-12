@@ -20,6 +20,43 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class RadUser {
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RadUser [id=");
+		builder.append(id);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", roleId=");
+		builder.append(roleId);
+		builder.append(", createdBy=");
+		builder.append(createdBy);
+		builder.append(", updatedBy=");
+		builder.append(updatedBy);
+		builder.append(", createdDate=");
+		builder.append(createdDate);
+		builder.append(", updateDate=");
+		builder.append(updateDate);
+		builder.append(", emailId=");
+		builder.append(emailId);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", macId=");
+		builder.append(macId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", jurId=");
+		builder.append(jurId);
+		builder.append(", orgId=");
+		builder.append(orgId);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	private Long id;
 	private String userName;
 	private String password;
