@@ -9,12 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
-import com.archsystemsinc.qam.repository.RadUserRepository;
-import com.archsystemsinc.qam.repository.RoleRepository;
+import com.archsystemsinc.qam.service.RadUserService;
 	
 /**
  * @author Prakash T
@@ -26,10 +26,9 @@ public class UserRestService {
 	private static final Logger log = Logger.getLogger(UserRestService.class);
 	
 	@Autowired
-	private RadUserRepository radUserRepository;
+	private RadUserService radUserService;
 	
-	@Autowired
-	private RoleRepository roleRepository;
+	
 	
 	/**
 	 * 
@@ -38,7 +37,7 @@ public class UserRestService {
 	@RequestMapping(value = "/listRoles", method = RequestMethod.GET)
 	public List<Role> listRoles(){
 		log.debug("--> listRoles:");
-		List<Role> data = roleRepository.findAll();
+		List<Role> data = radUserService.listRoles();
 		log.debug("<-- listRoles");
 		return data;
 	}
@@ -50,7 +49,7 @@ public class UserRestService {
 	@RequestMapping(value = "/listUsers", method = RequestMethod.GET)
 	public List<RadUser> listUsers(){
 		log.debug("--> listUsers:");
-		List<RadUser> data = radUserRepository.findAll();
+		List<RadUser> data = radUserService.listUsers();
 		log.debug("<-- listUsers");
 		return data;
 	}
@@ -60,11 +59,11 @@ public class UserRestService {
 	 * @return
 	 */
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public RadUser updateUser(RadUser radUser){
+	public Integer updateUser(RadUser radUser){
 		log.debug("--> updateUser:"+radUser);
-		radUser = radUserRepository.save(radUser);
+		Integer count = radUserService.updateUser(radUser);
 		log.debug("<-- updateUser");
-		return radUser;
+		return count;
 	}
 	
 	/**
@@ -74,9 +73,20 @@ public class UserRestService {
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public RadUser createUser(RadUser radUser){
 		log.debug("--> createUser:");
-		radUser = radUserRepository.save(radUser);
+		radUser = radUserService.createUser(radUser);
 		log.debug("<-- createUser");
 		return radUser;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+	public Integer updateStatus(@RequestParam("userId") Long userId,@RequestParam("status") Long status,@RequestParam("updatedBy") String updatedBy){
+		log.debug("--> updateStatus:");
+		Integer count = radUserService.updateStatus(userId, status,updatedBy);
+		log.debug("<-- updateStatus");
+		return count;
+	}
 }
