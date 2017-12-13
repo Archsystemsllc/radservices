@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -27,8 +29,8 @@ public class RadUser {
 		builder.append(id);
 		builder.append(", userName=");
 		builder.append(userName);
-		builder.append(", roleId=");
-		builder.append(roleId);
+		builder.append(", role=");
+		builder.append(role);
 		builder.append(", createdBy=");
 		builder.append(createdBy);
 		builder.append(", updatedBy=");
@@ -60,7 +62,7 @@ public class RadUser {
 	private Long id;
 	private String userName;
 	private String password;
-	private Long roleId;
+	private Role role;
 	private String createdBy;
 	private String updatedBy;
 	private Date createdDate;
@@ -106,13 +108,14 @@ public class RadUser {
 		this.password = password;
 	}
 
-	@Column(name = "ROLE_ID")
-	public Long getRoleId() {
-		return roleId;
+	@OneToOne
+	@JoinColumn(name="role_id")
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	@Column(name = "CREATED_BY")

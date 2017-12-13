@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +65,18 @@ public class UserRestService {
 		Integer count = radUserService.updateUser(radUser);
 		log.debug("<-- updateUser");
 		return count;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/findUser/{userName}", method = RequestMethod.GET)
+	public RadUser findUser(@PathVariable("userName") String userName){
+		log.debug("--> findUser:"+userName);
+		RadUser radUser = radUserService.findUser(userName);
+		log.debug("<-- findUser");
+		return radUser;
 	}
 	
 	/**

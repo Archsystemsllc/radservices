@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.archsystemsinc.qam.model.RadUser;
@@ -74,6 +75,8 @@ public class RadUserService {
 
 	public RadUser createUser(RadUser radUser){
 		log.debug("--> createUser:");
+		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+		radUser.setPassword(b.encode(radUser.getPassword()));
 		radUser = radUserRepository.save(radUser);
 		log.debug("<-- createUser");
 		return radUser;
@@ -89,6 +92,13 @@ public class RadUserService {
 		Integer cunt = radUserRepository.updateStatus(status,userId, new Date(), updatedBy);
 		log.debug("<-- createUser");
 		return cunt;
+	}
+
+	public RadUser findUser(String userName) {
+		log.debug("--> findUser:"+userName);
+		RadUser radUser = radUserRepository.findByUserName(userName);
+		log.debug("<-- findUser:");
+		return radUser;
 	}
 	
 	
