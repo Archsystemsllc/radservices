@@ -3,9 +3,7 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +77,15 @@ public class CsrListRestService {
 		List<Object[]> data = csrListService.getCsrListMonths(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
 		log.debug("<-- getCsrListMonths");
 		return data;
-	}		
+	}	
+	
+	
+	@RequestMapping(value = "/csrListNames", method = RequestMethod.GET)
+	public List<String> getCsrListNames(@RequestParam("term")  String csrLName,@RequestParam("macIdS") String macLookupId, @RequestParam("jurisdictionS") String jurisdiction, @RequestParam("programS") String program) {
+		String country = null;
+		macLookupId = macLookupId.toLowerCase();
+		List<String> data = csrListService.getCsrNames(csrLName, Long.valueOf(macLookupId), jurisdiction,program);
+				
+		return data;
+	}
 }

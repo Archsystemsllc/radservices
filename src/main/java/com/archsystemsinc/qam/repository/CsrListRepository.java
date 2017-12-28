@@ -15,6 +15,8 @@ import com.archsystemsinc.qam.model.CsrLists;
  */
 public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 	
+	//Queries to Find CSR Lists by From Date and To Date
+	
 	@Query("SELECT c FROM CsrLists c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 			+ "and c.macLookupId in (:macLookupIdList) and c.jurisdiction in (:jurisdictionList) and c.recordStatus = 1")
     public List<CsrLists> findByMonthYearRange(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear,@Param("macLookupIdList")ArrayList<Long> macLookupArrayList,@Param("jurisdictionList")ArrayList<String> jurisdictionArrayList);
@@ -31,7 +33,7 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 			+ "and c.macLookupId in (:macLookupIdList) and c.recordStatus = 1")
     public List<CsrLists> findByMonthYearRangeAllJuris(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear,@Param("macLookupIdList")ArrayList<Long> macLookupArrayList);
 	
-	
+	//Queries to Find Months based on CSR Lists by From Date and To Date
 	@Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year FROM CsrLists c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 			+ "and c.macLookupId in (:macLookupIdList) and c.jurisdiction in (:jurisdictionList) and c.recordStatus = 1 "
 			+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate)")
@@ -51,6 +53,12 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 			+ "and c.macLookupId in (:macLookupIdList) and c.recordStatus = 1 "
 			+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate)")
     public List<Object[]> findMonthsByMonthYearRangeAllJuris(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear,@Param("macLookupIdList")ArrayList<Long> macLookupArrayList);
+    
+    
+  //Queries to Find CSR Lists
+    
+    @Query("SELECT c.lastName FROM CsrLists c WHERE c.lastName Like :csrLName% and c.macLookupId = :macLookupId and c.jurisdiction = :jurisdiction and c.program = :program and c.recordStatus = 1")
+    public List<String> existingCsrListByMacIdJurisProgram(@Param("csrLName") String csrLName,@Param("macLookupId") Long macLookupId,@Param("jurisdiction") String jurisdiction,@Param("program") String program);
     
     
 	@Query("SELECT c FROM CsrLists c WHERE c.macLookupId = :macLookupId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")

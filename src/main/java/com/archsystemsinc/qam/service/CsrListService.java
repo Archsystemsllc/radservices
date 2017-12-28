@@ -286,6 +286,8 @@ public class CsrListService {
 			}
 		}
 		
+		
+		
 		if(macAllFlag && jurisdictionAllFlag) {
 			resultsList = csrListRepository.findMonthsByMonthYearRangeAll(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
 		} else if (macAllFlag) {
@@ -295,6 +297,24 @@ public class CsrListService {
 		} else {
 			resultsList = csrListRepository.findMonthsByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList, jurisdictionArrayList);
 		}
+		
+		return resultsList;
+	}
+	
+	
+public List<String> getCsrNames(String csrLName,Long macLookupId,String jurisdiction, String program) {
+		
+		List<String> resultsList = null;		
+		
+		try {
+			boolean macAllFlag = false;
+			
+			resultsList = csrListRepository.existingCsrListByMacIdJurisProgram(csrLName,macLookupId,jurisdiction,program);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		return resultsList;
 	}

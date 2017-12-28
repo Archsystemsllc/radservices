@@ -20,8 +20,11 @@ public class ScoreCard implements Serializable {
 	private int id;
 
 	@Column(name="call_category_id")
-	private int callCategoryId;
+	private Integer callCategoryId;	
 
+	@Column(name="csr_full_name")
+	private String csrFullName;
+	
 	@Column(name="call_duration")
 	private String callDuration;
 
@@ -44,9 +47,6 @@ public class ScoreCard implements Serializable {
 	@Column(name="csr_fall_privacy_prov")
 	private String csrFallPrivacyProv;
 
-	@Column(name="csr_full_name")
-	private String csrFullName;
-
 	@Column(name="csr_level")
 	private String csrLevel;
 
@@ -58,24 +58,27 @@ public class ScoreCard implements Serializable {
 
 	@Column(name="csr_was_courteous")
 	private String csrWasCourteous;
-
+	
 	@Column(name="fail_reason_comments")
 	private String failReasonComments;
-
+	
+	@Column(name="fail_reason_add_comments")
+	private String failReasonAdditionalComments;
+	
 	@Column(name="fail_reason_id")
-	private int failReasonId;
-
+	private Integer failReasonId;
+	
 	@Column(name="jur_id")
-	private String jurId;
-
+	private Integer jurId;
+	
 	@Column(name="mac_call_reference_number")
 	private String macCallReferenceNumber;
 
 	@Column(name="mac_id")
-	private String macId;
+	private Integer macId;
 
 	@Column(name="program_id")
-	private int programId;
+	private Integer programId;
 
 	@Column(name="qam_enddate_time")
 	private String qamEnddateTime;
@@ -91,243 +94,339 @@ public class ScoreCard implements Serializable {
 
 	@Column(name="scorecard_status")
 	private String scorecardStatus;
+	
 
 	@Column(name="user_id")
-	private int userId;
+	private Integer userId;
+	
+	
+	
 
-	//bi-directional one-to-one association to FailReasonsLookup
-	@OneToOne(mappedBy="scoreCard")
-	private FailReasonsLookup failReasonsLookup;
+	public String getFailReasonAdditionalComments() {
+		return failReasonAdditionalComments;
+	}
 
-	//bi-directional one-to-one association to ProgramLookup
-	@OneToOne(mappedBy="scoreCard")
-	private ProgramLookup programLookup;
+
+
+	public void setFailReasonAdditionalComments(String failReasonAdditionalComments) {
+		this.failReasonAdditionalComments = failReasonAdditionalComments;
+	}
+
+
 
 	public ScoreCard() {
 	}
 
+
+
 	public int getId() {
-		return this.id;
+		return id;
 	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public int getCallCategoryId() {
-		return this.callCategoryId;
+
+
+	public Integer getCallCategoryId() {
+		return callCategoryId;
 	}
 
-	public void setCallCategoryId(int callCategoryId) {
+
+
+	public void setCallCategoryId(Integer callCategoryId) {
 		this.callCategoryId = callCategoryId;
 	}
 
-	public String getCallDuration() {
-		return this.callDuration;
-	}
 
-	public void setCallDuration(String callDuration) {
-		this.callDuration = callDuration;
-	}
-
-	public Date getCallFailureTime() {
-		return this.callFailureTime;
-	}
-
-	public void setCallFailureTime(Date callFailureTime) {
-		this.callFailureTime = callFailureTime;
-	}
-
-	public String getCallLanguage() {
-		return this.callLanguage;
-	}
-
-	public void setCallLanguage(String callLanguage) {
-		this.callLanguage = callLanguage;
-	}
-
-	public String getCallMonitoringDate() {
-		return this.callMonitoringDate;
-	}
-
-	public void setCallMonitoringDate(String callMonitoringDate) {
-		this.callMonitoringDate = callMonitoringDate;
-	}
-
-	public String getCallResult() {
-		return this.callResult;
-	}
-
-	public void setCallResult(String callResult) {
-		this.callResult = callResult;
-	}
-
-	public String getCallTime() {
-		return this.callTime;
-	}
-
-	public void setCallTime(String callTime) {
-		this.callTime = callTime;
-	}
-
-	public String getCsrFallPrivacyProv() {
-		return this.csrFallPrivacyProv;
-	}
-
-	public void setCsrFallPrivacyProv(String csrFallPrivacyProv) {
-		this.csrFallPrivacyProv = csrFallPrivacyProv;
-	}
 
 	public String getCsrFullName() {
-		return this.csrFullName;
+		return csrFullName;
 	}
+
+
 
 	public void setCsrFullName(String csrFullName) {
 		this.csrFullName = csrFullName;
 	}
 
-	public String getCsrLevel() {
-		return this.csrLevel;
+
+
+	public String getCallDuration() {
+		return callDuration;
 	}
+
+
+
+	public void setCallDuration(String callDuration) {
+		this.callDuration = callDuration;
+	}
+
+
+
+	public Date getCallFailureTime() {
+		return callFailureTime;
+	}
+
+
+
+	public void setCallFailureTime(Date callFailureTime) {
+		this.callFailureTime = callFailureTime;
+	}
+
+
+
+	public String getCallLanguage() {
+		return callLanguage;
+	}
+
+
+
+	public void setCallLanguage(String callLanguage) {
+		this.callLanguage = callLanguage;
+	}
+
+
+
+	public String getCallMonitoringDate() {
+		return callMonitoringDate;
+	}
+
+
+
+	public void setCallMonitoringDate(String callMonitoringDate) {
+		this.callMonitoringDate = callMonitoringDate;
+	}
+
+
+
+	public String getCallResult() {
+		return callResult;
+	}
+
+
+
+	public void setCallResult(String callResult) {
+		this.callResult = callResult;
+	}
+
+
+
+	public String getCallTime() {
+		return callTime;
+	}
+
+
+
+	public void setCallTime(String callTime) {
+		this.callTime = callTime;
+	}
+
+
+
+	public String getCsrFallPrivacyProv() {
+		return csrFallPrivacyProv;
+	}
+
+
+
+	public void setCsrFallPrivacyProv(String csrFallPrivacyProv) {
+		this.csrFallPrivacyProv = csrFallPrivacyProv;
+	}
+
+
+
+	public String getCsrLevel() {
+		return csrLevel;
+	}
+
+
 
 	public void setCsrLevel(String csrLevel) {
 		this.csrLevel = csrLevel;
 	}
 
+
+
 	public String getCsrPrvAccInfo() {
-		return this.csrPrvAccInfo;
+		return csrPrvAccInfo;
 	}
+
+
 
 	public void setCsrPrvAccInfo(String csrPrvAccInfo) {
 		this.csrPrvAccInfo = csrPrvAccInfo;
 	}
 
+
+
 	public String getCsrPrvCompInfo() {
-		return this.csrPrvCompInfo;
+		return csrPrvCompInfo;
 	}
+
+
 
 	public void setCsrPrvCompInfo(String csrPrvCompInfo) {
 		this.csrPrvCompInfo = csrPrvCompInfo;
 	}
 
+
+
 	public String getCsrWasCourteous() {
-		return this.csrWasCourteous;
+		return csrWasCourteous;
 	}
+
+
 
 	public void setCsrWasCourteous(String csrWasCourteous) {
 		this.csrWasCourteous = csrWasCourteous;
 	}
 
+
+
 	public String getFailReasonComments() {
-		return this.failReasonComments;
+		return failReasonComments;
 	}
+
+
 
 	public void setFailReasonComments(String failReasonComments) {
 		this.failReasonComments = failReasonComments;
 	}
 
-	public int getFailReasonId() {
-		return this.failReasonId;
+
+
+	public Integer getFailReasonId() {
+		return failReasonId;
 	}
 
-	public void setFailReasonId(int failReasonId) {
+
+
+	public void setFailReasonId(Integer failReasonId) {
 		this.failReasonId = failReasonId;
 	}
 
-	public String getJurId() {
-		return this.jurId;
+
+
+	public Integer getJurId() {
+		return jurId;
 	}
 
-	public void setJurId(String jurId) {
+
+
+	public void setJurId(Integer jurId) {
 		this.jurId = jurId;
 	}
 
+
+
 	public String getMacCallReferenceNumber() {
-		return this.macCallReferenceNumber;
+		return macCallReferenceNumber;
 	}
+
+
 
 	public void setMacCallReferenceNumber(String macCallReferenceNumber) {
 		this.macCallReferenceNumber = macCallReferenceNumber;
 	}
 
-	public String getMacId() {
-		return this.macId;
+
+
+	public Integer getMacId() {
+		return macId;
 	}
 
-	public void setMacId(String macId) {
+
+
+	public void setMacId(Integer macId) {
 		this.macId = macId;
 	}
 
-	public int getProgramId() {
-		return this.programId;
+
+
+	public Integer getProgramId() {
+		return programId;
 	}
 
-	public void setProgramId(int programId) {
+
+
+	public void setProgramId(Integer programId) {
 		this.programId = programId;
 	}
 
+
+
 	public String getQamEnddateTime() {
-		return this.qamEnddateTime;
+		return qamEnddateTime;
 	}
+
+
 
 	public void setQamEnddateTime(String qamEnddateTime) {
 		this.qamEnddateTime = qamEnddateTime;
 	}
 
+
+
 	public String getQamFullName() {
-		return this.qamFullName;
+		return qamFullName;
 	}
+
+
 
 	public void setQamFullName(String qamFullName) {
 		this.qamFullName = qamFullName;
 	}
 
+
+
 	public String getQamStartdateTime() {
-		return this.qamStartdateTime;
+		return qamStartdateTime;
 	}
+
+
 
 	public void setQamStartdateTime(String qamStartdateTime) {
 		this.qamStartdateTime = qamStartdateTime;
 	}
 
+
+
 	public String getScorecardComments() {
-		return this.scorecardComments;
+		return scorecardComments;
 	}
+
+
 
 	public void setScorecardComments(String scorecardComments) {
 		this.scorecardComments = scorecardComments;
 	}
 
+
+
 	public String getScorecardStatus() {
-		return this.scorecardStatus;
+		return scorecardStatus;
 	}
+
+
 
 	public void setScorecardStatus(String scorecardStatus) {
 		this.scorecardStatus = scorecardStatus;
 	}
 
-	public int getUserId() {
-		return this.userId;
+
+
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserId(int userId) {
+
+
+	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	public FailReasonsLookup getFailReasonsLookup() {
-		return this.failReasonsLookup;
-	}
-
-	public void setFailReasonsLookup(FailReasonsLookup failReasonsLookup) {
-		this.failReasonsLookup = failReasonsLookup;
-	}
-
-	public ProgramLookup getProgramLookup() {
-		return this.programLookup;
-	}
-
-	public void setProgramLookup(ProgramLookup programLookup) {
-		this.programLookup = programLookup;
-	}
+	}	
 
 }
