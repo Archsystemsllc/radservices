@@ -3,6 +3,7 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -68,6 +69,7 @@ public class CsrListRestService {
 		log.debug("--> getCsrList:");
 		List<CsrLists> data = csrListService.getCsrList(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
 		log.debug("<-- getCsrList");
+		
 		return data;
 	}	
 	
@@ -85,7 +87,10 @@ public class CsrListRestService {
 		String country = null;
 		macLookupId = macLookupId.toLowerCase();
 		List<String> data = csrListService.getCsrNames(csrLName, Long.valueOf(macLookupId), jurisdiction,program);
-				
+		if(data==null || data.size()==0) {
+			data = new ArrayList<String>();
+			data.add("No CSR's Found");
+		}		
 		return data;
 	}
 }

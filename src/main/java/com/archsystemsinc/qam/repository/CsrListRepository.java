@@ -57,8 +57,8 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
     
   //Queries to Find CSR Lists
     
-    @Query("SELECT c.lastName FROM CsrLists c WHERE c.lastName Like :csrLName% and c.macLookupId = :macLookupId and c.jurisdiction = :jurisdiction and c.program = :program and c.recordStatus = 1")
-    public List<String> existingCsrListByMacIdJurisProgram(@Param("csrLName") String csrLName,@Param("macLookupId") Long macLookupId,@Param("jurisdiction") String jurisdiction,@Param("program") String program);
+    @Query("SELECT c FROM CsrLists c WHERE c.lastName Like :csrLName% and c.macLookupId = :macLookupId and c.jurisdiction = :jurisdiction and c.program = :program and c.recordStatus = 1")
+    public List<CsrLists> existingCsrListByMacIdJurisProgram(@Param("csrLName") String csrLName,@Param("macLookupId") Long macLookupId,@Param("jurisdiction") String jurisdiction,@Param("program") String program);
     
     
 	@Query("SELECT c FROM CsrLists c WHERE c.macLookupId = :macLookupId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")

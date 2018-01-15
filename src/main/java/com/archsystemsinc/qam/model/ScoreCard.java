@@ -21,6 +21,9 @@ public class ScoreCard implements Serializable {
 
 	@Column(name="call_category_id")
 	private Integer callCategoryId;	
+	
+	@Column(name="call_sub_category_id")
+	private Integer callSubCategoryId;
 
 	@Column(name="csr_full_name")
 	private String csrFullName;
@@ -65,8 +68,8 @@ public class ScoreCard implements Serializable {
 	@Column(name="fail_reason_add_comments")
 	private String failReasonAdditionalComments;
 	
-	@Column(name="fail_reason_id")
-	private Integer failReasonId;
+	@Column(name="fail_reason")
+	private String failReason;
 	
 	@Column(name="jur_id")
 	private Integer jurId;
@@ -95,12 +98,48 @@ public class ScoreCard implements Serializable {
 	@Column(name="scorecard_status")
 	private String scorecardStatus;
 	
+	@Column(name="scorecard_type")
+	private String scorecardType;
+	
+	@Column(name="lob")
+	private String lob;
+	
 
 	@Column(name="user_id")
 	private Integer userId;
 	
+	public ScoreCard() {
+	}	
+
+	public String getLob() {
+		return lob;
+	}
 	
-	
+	public void setLob(String lob) {
+		this.lob = lob;
+	}
+
+	public Integer getCallSubCategoryId() {
+		return callSubCategoryId;
+	}
+
+
+	public void setCallSubCategoryId(Integer callSubCategoryId) {
+		this.callSubCategoryId = callSubCategoryId;
+	}
+
+	public String getScorecardType() {
+		return scorecardType;
+	}
+
+
+
+	public void setScorecardType(String scorecardType) {
+		this.scorecardType = scorecardType;
+	}
+
+
+
 
 	public String getFailReasonAdditionalComments() {
 		return failReasonAdditionalComments;
@@ -114,8 +153,7 @@ public class ScoreCard implements Serializable {
 
 
 
-	public ScoreCard() {
-	}
+	
 
 
 
@@ -299,20 +337,21 @@ public class ScoreCard implements Serializable {
 
 
 
-	public Integer getFailReasonId() {
-		return failReasonId;
-	}
-
-
-
-	public void setFailReasonId(Integer failReasonId) {
-		this.failReasonId = failReasonId;
-	}
-
-
-
 	public Integer getJurId() {
 		return jurId;
+	}
+	
+	
+
+
+	public String getFailReason() {
+		return failReason;
+	}
+
+
+
+	public void setFailReason(String failReason) {
+		this.failReason = failReason;
 	}
 
 

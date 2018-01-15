@@ -16,7 +16,7 @@ public class ProgramLookup implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(name="created_by")
 	private String createdBy;
@@ -36,21 +36,19 @@ public class ProgramLookup implements Serializable {
 	@Column(name="updated_date")
 	private String updatedDate;
 
-	//bi-directional one-to-one association to ScoreCard
-	@OneToOne
-	@JoinColumn(name="id")
-	private ScoreCard scoreCard;
-
 	public ProgramLookup() {
 	}
 
-	public int getId() {
-		return this.id;
+	
+	public Integer getId() {
+		return id;
 	}
 
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getCreatedBy() {
 		return this.createdBy;
@@ -98,14 +96,6 @@ public class ProgramLookup implements Serializable {
 
 	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
-	}
-
-	public ScoreCard getScoreCard() {
-		return this.scoreCard;
-	}
-
-	public void setScoreCard(ScoreCard scoreCard) {
-		this.scoreCard = scoreCard;
 	}
 
 }
