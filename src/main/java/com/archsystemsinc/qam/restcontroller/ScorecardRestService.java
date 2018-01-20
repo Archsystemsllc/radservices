@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.service.ScoreCardService;
 import com.archsystemsinc.qam.utils.UploadResponse;
@@ -25,8 +26,8 @@ import com.archsystemsinc.qam.utils.UploadResponse;
  */
 @RestController
 @RequestMapping("api")
-public class ScorecardService {
-	private static final Logger log = Logger.getLogger(ScorecardService.class);
+public class ScorecardRestService {
+	private static final Logger log = Logger.getLogger(ScorecardRestService.class);
 	
 	@Autowired
 	private ScoreCardService scoreCardService;
@@ -61,5 +62,21 @@ public class ScorecardService {
 		}
 		log.debug("<-- saveOrUpdateScoreCard");
 		return scoreCardResult;
+	}
+	
+	@RequestMapping(value = "/retrieveMacCallRefFailList", method = RequestMethod.GET)
+	public List<ScoreCard> retrieveMacCallRefFailList(){
+		log.debug("--> retrieveMacCallRefFailList:");		
+		List<ScoreCard> scoreCardFailList = null;
+		
+		try {
+			scoreCardFailList = scoreCardService.retrieveFailedCallList();
+			
+		} catch (Exception e) {
+			log.error("Error while retrieving failed list",e);
+			scoreCardFailList = null;			
+		}
+		log.debug("<-- retrieveMacCallRefFailList");
+		return scoreCardFailList;
 	}
 }

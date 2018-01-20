@@ -28,4 +28,9 @@ public class RebuttalService {
 	public List<Rebuttal> findAll(){
 		return rebuttalRepository.findAll();
 	}	
+	
+	public Rebuttal saveOrUpdateRebuttal(Rebuttal rebuttal) {
+		rebuttal = rebuttalRepository.save(rebuttal);
+		return rebuttal;
+	}
 }

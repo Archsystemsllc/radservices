@@ -6,7 +6,7 @@ import com.archsystemsinc.qam.model.Rebuttal;
 
 /**
  */
-public interface RebuttalRepository extends JpaRepository<Rebuttal, Long>{
+public interface RebuttalRepository extends JpaRepository<Rebuttal, Long>{	
 	
 	
 }

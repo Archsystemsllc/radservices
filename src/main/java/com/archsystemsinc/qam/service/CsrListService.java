@@ -52,7 +52,7 @@ public class CsrListService {
 	 * @param keepCurrentList 
 	 * @throws Exception
 	 */
-	public String uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList, Long macId) throws FileUploadException,Exception{
+	public String uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList, Long macId, String jurisdiction) throws FileUploadException,Exception{
 		List<CsrLists> data;
 		CsrLog clog = constructCsrLog(userId);
 		String validationResult = "";
@@ -60,9 +60,9 @@ public class CsrListService {
 			Integer yearMonth = CommonUtils.getCurrentYearMonth();
 			if("true".equals(keepCurrentList)) {
 				//List<CsrLists> existingRows = existingCsrListByUserMonthYear(userId,yearMonth-1);
-				List<CsrLists> existingRows = existingCsrListByMacMonthYear(macId,yearMonth-1);
+				List<CsrLists> existingRows = existingCsrListByMacJurisdictionMonthYear(macId,jurisdiction,yearMonth-1);
 				if(existingRows.size() == 0) {
-					throw new FileUploadException("For previous month there is no CSR Lists data available!");
+					validationResult = "For previous month there is no CSR Lists data available!";
 				}else {
 					data = copyCsrLists(existingRows);
 					processCsrLists(userId, data, yearMonth,macId);
@@ -161,13 +161,18 @@ public class CsrListService {
 	}
 	
 	public List<CsrLists> existingCsrListByUserMonthYear(Long userId, Integer yearMonth){
-		log.debug("countCsrListByUserMonthYear::"+userId+","+yearMonth);
+		log.debug("existingCsrListByUserMonthYear::"+userId+","+yearMonth);
 		return csrListRepository.existingCsrListByUserMonthYear(userId, yearMonth);
 	}
 	
-	public List<CsrLists> existingCsrListByMacMonthYear(Long macId, Integer yearMonth){
+	public List<CsrLists> existingCsrListByMacMonthYear(Long macId,Integer yearMonth){
 		log.debug("existingCsrListByMacMonthYear::"+macId+","+yearMonth);
 		return csrListRepository.existingCsrListByMacMonthYear(macId, yearMonth);
+	}
+	
+	public List<CsrLists> existingCsrListByMacJurisdictionMonthYear(Long macId, String jurisdiction,Integer yearMonth){
+		log.debug("existingCsrListByMacMonthYear::"+macId+","+yearMonth);
+		return csrListRepository.existingCsrListByMacJurisdictionMonthYear(macId, jurisdiction, yearMonth);
 	}
 
 	public List<CsrLists> getCsrList(String from, String to,String macLookupIds,String jurisdictions) {

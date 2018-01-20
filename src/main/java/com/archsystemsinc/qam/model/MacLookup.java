@@ -27,13 +27,12 @@ public class MacLookup {
 	private String macName;
 	private String macDescription;
 	private String createdBy;
-	private String updatedBy;
-		
-	@JsonSerialize(using=DateSerializer.class)
-	private Date createdDate;
+	private String updatedBy;	
 	
-	@JsonSerialize(using=DateSerializer.class)
-	private Date updateddDate;
+	private String qamStartDate;	
+	private String qamEndDate;
+	private String createdDate;	
+	private String updateddDate;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -64,11 +63,11 @@ public class MacLookup {
 	}	
 	
 	@Column(name = "CREATED_DATE")
-	public Date getCreatedDate() {
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -91,11 +90,30 @@ public class MacLookup {
 	}
 	
 	@Column(name = "UPDATED_DATE")
-	public Date getUpdateddDate() {
+	public String getUpdateddDate() {
 		return updateddDate;
 	}
 
-	public void setUpdateddDate(Date updateddDate) {
+	public void setUpdateddDate(String updateddDate) {
 		this.updateddDate = updateddDate;
-	}	
+	}
+	
+	@Column(name = "QAM_START_DATE")
+	public String getQamStartDate() {
+		return qamStartDate;
+	}
+
+	public void setQamStartDate(String qamStartDate) {
+		this.qamStartDate = qamStartDate;
+	}
+	
+	@Column(name = "QAM_END_DATE")
+	public String getQamEndDate() {
+		return qamEndDate;
+	}
+
+	public void setQamEndDate(String qamEndDate) {
+		this.qamEndDate = qamEndDate;
+	}
+	
 }

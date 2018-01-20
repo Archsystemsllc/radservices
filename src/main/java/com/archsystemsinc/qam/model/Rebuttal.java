@@ -1,5 +1,6 @@
 package com.archsystemsinc.qam.model;
 
+import java.io.File;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="rebuttal")
 @NamedQuery(name="Rebuttal.findAll", query="SELECT r FROM Rebuttal r")
 public class Rebuttal implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -58,7 +60,7 @@ public class Rebuttal implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-	//bi-directional many-to-one association to MacLookup
+	/*//bi-directional many-to-one association to MacLookup
 	@ManyToOne
 	@JoinColumn(name="mac_id")
 	private MacLookup macLookup;
@@ -66,9 +68,135 @@ public class Rebuttal implements Serializable {
 	//bi-directional one-to-one association to RebuttalQmLog
 	@OneToOne(mappedBy="rebuttal")
 	private RebuttalQmLog rebuttalQmLog;
+	*/
+	@Column(name="mac_pcc_name")
+	private String macPCCName;
+	
+	@Column(name="csr_full_name")
+	private String csrFullName;
+	
+	@Column(name="failure_reason")
+	private String failureReason;
+	
+	@Column(name="qam_full_name")
+	private String qamFullName;
+	
+	@Column(name="call_time")
+	private String callTime;
+	
+	@Column(name="call_category")
+	private String callCategory;
+	
+	@Column(name="descriptive_comments")
+	private String descriptionComments;
+	
+	@Column(name="mac_call_ref_number")
+	private String macCallReferenceNumber;
 
 	public Rebuttal() {
 	}
+	
+	
+	public String getMacCallReferenceNumber() {
+		return macCallReferenceNumber;
+	}
+
+
+
+
+	public void setMacCallReferenceNumber(String macCallReferenceNumber) {
+		this.macCallReferenceNumber = macCallReferenceNumber;
+	}
+
+
+
+
+	public String getMacPCCName() {
+		return macPCCName;
+	}
+
+
+
+
+	public void setMacPCCName(String macPCCName) {
+		this.macPCCName = macPCCName;
+	}
+
+
+
+
+	public String getCsrFullName() {
+		return csrFullName;
+	}
+
+
+
+	public void setCsrFullName(String csrFullName) {
+		this.csrFullName = csrFullName;
+	}
+
+
+
+	public String getFailureReason() {
+		return failureReason;
+	}
+
+
+
+	public void setFailureReason(String failureReason) {
+		this.failureReason = failureReason;
+	}
+
+
+
+	public String getQamFullName() {
+		return qamFullName;
+	}
+
+
+
+	public void setQamFullName(String qamFullName) {
+		this.qamFullName = qamFullName;
+	}
+
+
+
+	public String getCallTime() {
+		return callTime;
+	}
+
+
+
+	public void setCallTime(String callTime) {
+		this.callTime = callTime;
+	}
+	
+
+
+
+	public String getCallCategory() {
+		return callCategory;
+	}
+
+
+
+	public void setCallCategory(String callCategory) {
+		this.callCategory = callCategory;
+	}
+
+
+
+	public String getDescriptionComments() {
+		return descriptionComments;
+	}
+
+
+
+	public void setDescriptionComments(String descriptionComments) {
+		this.descriptionComments = descriptionComments;
+	}
+
+
 
 	public int getId() {
 		return this.id;
@@ -190,7 +318,7 @@ public class Rebuttal implements Serializable {
 		this.userId = userId;
 	}
 
-	public MacLookup getMacLookup() {
+	/*public MacLookup getMacLookup() {
 		return this.macLookup;
 	}
 
@@ -204,6 +332,6 @@ public class Rebuttal implements Serializable {
 
 	public void setRebuttalQmLog(RebuttalQmLog rebuttalQmLog) {
 		this.rebuttalQmLog = rebuttalQmLog;
-	}
+	}*/
 
 }

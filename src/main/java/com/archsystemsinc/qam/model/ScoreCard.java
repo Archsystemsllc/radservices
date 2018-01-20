@@ -2,6 +2,10 @@ package com.archsystemsinc.qam.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.archsystemsinc.qam.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
 
@@ -82,13 +86,13 @@ public class ScoreCard implements Serializable {
 
 	@Column(name="program_id")
 	private Integer programId;
-
+	
 	@Column(name="qam_enddate_time")
 	private String qamEnddateTime;
 
 	@Column(name="qam_full_name")
 	private String qamFullName;
-
+	
 	@Column(name="qam_startdate_time")
 	private String qamStartdateTime;
 
@@ -109,7 +113,38 @@ public class ScoreCard implements Serializable {
 	private Integer userId;
 	
 	public ScoreCard() {
-	}	
+	}
+	
+
+	public String getCallMonitoringDate() {
+		return callMonitoringDate;
+	}
+
+	public void setCallMonitoringDate(String callMonitoringDate) {
+		this.callMonitoringDate = callMonitoringDate;
+	}
+
+	public String getQamEnddateTime() {
+		return qamEnddateTime;
+	}
+
+	public void setQamEnddateTime(String qamEnddateTime) {
+		this.qamEnddateTime = qamEnddateTime;
+	}
+
+
+
+	public String getQamStartdateTime() {
+		return qamStartdateTime;
+	}
+
+
+
+	public void setQamStartdateTime(String qamStartdateTime) {
+		this.qamStartdateTime = qamStartdateTime;
+	}
+
+
 
 	public String getLob() {
 		return lob;
@@ -225,18 +260,6 @@ public class ScoreCard implements Serializable {
 
 	public void setCallLanguage(String callLanguage) {
 		this.callLanguage = callLanguage;
-	}
-
-
-
-	public String getCallMonitoringDate() {
-		return callMonitoringDate;
-	}
-
-
-
-	public void setCallMonitoringDate(String callMonitoringDate) {
-		this.callMonitoringDate = callMonitoringDate;
 	}
 
 
@@ -398,18 +421,6 @@ public class ScoreCard implements Serializable {
 
 
 
-	public String getQamEnddateTime() {
-		return qamEnddateTime;
-	}
-
-
-
-	public void setQamEnddateTime(String qamEnddateTime) {
-		this.qamEnddateTime = qamEnddateTime;
-	}
-
-
-
 	public String getQamFullName() {
 		return qamFullName;
 	}
@@ -418,18 +429,6 @@ public class ScoreCard implements Serializable {
 
 	public void setQamFullName(String qamFullName) {
 		this.qamFullName = qamFullName;
-	}
-
-
-
-	public String getQamStartdateTime() {
-		return qamStartdateTime;
-	}
-
-
-
-	public void setQamStartdateTime(String qamStartdateTime) {
-		this.qamStartdateTime = qamStartdateTime;
 	}
 
 

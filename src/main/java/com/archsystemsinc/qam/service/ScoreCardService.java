@@ -33,4 +33,8 @@ public class ScoreCardService {
 		scoreCard = scoreCardRepository.save(scoreCard);
 		return scoreCard;
 	}
+	
+	public List<ScoreCard> retrieveFailedCallList(){
+		return scoreCardRepository.findAllByFailedReason("Fail");
+	}	
 }

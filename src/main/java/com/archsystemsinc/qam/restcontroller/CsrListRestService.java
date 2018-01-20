@@ -30,14 +30,22 @@ public class CsrListRestService {
 	@Autowired
 	private CsrListService csrListService;
 	
-	@RequestMapping(value = "/keepCurrentList", method = RequestMethod.POST)
-	public UploadResponse keepCurrentList(@RequestParam("userId") Long userId,@RequestParam("macIdK") Long macId ){
+	@RequestMapping(value = "/keepCurrentList", method = RequestMethod.GET)
+	public UploadResponse keepCurrentList(@RequestParam("userId") Long userId,@RequestParam("macIdK") Long macId,@RequestParam("jurisdictionK") String jurisdiction){
 		log.debug("--> keepCurrentList:");
 		UploadResponse response = new UploadResponse();
 		String keepCurrentList = "true";
+		String statusString = "";
+		
 		try {
-			csrListService.uploadFileData(null,userId,keepCurrentList,macId);
-			response.setStatus("SUCCESS");
+			statusString = csrListService.uploadFileData(null,userId,keepCurrentList,macId, jurisdiction);
+			if(statusString.equalsIgnoreCase("")) {
+				response.setStatus("SUCCESS");
+			} else {
+				response.setStatus("ERROR");			
+				response.setErroMessage(statusString);
+			}
+			
 		} catch (Exception e) {
 			log.error("Error while uploading data",e);
 			response.setStatus("ERROR");
@@ -53,7 +61,7 @@ public class CsrListRestService {
 		UploadResponse response = new UploadResponse();
 		
 		try {
-			String uploadResult=csrListService.uploadFileData(uploadedFile,userId,null,macId);
+			String uploadResult=csrListService.uploadFileData(uploadedFile,userId,null,macId,jurisdictionList);
 			response.setStatus(uploadResult);
 		} catch (Exception e) {
 			log.error("Error while uploading data",e);

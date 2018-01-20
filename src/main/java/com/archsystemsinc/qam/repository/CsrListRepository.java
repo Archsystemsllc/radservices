@@ -67,6 +67,10 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 	@Query("SELECT c FROM CsrLists c WHERE c.userId = :userId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
     public List<CsrLists> existingCsrListByMacMonthYear(@Param("userId") Long userId,@Param("monthYear") Integer monthYear);
 	
+	@Query("SELECT c FROM CsrLists c WHERE c.macLookupId = :macLookupId and c.jurisdiction = :jurisdiction  and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
+    public List<CsrLists> existingCsrListByMacJurisdictionMonthYear(@Param("macLookupId") Long macLookupId,@Param("jurisdiction") String jurisdiction,@Param("monthYear") Integer monthYear);
+	
+	
 	@Query("SELECT c FROM CsrLists c WHERE c.userId = :userId and c.macLookupId = :macLookupId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
     public List<CsrLists> existingCsrListByUserMacMonthYear(@Param("userId") Long userId,@Param("macLookupId") Long macLookupId,@Param("monthYear") Integer monthYear);
 
