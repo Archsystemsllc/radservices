@@ -41,7 +41,7 @@ public class ReportsRestService {
 		try {
 			log.debug("--> getMacJurisReport:");
 			data = reportsService.retrieveMacJurisReport(reportsForm.getMacId(), reportsForm.getJurisId(), 
-					reportsForm.getFromDate(), reportsForm.getToDate());
+					reportsForm.getFromDate(), reportsForm.getToDate(), reportsForm.getScoreCardType(), reportsForm.getCallResult());
 			
 			for(ScoreCard scoreCard: data) {
 				resultsMap.put(scoreCard.getId(), scoreCard);
@@ -54,36 +54,5 @@ public class ReportsRestService {
 		return resultsMap;
 	}		
 	
-	/*@RequestMapping(value = "/saveOrUpdateScoreCard", method = RequestMethod.POST)
-	public @ResponseBody ScoreCard saveOrUpdateScoreCard(@RequestBody  ScoreCard scoreCard){
-		log.debug("--> saveOrUpdateScoreCard:");		
-		ScoreCard scoreCardResult = null;
-		
-		try {
-			scoreCardResult = scoreCardService.saveOrUpdateScoreCard(scoreCard);
-			
-		} catch (Exception e) {
-			log.error("Error while uploading data",e);
-			return scoreCardResult;
-			
-		}
-		log.debug("<-- saveOrUpdateScoreCard");
-		return scoreCardResult;
-	}
 	
-	@RequestMapping(value = "/retrieveMacCallRefFailList", method = RequestMethod.GET)
-	public List<ScoreCard> retrieveMacCallRefFailList(){
-		log.debug("--> retrieveMacCallRefFailList:");		
-		List<ScoreCard> scoreCardFailList = null;
-		
-		try {
-			scoreCardFailList = scoreCardService.retrieveFailedCallList();
-			
-		} catch (Exception e) {
-			log.error("Error while retrieving failed list",e);
-			scoreCardFailList = null;			
-		}
-		log.debug("<-- retrieveMacCallRefFailList");
-		return scoreCardFailList;
-	}*/
 }

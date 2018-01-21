@@ -3,6 +3,7 @@
  */
 package com.archsystemsinc.qam.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,8 +31,9 @@ public class ReportsService {
 		return scoreCardRepository.findAll();
 	}	
 	
-	public List<ScoreCard> retrieveMacJurisReport(String macId, String jurisId, Date fromDate, Date toDate){
+	public List<ScoreCard> retrieveMacJurisReport(String macId, String jurisId, Date fromDate, Date toDate, String scoreCardType, String callResult){
 		List<ScoreCard> reportResults = null;
+		List<ScoreCard> finalResultsList = null;
 		
 		if(macId.equalsIgnoreCase("ALL") && jurisId.equalsIgnoreCase("ALL")) {
 			reportResults = scoreCardRepository.macJuriReport_AllMacAllJuris(fromDate, toDate);	
@@ -43,6 +45,50 @@ public class ReportsService {
 			reportResults = scoreCardRepository.macJurisReport(Integer.valueOf(macId), Integer.valueOf(jurisId), fromDate, toDate);			
 		}
 		
-		return reportResults;
+		if(scoreCardType.equalsIgnoreCase("")) {
+			finalResultsList = reportResults;
+		} else if (scoreCardType.equalsIgnoreCase("Scoreable") && callResult.equalsIgnoreCase("All")) {
+			finalResultsList = new ArrayList<ScoreCard>();
+			for(ScoreCard scoreCard:reportResults) {
+				if (scoreCard.getScorecardType().equalsIgnoreCase("Scoreable")) {
+					finalResultsList.add(scoreCard);
+				}
+			}
+			
+		}  else if (scoreCardType.equalsIgnoreCase("Scoreable") && callResult.equalsIgnoreCase("Pass")) {
+			finalResultsList = new ArrayList<ScoreCard>();
+			for(ScoreCard scoreCard:reportResults) {
+				if (scoreCard.getScorecardType().equalsIgnoreCase("Scoreable") && scoreCard.getCallResult().equalsIgnoreCase("Pass")) {
+					finalResultsList.add(scoreCard);
+				}
+			}
+			
+		}  else if (scoreCardType.equalsIgnoreCase("Scoreable") && callResult.equalsIgnoreCase("Fail") ) {
+			finalResultsList = new ArrayList<ScoreCard>();
+			for(ScoreCard scoreCard:reportResults) {
+				if (scoreCard.getScorecardType().equalsIgnoreCase("Scoreable") && scoreCard.getCallResult().equalsIgnoreCase("Fail")) {
+					finalResultsList.add(scoreCard);
+				}
+			}
+			
+		} else if (scoreCardType.equalsIgnoreCase("Non-Scoreable")) {
+			finalResultsList = new ArrayList<ScoreCard>();
+			for(ScoreCard scoreCard:reportResults) {
+				if (scoreCard.getScorecardType().equalsIgnoreCase("Non-Scoreable")) {
+					finalResultsList.add(scoreCard);
+				}
+			}
+			
+		} else if (scoreCardType.equalsIgnoreCase("Does Not Count")) {
+			finalResultsList = new ArrayList<ScoreCard>();
+			for(ScoreCard scoreCard:reportResults) {
+				if (scoreCard.getScorecardType().equalsIgnoreCase("Does Not Count")) {
+					finalResultsList.add(scoreCard);
+				}
+			}
+			
+		}
+		
+		return finalResultsList;
 	}	
 }

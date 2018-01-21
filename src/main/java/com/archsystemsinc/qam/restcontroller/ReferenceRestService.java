@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.archsystemsinc.qam.model.Jurisdiction;
 import com.archsystemsinc.qam.model.MacLookup;
 import com.archsystemsinc.qam.model.MacProgJurisPccMapping;
+import com.archsystemsinc.qam.model.PccLocation;
 import com.archsystemsinc.qam.model.ProgramLookup;
 import com.archsystemsinc.qam.service.JurisdictionService;
 import com.archsystemsinc.qam.service.MacLookupService;
 import com.archsystemsinc.qam.service.MacProgJurisPccMappingService;
+import com.archsystemsinc.qam.service.PccLocationService;
 import com.archsystemsinc.qam.service.ProgramLookupService;
 	
 	/**
@@ -41,6 +43,9 @@ public class ReferenceRestService {
 	
 	@Autowired
 	private ProgramLookupService programLookupService;
+	
+	@Autowired
+	private PccLocationService pccLocationService;
 	
 	@RequestMapping(value = "/macList", method = RequestMethod.GET)
 	public List<MacLookup> getMACList(){
@@ -93,6 +98,19 @@ public class ReferenceRestService {
 		}
 		log.debug("<-- getProgramList");
 		return programHashMap;
+	}
+	
+	@RequestMapping(value = "/pccLocationMap", method = RequestMethod.GET)
+	public HashMap<Integer,String> getPccLocationList(){
+		log.debug("--> getPccLocationList:");
+		HashMap<Integer, String> pccLocationHashMap = new HashMap<Integer, String> ();
+		List<PccLocation> data = pccLocationService.findAll();
+		
+		for(PccLocation pccLocation: data) {
+			pccLocationHashMap.put(pccLocation.getId(), pccLocation.getPccLocationName());
+		}
+		log.debug("<-- getPccLocationList");
+		return pccLocationHashMap;
 	}
 	
 	@RequestMapping(value = "/macPrgmJurisPccList", method = RequestMethod.GET)

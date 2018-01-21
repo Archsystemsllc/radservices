@@ -16,16 +16,19 @@ public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long>{
 	@Query("SELECT s FROM ScoreCard s WHERE s.callResult= :callResult ")
     public List<ScoreCard> findAllByFailedReason(@Param("callResult") String failureResult);
 	
-	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and s.jurId = :jurisId and STR_TO_DATE(qam_enddate_time,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+	//AllScoreCardReport
+	
+	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and s.jurId = :jurisId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
     public List<ScoreCard> macJurisReport(@Param("macId") Integer macId,@Param("jurisId") Integer jurisId,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 	
-	@Query("SELECT s FROM ScoreCard s WHERE STR_TO_DATE(qam_enddate_time,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+	@Query("SELECT s FROM ScoreCard s WHERE STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
     public List<ScoreCard> macJuriReport_AllMacAllJuris(@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 	
-	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and STR_TO_DATE(qam_enddate_time,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
     public List<ScoreCard> macJuriReport_AllJuris(@Param("macId") Integer macId,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 	
-	@Query("SELECT s FROM ScoreCard s WHERE s.jurId = :jurisId and STR_TO_DATE(qam_enddate_time,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+	@Query("SELECT s FROM ScoreCard s WHERE s.jurId = :jurisId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
     public List<ScoreCard> macJuriReport_AllMac(@Param("jurisId") Integer jurisId,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+	
 	
 }
