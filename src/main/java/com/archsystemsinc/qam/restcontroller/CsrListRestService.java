@@ -91,13 +91,15 @@ public class CsrListRestService {
 	
 	
 	@RequestMapping(value = "/csrListNames", method = RequestMethod.GET)
-	public List<String> getCsrListNames(@RequestParam("term")  String csrLName,@RequestParam("macIdS") String macLookupId, @RequestParam("jurisdictionS") String jurisdiction, @RequestParam("programS") String program) {
-		String country = null;
+	public List<CsrLists> getCsrListNames(@RequestParam("term")  String csrLName,@RequestParam("macIdS") String macLookupId, @RequestParam("jurisdictionS") String jurisdiction, @RequestParam("programS") String program) {
+		
 		macLookupId = macLookupId.toLowerCase();
-		List<String> data = csrListService.getCsrNames(csrLName, Long.valueOf(macLookupId), jurisdiction,program);
+		List<CsrLists> data = csrListService.getCsrNames(csrLName, Long.valueOf(macLookupId), jurisdiction,program);			
 		if(data==null || data.size()==0) {
-			data = new ArrayList<String>();
-			data.add("No CSR's Found");
+			data = new ArrayList<CsrLists>();
+			CsrLists csrListTemp= new CsrLists();
+			csrListTemp.setFirstName("No CSR's Found");
+			data.add(csrListTemp);
 		}		
 		return data;
 	}

@@ -307,35 +307,29 @@ public class CsrListService {
 	}
 	
 	
-public List<String> getCsrNames(String csrLName,Long macLookupId,String jurisdiction, String program) {
+public List<CsrLists> getCsrNames(String csrLName,Long macLookupId,String jurisdiction, String program) {
 		
 		List<CsrLists> tempCsrList = null;		
-		List<String> csrFullNameList = new ArrayList<String>();
-		
+		List<String[]> csrFullNameList = new ArrayList<String[]>();
+		String resultArray[] = new String[2];
 		try {
 			boolean macAllFlag = false;
 			
 			tempCsrList = csrListRepository.existingCsrListByMacIdJurisProgram(csrLName,macLookupId,jurisdiction,program);
-			for (CsrLists tempCsrListObject: tempCsrList) {
+			/*for (CsrLists tempCsrListObject: tempCsrList) {
 				String firstName = tempCsrListObject.getFirstName();
 				String middleName = tempCsrListObject.getMiddleName();
 				String lastName = tempCsrListObject.getLastName();
 				String csrFullName = firstName + "," + middleName + "," + lastName;
-				/*if (!firstName.equalsIgnoreCase("")) {
-					csrFullName = firstName + ",";
-				}
-				if (!middleName.equalsIgnoreCase("")) {
-					csrFullName += middleName + ",";
-				}
-				if (!lastName.equalsIgnoreCase("")) {
-					csrFullName += lastName ;
-				}*/
-				csrFullNameList.add(csrFullName);
-			}
+				String csrLevl = tempCsrListObject.getLevel();			
+				resultArray[0] = csrFullName;
+				resultArray[1] = csrLevl;
+				csrFullNameList.add(resultArray);
+			}*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		return csrFullNameList;
+		return tempCsrList;
 	}
 }
