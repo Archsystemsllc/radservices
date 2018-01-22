@@ -100,6 +100,28 @@ public class RadUserService {
 		log.debug("<-- findUser:");
 		return radUser;
 	}
+
+	public Integer updateUserPassword(Long userId, String newPassword) {
+		log.debug("--> updateUserPassword:"+userId);
+		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+		newPassword = b.encode(newPassword);
+		Integer count = radUserRepository.updateUserPassword(userId,newPassword);
+		log.debug("<-- updateUser");
+		return count;
+	}
+
+	public List<RadUser> filterUser(String lastName, String roleId, String orgId) {
+		log.debug("--> filterUser:");
+		List<RadUser> data = null;
+		if(lastName!= null && !"".equals(lastName.trim())){
+			data = radUserRepository.filterUser(lastName,new Long(roleId),new Integer(orgId));
+		}else{
+			data = radUserRepository.filterUser(new Long(roleId),new Integer(orgId));
+		}
+		
+		log.debug("<-- filterUser");
+		return data;
+	}
 	
 	
 }

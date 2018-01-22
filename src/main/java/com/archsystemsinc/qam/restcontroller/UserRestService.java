@@ -71,11 +71,51 @@ public class UserRestService {
 	 * 
 	 * @return
 	 */
+	@RequestMapping(value = "/updateUserPassword", method = RequestMethod.POST)
+	public Integer updateUserPassword(@RequestParam("userId") Long userId, @RequestParam("newPassword") String newPassword){
+		log.debug("--> updateUserPassword:"+userId);
+		Integer count = radUserService.updateUserPassword(userId,newPassword);
+		log.debug("<-- updateUserPassword");
+		return count;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/findUser/{userName}", method = RequestMethod.GET)
 	public RadUser findUser(@PathVariable("userName") String userName){
 		log.debug("--> findUser:"+userName);
 		RadUser radUser = radUserService.findUser(userName);
 		log.debug("<-- findUser");
+		return radUser;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/findUser/{lastName}/{roleId}/{orgId}", method = RequestMethod.GET)
+	public List<RadUser> filterUser(@PathVariable("lastName") String lastName,@PathVariable("roleId") String roleId,@PathVariable("orgId") String orgId){
+		log.debug("--> filterUser:"+lastName);
+		log.debug("--> roleId:"+roleId);
+		log.debug("--> orgId:"+orgId);
+		List<RadUser> radUser = radUserService.filterUser(lastName,roleId,orgId);
+		log.debug("<-- roleId");
+		return radUser;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/findUser/{roleId}/{orgId}", method = RequestMethod.GET)
+	public List<RadUser> filterUserById(@PathVariable("roleId") String roleId,@PathVariable("orgId") String orgId){
+		log.debug("--> filterUserById:");
+		log.debug("--> roleId:"+roleId);
+		log.debug("--> orgId:"+orgId);
+		List<RadUser> radUser = radUserService.filterUser(null,roleId,orgId);
+		log.debug("<-- filterUserById");
 		return radUser;
 	}
 	

@@ -113,6 +113,7 @@ public class PersistenceConfig {
            final Properties hibernateProperties = new Properties();
            hibernateProperties.setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
            hibernateProperties.setProperty("hibernate.dialect", hibernateDialect);
+           hibernateProperties.setProperty("connection.autocommit", "true");
            return hibernateProperties;
        }
 
