@@ -95,6 +95,18 @@ public class UserRestService {
 	 * 
 	 * @return
 	 */
+	@RequestMapping(value = "/findUserById/{id}", method = RequestMethod.GET)
+	public RadUser findUserById(@PathVariable("id") Long id){
+		log.debug("--> findUserById:"+id);
+		RadUser radUser = radUserService.findById(id);
+		log.debug("<-- findUserById");
+		return radUser;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/findUser/{lastName}/{roleId}/{orgId}", method = RequestMethod.GET)
 	public List<RadUser> filterUser(@PathVariable("lastName") String lastName,@PathVariable("roleId") String roleId,@PathVariable("orgId") String orgId){
 		log.debug("--> filterUser:"+lastName);

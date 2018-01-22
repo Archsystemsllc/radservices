@@ -26,6 +26,12 @@ public interface RadUserRepository extends JpaRepository<RadUser, Long>{
 	@Query("update RadUser c set c.emailId = :emailId, c.updateDate = :updatedDate, c.updatedBy = :updatedBy, c.lastName =:lastName, c.middleName = :middleName, c.firstName = :firstName where c.id = :userId")
 	int updateUser(@Param("emailId") String emailId,@Param("firstName") String firstName,@Param("middleName") String middleName,@Param("lastName") String lastName, @Param("userId") Long userId,@Param("updatedDate") Date updatedDate, @Param("updatedBy") String updatedBy);
 	
+	
+	@Modifying
+	@Query("update RadUser c set c.password = :password, c.role.id = :roleId , c.organizationLookup.id = :orgId, c.macId = :macId, c.pccId = :pccId, c.emailId = :emailId, c.updateDate = :updatedDate, c.updatedBy = :updatedBy, c.lastName =:lastName, c.middleName = :middleName, c.firstName = :firstName where c.id = :userId")
+	int updateUserData(@Param("password") String password, @Param("roleId") Long roleId,@Param("orgId")  Integer orgId, @Param("macId") Long macId,@Param("pccId") Long pccId,@Param("emailId") String emailId,@Param("firstName") String firstName,@Param("middleName") String middleName,@Param("lastName") String lastName, @Param("userId") Long userId,@Param("updatedDate") Date updatedDate, @Param("updatedBy") String updatedBy);
+	
+	
 	@Modifying
 	@Query("update RadUser c set c.password = :newPassword where c.id = :userId")
 	Integer updateUserPassword(@Param("userId") Long userId, @Param("newPassword") String newPassword);
