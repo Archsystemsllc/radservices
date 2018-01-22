@@ -36,4 +36,8 @@ public interface RadUserRepository extends JpaRepository<RadUser, Long>{
 	
 	@Query("SELECT r FROM RadUser r where r.role.id = :roleId and r.organizationLookup.id = :orgId") 
 	List<RadUser> filterUser( @Param("roleId") Long roleId,@Param("orgId")  Integer orgId);
+	
+	
+	@Query("SELECT r FROM RadUser r where r.status != :status") 
+	List<RadUser> findUsers( @Param("status") Long status);
 }

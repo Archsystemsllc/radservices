@@ -51,7 +51,7 @@ public class RadUserService {
 
 	public List<RadUser> listUsers(){
 		log.debug("--> listUsers:");
-		List<RadUser> data = radUserRepository.findAll();
+		List<RadUser> data = radUserRepository.findUsers(new Long(2));
 		log.debug("<-- listUsers");
 		return data;
 	}
