@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.archsystemsinc.qam.model.Jurisdiction;
 import com.archsystemsinc.qam.model.MacLookup;
 import com.archsystemsinc.qam.model.MacProgJurisPccMapping;
+import com.archsystemsinc.qam.model.OrganizationLookup;
 import com.archsystemsinc.qam.model.PccLocation;
 import com.archsystemsinc.qam.model.ProgramLookup;
+import com.archsystemsinc.qam.model.Role;
 import com.archsystemsinc.qam.service.JurisdictionService;
 import com.archsystemsinc.qam.service.MacLookupService;
 import com.archsystemsinc.qam.service.MacProgJurisPccMappingService;
+import com.archsystemsinc.qam.service.OrganizationLookupService;
 import com.archsystemsinc.qam.service.PccLocationService;
 import com.archsystemsinc.qam.service.ProgramLookupService;
+import com.archsystemsinc.qam.service.RadUserService;
 	
 	/**
  * @author Abdul Nissar S
@@ -43,6 +47,13 @@ public class ReferenceRestService {
 	
 	@Autowired
 	private ProgramLookupService programLookupService;
+	
+	@Autowired
+	private OrganizationLookupService organizationLookupService;
+	
+	@Autowired
+	private RadUserService radUserService;
+	
 	
 	@Autowired
 	private PccLocationService pccLocationService;
@@ -111,6 +122,32 @@ public class ReferenceRestService {
 		}
 		log.debug("<-- getPccLocationList");
 		return pccLocationHashMap;
+	}
+	
+	@RequestMapping(value = "/orgMap", method = RequestMethod.GET)
+	public HashMap<Integer,String> getOrgMap(){
+		log.debug("--> getOrgMap:");
+		HashMap<Integer, String> orgHashMap = new HashMap<Integer, String> ();
+		List<OrganizationLookup> data = organizationLookupService.findAll();
+		
+		for(OrganizationLookup org: data) {
+			orgHashMap.put(org.getId(), org.getOrganizationName());
+		}
+		log.debug("<-- getOrgMap");
+		return orgHashMap;
+	}
+	
+	@RequestMapping(value = "/roleMap", method = RequestMethod.GET)
+	public HashMap<Integer,String> getRoleMap(){
+		log.debug("--> getRoleMap:");
+		HashMap<Integer, String> roleHashMap = new HashMap<Integer, String> ();
+		List<Role> data = radUserService.listRoles();
+		
+		for(Role role: data) {
+			roleHashMap.put(role.getId().intValue(), role.getRoleName());
+		}
+		log.debug("<-- getRoleMap");
+		return roleHashMap;
 	}
 	
 	@RequestMapping(value = "/macPrgmJurisPccList", method = RequestMethod.GET)

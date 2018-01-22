@@ -15,7 +15,7 @@ import com.archsystemsinc.qam.model.ProgramLookup;
 import com.archsystemsinc.qam.repository.ProgramLookupRepository;
 
 /**
- * @author Abdul Nissar S
+ * @author 
  *
  */
 @Service

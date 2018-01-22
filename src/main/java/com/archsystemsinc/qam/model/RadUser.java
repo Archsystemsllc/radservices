@@ -53,8 +53,8 @@ public class RadUser {
 		builder.append(status);
 		builder.append(", jurId=");
 		builder.append(jurId);
-		builder.append(", orgId=");
-		builder.append(orgId);
+		builder.append(", pccId=");
+		builder.append(pccId);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -63,6 +63,8 @@ public class RadUser {
 	private String userName;
 	private String password;
 	private Role role;
+	
+	private OrganizationLookup organizationLookup;
 	private String createdBy;
 	private String updatedBy;
 	private Date createdDate;
@@ -77,7 +79,7 @@ public class RadUser {
 
 	private Long status;
 	private Long jurId;
-	private Long orgId;
+	private Long pccId;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -116,6 +118,16 @@ public class RadUser {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	@OneToOne
+	@JoinColumn(name="org_id")
+	public OrganizationLookup getOrganizationLookup() {
+		return organizationLookup;
+	}
+
+	public void setOrganizationLookup(OrganizationLookup organizationLookup) {
+		this.organizationLookup = organizationLookup;
 	}
 
 	@Column(name = "CREATED_BY")
@@ -205,6 +217,15 @@ public class RadUser {
 		return macId;
 	}
 
+	@Column(name = "PCC_ID")
+	public Long getPccId() {
+		return pccId;
+	}
+	
+	public void setPccId(Long pccId) {
+		this.pccId = pccId;
+	}
+
 	public void setMacId(Long macId) {
 		this.macId = macId;
 	}
@@ -218,14 +239,6 @@ public class RadUser {
 		this.jurId = jurId;
 	}
 
-	@Column(name = "ORG_ID")
-	public Long getOrgId() {
-		return orgId;
-	}
-
-	public void setOrgId(Long orgId) {
-		this.orgId = orgId;
-	}
-
+	
 	
 }

@@ -1,6 +1,7 @@
 package com.archsystemsinc.qam.repository;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,4 +25,25 @@ public interface RadUserRepository extends JpaRepository<RadUser, Long>{
 	@Modifying
 	@Query("update RadUser c set c.emailId = :emailId, c.updateDate = :updatedDate, c.updatedBy = :updatedBy, c.lastName =:lastName, c.middleName = :middleName, c.firstName = :firstName where c.id = :userId")
 	int updateUser(@Param("emailId") String emailId,@Param("firstName") String firstName,@Param("middleName") String middleName,@Param("lastName") String lastName, @Param("userId") Long userId,@Param("updatedDate") Date updatedDate, @Param("updatedBy") String updatedBy);
+	
+	
+	@Modifying
+	@Query("update RadUser c set c.password = :password, c.role.id = :roleId , c.organizationLookup.id = :orgId, c.macId = :macId, c.pccId = :pccId, c.emailId = :emailId, c.updateDate = :updatedDate, c.updatedBy = :updatedBy, c.lastName =:lastName, c.middleName = :middleName, c.firstName = :firstName where c.id = :userId")
+	int updateUserData(@Param("password") String password, @Param("roleId") Long roleId,@Param("orgId")  Integer orgId, @Param("macId") Long macId,@Param("pccId") Long pccId,@Param("emailId") String emailId,@Param("firstName") String firstName,@Param("middleName") String middleName,@Param("lastName") String lastName, @Param("userId") Long userId,@Param("updatedDate") Date updatedDate, @Param("updatedBy") String updatedBy);
+	
+	
+	@Modifying
+	@Query("update RadUser c set c.password = :newPassword where c.id = :userId")
+	Integer updateUserPassword(@Param("userId") Long userId, @Param("newPassword") String newPassword);
+	
+	
+	@Query("SELECT r FROM RadUser r where r.lastName like :lastName and r.role.id = :roleId and r.organizationLookup.id = :orgId") 
+	List<RadUser> filterUser(@Param("lastName") String lastName, @Param("roleId") Long roleId,@Param("orgId")  Integer orgId);
+	
+	@Query("SELECT r FROM RadUser r where r.role.id = :roleId and r.organizationLookup.id = :orgId") 
+	List<RadUser> filterUser( @Param("roleId") Long roleId,@Param("orgId")  Integer orgId);
+	
+	
+	@Query("SELECT r FROM RadUser r where r.status != :status") 
+	List<RadUser> findUsers( @Param("status") Long status);
 }
