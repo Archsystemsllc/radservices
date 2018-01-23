@@ -85,6 +85,9 @@ public class CsrListRestService {
 	public List<Object[]> getCsrListMonths(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
 		log.debug("--> getCsrListMonths:");
 		List<Object[]> data = csrListService.getCsrListMonths(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
+		if(data == null || data.size() == 0) {
+			data = new ArrayList();
+		}
 		log.debug("<-- getCsrListMonths");
 		return data;
 	}	
