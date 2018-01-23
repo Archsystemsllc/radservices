@@ -38,6 +38,9 @@ public class CsrListService {
 	
 	@Autowired
 	private PoiUtils poiUtils;
+	
+	@Autowired
+	private JurisdictionService jurisdictionService;
 
 	
 	public void createCsrList(List<CsrLists> data){
@@ -268,7 +271,6 @@ public class CsrListService {
 					break;
 				} else {
 					macLookupIdArrayList.add (Long.valueOf(macLookupIdString));
-					
 				}
 			}
 		}
@@ -285,13 +287,12 @@ public class CsrListService {
 					jurisdictionAllFlag = true;
 					break;
 				} else {
+					//String jurisName = jurisdictionService.
 					jurisdictionArrayList.add(jurisdictionString);
 					
 				}
 			}
 		}
-		
-		
 		
 		if(macAllFlag && jurisdictionAllFlag) {
 			resultsList = csrListRepository.findMonthsByMonthYearRangeAll(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
