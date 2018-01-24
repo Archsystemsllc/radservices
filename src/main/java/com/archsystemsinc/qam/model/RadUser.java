@@ -81,6 +81,8 @@ public class RadUser {
 	private Long jurId;
 	private Long pccId;
 	
+	private Date lastLoggedinDate;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
@@ -91,7 +93,15 @@ public class RadUser {
 		this.id = id;
 	}
 
-	
+	@Column(name = "last_loggedin_date")
+	public Date getLastLoggedinDate() {
+		return lastLoggedinDate;
+	}
+
+	public void setLastLoggedinDate(Date lastLoggedinDate) {
+		this.lastLoggedinDate = lastLoggedinDate;
+	}
+
 	@Column(name = "USER_NAME")
 	public String getUserName() {
 		return userName;
@@ -238,7 +248,4 @@ public class RadUser {
 	public void setJurId(Long jurId) {
 		this.jurId = jurId;
 	}
-
-	
-	
 }

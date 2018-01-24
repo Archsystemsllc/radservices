@@ -3,6 +3,7 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -83,6 +84,19 @@ public class UserRestService {
 	 * 
 	 * @return
 	 */
+	@RequestMapping(value = "/updateUserLastLoginDate", method = RequestMethod.POST)
+	public Integer updateUserLastLoginDate(@RequestParam("userId") Long userId){
+		log.debug("--> updateUserLastLoginDate:"+userId);
+		Integer count = radUserService.updateUserLastLoggedinDate(userId, new Date());
+		log.debug("<-- updateUserLastLoginDate");
+		return count;
+	}
+
+	
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/findUser/{userName}", method = RequestMethod.GET)
 	public RadUser findUser(@PathVariable("userName") String userName){
 		log.debug("--> findUser:"+userName);
@@ -151,6 +165,18 @@ public class UserRestService {
 	public Integer updateStatus(@RequestParam("userId") Long userId,@RequestParam("status") Long status,@RequestParam("updatedBy") String updatedBy){
 		log.debug("--> updateStatus:");
 		Integer count = radUserService.updateStatus(userId, status,updatedBy);
+		log.debug("<-- updateStatus");
+		return count;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/updateStatusForAll", method = RequestMethod.POST)
+	public Integer updateStatusForAll(@RequestParam("status") Long status,@RequestParam("updatedBy") String updatedBy){
+		log.debug("--> updateStatus:");
+		Integer count = radUserService.updateStatus(status,updatedBy);
 		log.debug("<-- updateStatus");
 		return count;
 	}

@@ -56,6 +56,9 @@ public class RadUserService {
 		return data;
 	}
 
+	public Integer updateUserLastLoggedinDate(Long userId, Date lastLoggedinDate){
+		return radUserRepository.updateUserLastLoggedinDate(userId, lastLoggedinDate);
+	}
 	/**
 	 * 
 	 * @return
@@ -101,6 +104,18 @@ public class RadUserService {
 		log.debug("--> createUser:");
 		Integer cunt = radUserRepository.updateStatus(status, userId,
 				new Date(), updatedBy);
+		log.debug("<-- createUser");
+		return cunt;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+
+	public Integer updateStatus(Long status, String updatedBy) {
+		log.debug("--> createUser:");
+		Integer cunt = radUserRepository.updateStatus(status,new Date(), updatedBy);
 		log.debug("<-- createUser");
 		return cunt;
 	}

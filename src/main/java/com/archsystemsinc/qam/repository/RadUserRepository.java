@@ -37,6 +37,11 @@ public interface RadUserRepository extends JpaRepository<RadUser, Long>{
 	Integer updateUserPassword(@Param("userId") Long userId, @Param("newPassword") String newPassword);
 	
 	
+	@Modifying
+	@Query("update RadUser c set c.lastLoggedinDate= :lastLoggedinDate where c.id = :userId")
+	Integer updateUserLastLoggedinDate(@Param("userId") Long userId, @Param("lastLoggedinDate") Date lastLoggedinDate);
+	
+	
 	@Query("SELECT r FROM RadUser r where r.lastName like :lastName and r.role.id = :roleId and r.organizationLookup.id = :orgId") 
 	List<RadUser> filterUser(@Param("lastName") String lastName, @Param("roleId") Long roleId,@Param("orgId")  Integer orgId);
 	
@@ -46,4 +51,13 @@ public interface RadUserRepository extends JpaRepository<RadUser, Long>{
 	
 	@Query("SELECT r FROM RadUser r where r.status != :status") 
 	List<RadUser> findUsers( @Param("status") Long status);
+	
+	/*@Modifying
+	@Query("update RadUser c set c.status = :status, c.updateDate = :updatedDate, c.updatedBy = :updatedBy where c.lastLoggedinDate is not null and DATE_ADD(c.lastLoggedinDate, INTERVAL 60 DAY) <= CURDATE()")
+	int updateStatus(@Param("status") Long status, @Param("updatedDate") Date updatedDate, @Param("updatedBy") String updatedBy);
+	*/
+	@Modifying
+	@Query(value="update user c set c.record_status = :status,  c.updated_date = :updatedDate, c.updated_by = :updatedBy where c.last_loggedin_date is not null and DATE_ADD(last_loggedin_date, INTERVAL 60 DAY) <= CURDATE()",nativeQuery = true)
+	int updateStatus(@Param("status") Long status, @Param("updatedDate") Date updatedDate, @Param("updatedBy") String updatedBy);
+	
 }
