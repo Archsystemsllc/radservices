@@ -92,25 +92,67 @@ public class CsrListService {
 	}
 	
 	private String validateCsrLists(List<CsrLists> data) {
-		String lastNameValidation = "Missing Value in Last Name at Row/s:";
-		String programValidation = "Missing Value in Program at Row/s:";
+		String firstNameValidation = "Missing Value/s in First Name at Row/s:";
+		String lastNameValidation = "Missing Value/s in Last Name at Row/s:";
+		String pccValidation = "Missing Value/s in PCC at Row/s:";
+		String csrLevelValidation = "Missing Value/s in CSR Level at Row/s:";
+		String jurisdictionValidation = "Missing Value/s in Jurisdiction at Row/s:";
+		String programValidation = "Missing Value/s in Program at Row/s:";		
+		String statusValidation = "Missing Value/s in Status at Row/s:";
+		
 		String validationResult = "";
 		int rowNum = 1;
 		for (CsrLists csrList: data) {
+			if(csrList.getFirstName().equalsIgnoreCase("")) {
+				firstNameValidation+=rowNum+":";
+			}
 			if(csrList.getLastName().equalsIgnoreCase("")) {
 				lastNameValidation+=rowNum+":";
 			}
+			if(csrList.getLocation().equalsIgnoreCase("")) {
+				pccValidation+=rowNum+":";
+			}
+			if(csrList.getLevel().equalsIgnoreCase("")) {
+				csrLevelValidation+=rowNum+":";
+			}
+			
+			if(csrList.getJurisdiction().equalsIgnoreCase("")) {
+				jurisdictionValidation+=rowNum+":";
+			}
+			
 			if(csrList.getProgram().equalsIgnoreCase("")) {
 				programValidation+=rowNum+":";
+			}
+			
+			if(csrList.getStatus().equalsIgnoreCase("")) {
+				statusValidation+=rowNum+":";
 			}
 			rowNum ++;			
 		}
 		
-		if(!lastNameValidation.equalsIgnoreCase("Missing Value in Last Name at Row/s:")) {
-			validationResult = lastNameValidation;
+		if(!firstNameValidation.equalsIgnoreCase("Missing Value/s in First Name at Row/s:")) {
+			validationResult += firstNameValidation;
+		}
+		if(!lastNameValidation.equalsIgnoreCase("Missing Value/s in Last Name at Row/s:")) {
+			validationResult += programValidation;
+		}
+		
+		if(!pccValidation.equalsIgnoreCase("Missing Value/s in PCC at Row/s:")) {
+			validationResult += lastNameValidation;
+		}
+		if(!csrLevelValidation.equalsIgnoreCase("Missing Value/s in CSR Level at Row/s:")) {
+			validationResult += csrLevelValidation;
+		}
+		
+		if(!jurisdictionValidation.equalsIgnoreCase("Missing Value/s in Jurisdiction at Row/s:")) {
+			validationResult += jurisdictionValidation;
 		}
 		if(!programValidation.equalsIgnoreCase("Missing Value in Program at Row/s:")) {
 			validationResult += programValidation;
+		}
+		
+		if(!statusValidation.equalsIgnoreCase("Missing Value/s in Status at Row/s:")) {
+			validationResult += statusValidation;
 		}
 		if(validationResult.equalsIgnoreCase("")) {
 			validationResult ="ValidationSuccessful";

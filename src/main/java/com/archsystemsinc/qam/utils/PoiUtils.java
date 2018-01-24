@@ -37,6 +37,15 @@ public class PoiUtils {
 	private RadUserRepository radUserRepository;
 	
 	private static final Logger log = Logger.getLogger(PoiUtils.class);
+	
+	private boolean isRowEmpty(Row row) {
+	    for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+	        Cell cell = row.getCell(c);
+	        if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK)
+	            return false;
+	    }
+	    return true;
+	}
 
 
 	public List<CsrLists> parseCsrListFile(MultipartFile uploadedFile, Long userId, Long macId) throws Exception {
@@ -60,14 +69,18 @@ public class PoiUtils {
 				CsrLists data = null;
 				while (providersFileRowIterator.hasNext()) {
 					Row providersFileRow = (Row) providersFileRowIterator.next();
-
+					if(isRowEmpty(providersFileRow)==true) {
+						continue;
+					}
 					if (providersFileRow.getRowNum() > 0 && providersFileRow.getRowNum() <= providersFileRowCount) {
 						data = new CsrLists();
 						log.debug("ROW - " + providersFileRow.getRowNum());
+						
 						Iterator<Cell> iterator = providersFileRow.cellIterator();
 						while (iterator.hasNext()) {
 							Cell hssfCell = (Cell) iterator.next();
 							int cellIndex = hssfCell.getColumnIndex();
+							
 							switch (cellIndex) {
 							case 0:
 								data.setFirstName(hssfCell.getStringCellValue());

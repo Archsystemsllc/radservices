@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.archsystemsinc.qam.model.CategoryLookup;
 import com.archsystemsinc.qam.model.Jurisdiction;
 import com.archsystemsinc.qam.model.MacLookup;
 import com.archsystemsinc.qam.model.MacProgJurisPccMapping;
@@ -19,6 +20,8 @@ import com.archsystemsinc.qam.model.OrganizationLookup;
 import com.archsystemsinc.qam.model.PccLocation;
 import com.archsystemsinc.qam.model.ProgramLookup;
 import com.archsystemsinc.qam.model.Role;
+import com.archsystemsinc.qam.model.SubcategoriesLookup;
+import com.archsystemsinc.qam.service.CategoryLookupService;
 import com.archsystemsinc.qam.service.JurisdictionService;
 import com.archsystemsinc.qam.service.MacLookupService;
 import com.archsystemsinc.qam.service.MacProgJurisPccMappingService;
@@ -26,6 +29,7 @@ import com.archsystemsinc.qam.service.OrganizationLookupService;
 import com.archsystemsinc.qam.service.PccLocationService;
 import com.archsystemsinc.qam.service.ProgramLookupService;
 import com.archsystemsinc.qam.service.RadUserService;
+import com.archsystemsinc.qam.service.SubcategoriesLookupService;
 	
 	/**
  * @author Abdul Nissar S
@@ -52,11 +56,16 @@ public class ReferenceRestService {
 	private OrganizationLookupService organizationLookupService;
 	
 	@Autowired
-	private RadUserService radUserService;
-	
+	private RadUserService radUserService;	
 	
 	@Autowired
 	private PccLocationService pccLocationService;
+	
+	@Autowired
+	private CategoryLookupService categoryLookupService;
+	
+	@Autowired
+	private SubcategoriesLookupService subcategoriesLookupService;
 	
 	@RequestMapping(value = "/macList", method = RequestMethod.GET)
 	public List<MacLookup> getMACList(){
@@ -156,6 +165,38 @@ public class ReferenceRestService {
 		List<MacProgJurisPccMapping> data = macProgJurisPccMappingService.findAll();		
 		log.debug("<-- getMacPrgmJurisPccList");
 		return data;
+	}
+	
+	@RequestMapping(value = "/callCategoryMap", method = RequestMethod.GET)
+	public HashMap<Integer,String> getCallCategoryMap(){
+		log.debug("--> getCallCategoryMap:");
+		HashMap<Integer, String> callCategoryHashMap = new HashMap<Integer, String> ();
+		List<CategoryLookup> data = categoryLookupService.findAll();
+		for(CategoryLookup categoryLookup: data) {
+			callCategoryHashMap.put(categoryLookup.getId().intValue(), categoryLookup.getCategoryName());
+		}
+		log.debug("<-- getCallCategoryMap");
+		return callCategoryHashMap;
+	}
+	
+	@RequestMapping(value = "/callSubcategoriesMap", method = RequestMethod.GET)
+	public HashMap<Integer,HashMap<Integer,String>> getCallSubcategoriesMap(){
+		log.debug("--> getCallSubcategoriesMap:");
+		HashMap<Integer,HashMap<Integer,String>> callSubcategoriesHashMap = new HashMap<Integer,HashMap<Integer,String>>();
+		List<SubcategoriesLookup> data = subcategoriesLookupService.findAll();
+		
+		for(SubcategoriesLookup subcategoriesLookup: data) {
+			String subcategory = subcategoriesLookup.getSubCategoryName();
+			HashMap<Integer,String> subCategoryMap = callSubcategoriesHashMap.get(subcategoriesLookup.getCategoryId());
+			if (subCategoryMap == null) {
+				subCategoryMap = new HashMap<Integer,String>();
+				subCategoryMap.put(subcategoriesLookup.getId(), subcategory);
+			} else {
+				subCategoryMap.put(subcategoriesLookup.getId(), subcategory);
+			}			
+			callSubcategoriesHashMap.put(subcategoriesLookup.getCategoryId(), subCategoryMap);
+		}		
+		return callSubcategoriesHashMap;
 	}
 	
 }

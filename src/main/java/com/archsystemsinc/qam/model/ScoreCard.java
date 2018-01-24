@@ -112,9 +112,144 @@ public class ScoreCard implements Serializable {
 	@Column(name="user_id")
 	private Integer userId;
 	
-	public ScoreCard() {
-	}
+	@Column(name="accuracy_call_failure_reason")
+	private String accuracyCallFailureReason;
 	
+	@Column(name="accuracy_call_failure_time")
+	private String accuracyCallFailureTime;
+	
+	@Column(name="completeness_call_failure_reason")
+	private String completenessCallFailureReason;
+	
+	@Column(name="completeness_call_failure_time")
+	private String completenessCallFailureTime;
+	
+	@Column(name="privacy_call_failure_reason")
+	private String privacyCallFailureReason;
+	
+	@Column(name="privacy_call_failure_time")
+	private String privacyCallFailureTime;
+	
+	@Column(name="customer_skills_call_failure_reason")
+	private String customerSkillsCallFailureReason;
+	
+	@Column(name="customer_skills_call_failure_time")
+	private String customerSkillsCallFailureTime;
+	
+	public ScoreCard() {
+	}	
+
+	public String getAccuracyCallFailureReason() {
+		return accuracyCallFailureReason;
+	}
+
+
+
+
+	public void setAccuracyCallFailureReason(String accuracyCallFailureReason) {
+		this.accuracyCallFailureReason = accuracyCallFailureReason;
+	}
+
+
+
+
+	public String getAccuracyCallFailureTime() {
+		return accuracyCallFailureTime;
+	}
+
+
+
+
+	public void setAccuracyCallFailureTime(String accuracyCallFailureTime) {
+		this.accuracyCallFailureTime = accuracyCallFailureTime;
+	}
+
+
+
+
+	public String getCompletenessCallFailureReason() {
+		return completenessCallFailureReason;
+	}
+
+
+
+
+	public void setCompletenessCallFailureReason(String completenessCallFailureReason) {
+		this.completenessCallFailureReason = completenessCallFailureReason;
+	}
+
+
+
+
+	public String getCompletenessCallFailureTime() {
+		return completenessCallFailureTime;
+	}
+
+
+
+
+	public void setCompletenessCallFailureTime(String completenessCallFailureTime) {
+		this.completenessCallFailureTime = completenessCallFailureTime;
+	}
+
+
+
+
+	public String getPrivacyCallFailureReason() {
+		return privacyCallFailureReason;
+	}
+
+
+
+
+	public void setPrivacyCallFailureReason(String privacyCallFailureReason) {
+		this.privacyCallFailureReason = privacyCallFailureReason;
+	}
+
+
+
+
+	public String getPrivacyCallFailureTime() {
+		return privacyCallFailureTime;
+	}
+
+
+
+
+	public void setPrivacyCallFailureTime(String privacyCallFailureTime) {
+		this.privacyCallFailureTime = privacyCallFailureTime;
+	}
+
+
+
+
+	public String getCustomerSkillsCallFailureReason() {
+		return customerSkillsCallFailureReason;
+	}
+
+
+
+
+	public void setCustomerSkillsCallFailureReason(String customerSkillsCallFailureReason) {
+		this.customerSkillsCallFailureReason = customerSkillsCallFailureReason;
+	}
+
+
+
+
+	public String getCustomerSkillsCallFailureTime() {
+		return customerSkillsCallFailureTime;
+	}
+
+
+
+
+	public void setCustomerSkillsCallFailureTime(String customerSkillsCallFailureTime) {
+		this.customerSkillsCallFailureTime = customerSkillsCallFailureTime;
+	}
+
+
+
 
 	public String getCallMonitoringDate() {
 		return callMonitoringDate;
