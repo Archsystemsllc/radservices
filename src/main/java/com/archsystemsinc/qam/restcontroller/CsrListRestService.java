@@ -56,7 +56,7 @@ public class CsrListRestService {
 	}
 	
 	@RequestMapping(value = "/uploadCsrList", method = RequestMethod.POST)
-	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId,@RequestParam("jurisdictionU") String jurisdictionList){
+	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId,@RequestParam("jurisdictionUText") String jurisdictionList){
 		log.debug("--> uploadFileData:");
 		UploadResponse response = new UploadResponse();
 		
@@ -102,6 +102,9 @@ public class CsrListRestService {
 			data = new ArrayList<CsrLists>();
 			CsrLists csrListTemp= new CsrLists();
 			csrListTemp.setFirstName("No CSR's Found");
+			csrListTemp.setMiddleName("");
+			csrListTemp.setLastName("");
+			csrListTemp.setLevel("");
 			data.add(csrListTemp);
 		}		
 		return data;

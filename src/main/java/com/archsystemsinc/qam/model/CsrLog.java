@@ -26,10 +26,12 @@ public class CsrLog {
 	private Long id;
 	private Long userId;
 
-	@JsonSerialize(using=DateSerializer.class)
 	private Date createdDate;
 	private Long complianceStatus;
 	private Long uploadStatus;
+	
+	private Integer macId;
+	private String jurisdiction;
 	
 	
 	@Id
@@ -79,4 +81,21 @@ public class CsrLog {
 		this.uploadStatus = uploadStatus;
 	}
 	
+	@Column(name = "MAC_ID")
+	public Integer getMacId() {
+		return macId;
+	}
+
+	public void setMacId(Integer macId) {
+		this.macId = macId;
+	}
+	
+	@Column(name = "JURISDICTION")
+	public String getJurisdiction() {
+		return jurisdiction;
+	}
+
+	public void setJurisdiction(String jurisdiction) {
+		this.jurisdiction = jurisdiction;
+	}
 }

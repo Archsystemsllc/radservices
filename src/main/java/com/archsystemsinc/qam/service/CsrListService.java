@@ -39,10 +39,6 @@ public class CsrListService {
 	@Autowired
 	private PoiUtils poiUtils;
 	
-	@Autowired
-	private JurisdictionService jurisdictionService;
-
-	
 	public void createCsrList(List<CsrLists> data){
 		csrListRepository.save(data);
 	}
@@ -57,24 +53,24 @@ public class CsrListService {
 	 */
 	public String uploadFileData(MultipartFile uploadedFile, Long userId, String keepCurrentList, Long macId, String jurisdiction) throws FileUploadException,Exception{
 		List<CsrLists> data;
-		CsrLog clog = constructCsrLog(userId);
+		CsrLog clog = constructCsrLog(userId,macId.intValue(),jurisdiction);
 		String validationResult = "";
 		try {
 			Integer yearMonth = CommonUtils.getCurrentYearMonth();
 			if("true".equals(keepCurrentList)) {
-				//List<CsrLists> existingRows = existingCsrListByUserMonthYear(userId,yearMonth-1);
+				
 				List<CsrLists> existingRows = existingCsrListByMacJurisdictionMonthYear(macId,jurisdiction,yearMonth-1);
 				if(existingRows.size() == 0) {
 					validationResult = "For previous month there is no CSR Lists data available!";
 				}else {
 					data = copyCsrLists(existingRows);
-					processCsrLists(userId, data, yearMonth,macId);
+					processCsrLists(userId, data, yearMonth,macId,jurisdiction);
 				}
 			}else {
 				data = poiUtils.parseCsrListFile(uploadedFile,userId,macId);
 				validationResult = validateCsrLists(data);
 				if (validationResult.equalsIgnoreCase("ValidationSuccessful")) {
-					processCsrLists(userId, data, yearMonth,macId);
+					processCsrLists(userId, data, yearMonth,macId,jurisdiction);
 					clog.setUploadStatus(1l);
 					validationResult ="CSR List Uploaded Successfully";
 				}				
@@ -147,7 +143,7 @@ public class CsrListService {
 		if(!jurisdictionValidation.equalsIgnoreCase("Missing Value/s in Jurisdiction at Row/s:")) {
 			validationResult += jurisdictionValidation;
 		}
-		if(!programValidation.equalsIgnoreCase("Missing Value in Program at Row/s:")) {
+		if(!programValidation.equalsIgnoreCase("Missing Value/s in Program at Row/s:")) {
 			validationResult += programValidation;
 		}
 		
@@ -162,10 +158,10 @@ public class CsrListService {
 		return validationResult;
 	}
 
-	private void processCsrLists(Long userId, List<CsrLists> data, Integer yearMonth,Long macId) {
-		List<CsrLists> existingRows1 = existingCsrListByMacMonthYear(macId,yearMonth);
+	private void processCsrLists(Long userId, List<CsrLists> data, Integer yearMonth,Long macId, String jurisdiction) {
+		List<CsrLists> existingRows1 = existingCsrListByMacJurisdictionMonthYear(macId, jurisdiction, yearMonth);
 		if(existingRows1.size() > 0) {
-			int count = csrListRepository.markStatusDeletedForAdmin(0l, macId, yearMonth, new Date());
+			int count = csrListRepository.markStatusDeletedForAdmin(0l, macId, yearMonth, new Date(), jurisdiction);
 			log.debug("updated count:"+count);
 		}
 		createCsrList(data);
@@ -196,12 +192,14 @@ public class CsrListService {
 		return data;
 	}
 
-	private CsrLog constructCsrLog(Long userId) {
+	private CsrLog constructCsrLog(Long userId, Integer macId, String jurisdiction) {
 		CsrLog clog = new CsrLog();
 		clog.setComplianceStatus(0l);
 		clog.setUploadStatus(0l);
 		clog.setUserId(userId);
 		clog.setCreatedDate(new Date());
+		clog.setMacId(macId);
+		clog.setJurisdiction(jurisdiction);
 		return clog;
 	}
 	
@@ -210,9 +208,9 @@ public class CsrListService {
 		return csrListRepository.existingCsrListByUserMonthYear(userId, yearMonth);
 	}
 	
-	public List<CsrLists> existingCsrListByMacMonthYear(Long macId,Integer yearMonth){
+	public List<CsrLists> existingCsrListByMacMonthYear(Long macId,String jurisdiction,Integer yearMonth){
 		log.debug("existingCsrListByMacMonthYear::"+macId+","+yearMonth);
-		return csrListRepository.existingCsrListByMacMonthYear(macId, yearMonth);
+		return csrListRepository.existingCsrListByMacJurisdictionMonthYear(macId, jurisdiction, yearMonth);
 	}
 	
 	public List<CsrLists> existingCsrListByMacJurisdictionMonthYear(Long macId, String jurisdiction,Integer yearMonth){
@@ -261,7 +259,7 @@ public class CsrListService {
 			
 			for(String jurisdictionString: jurisdictionStringList) {
 				jurisdictionString=jurisdictionString.substring(1,jurisdictionString.length()-1);
-				if(jurisdictionString.equalsIgnoreCase("ALL")) {
+				if(jurisdictionString.equalsIgnoreCase("Select ALL")) {
 					jurisdictionAllFlag = true;
 					break;
 				} else {
@@ -325,7 +323,7 @@ public class CsrListService {
 			
 			for(String jurisdictionString: jurisdictionStringList) {
 				jurisdictionString=jurisdictionString.substring(1,jurisdictionString.length()-1);
-				if(jurisdictionString.equalsIgnoreCase("ALL")) {
+				if(jurisdictionString.equalsIgnoreCase("Select ALL")) {
 					jurisdictionAllFlag = true;
 					break;
 				} else {

@@ -13,7 +13,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.archsystemsinc.qam.model.CsrLog;
+import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.ScoreCard;
+import com.archsystemsinc.qam.repository.CsrLogRepository;
+import com.archsystemsinc.qam.repository.RebuttalRepository;
 import com.archsystemsinc.qam.repository.ScoreCardRepository;
 
 /**
@@ -27,11 +31,14 @@ public class ReportsService {
 	@Autowired
 	private ScoreCardRepository scoreCardRepository;	
 	
-	public List<ScoreCard> findAll(){
-		return scoreCardRepository.findAll();
-	}	
+	@Autowired
+	private CsrLogRepository csrLogRepository;
 	
-	public List<ScoreCard> retrieveMacJurisReport(String macId, String jurisId, Date fromDate, Date toDate, String scoreCardType, String callResult){
+	
+	@Autowired
+	private RebuttalRepository rebuttalRepository;
+	
+	public List<ScoreCard> retrieveMacJurisScorecardReport(String macId, String jurisId, Date fromDate, Date toDate, String scoreCardType, String callResult){
 		List<ScoreCard> reportResults = null;
 		List<ScoreCard> finalResultsList = null;
 		
@@ -90,5 +97,37 @@ public class ReportsService {
 		}
 		
 		return finalResultsList;
+	}	
+	
+	public List<CsrLog> retrieveComplianceReport(String macId, String jurisdiction, Date fromDate, Date toDate){
+		List<CsrLog> reportResults = null;
+		//List<CsrLog> finalResultsList = null;
+		
+		if(macId.equalsIgnoreCase("ALL") && jurisdiction.equalsIgnoreCase("ALL")) {
+			reportResults = csrLogRepository.complianceReport_AllMacAllJuris(fromDate, toDate);	
+		} else if(macId.equalsIgnoreCase("ALL") ) {
+			reportResults = csrLogRepository.complianceReport_AllMac(jurisdiction, fromDate, toDate);	
+		} else if(jurisdiction.equalsIgnoreCase("ALL")) {
+			reportResults = csrLogRepository.complianceReport_AllJuris(Integer.valueOf(macId), fromDate, toDate);	
+		} else {
+			reportResults = csrLogRepository.complianceReport(Integer.valueOf(macId), jurisdiction, fromDate, toDate);			
+		}
+		return reportResults;
+	}	
+	
+	public List<Rebuttal> retrieveRebuttalReportData(String macId, String jurisdiction, Date fromDate, Date toDate){
+		List<Rebuttal> reportResults = null;
+		//List<CsrLog> finalResultsList = null;
+		
+		if(macId.equalsIgnoreCase("ALL") && jurisdiction.equalsIgnoreCase("ALL")) {
+			reportResults = rebuttalRepository.rebuttalReport_AllMacAllJuris(fromDate, toDate);	
+		} else if(macId.equalsIgnoreCase("ALL") ) {
+			reportResults = rebuttalRepository.rebuttalReport_AllMac(Integer.valueOf(jurisdiction), fromDate, toDate);	
+		} else if(jurisdiction.equalsIgnoreCase("ALL")) {
+			reportResults = rebuttalRepository.rebuttalReport_AllJuris(Integer.valueOf(macId), fromDate, toDate);	
+		} else {
+			reportResults = rebuttalRepository.rebuttalReport(Integer.valueOf(macId), Integer.valueOf(jurisdiction), fromDate, toDate);			
+		}
+		return reportResults;
 	}	
 }

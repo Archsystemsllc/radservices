@@ -30,8 +30,27 @@ public class ReportsForm {
     
     private String callResult;    
     
+    private String macName;
+    
+    private String jurisdictionName;
 
-   	public String getCallResult() {
+   	public String getMacName() {
+		return macName;
+	}
+
+	public void setMacName(String macName) {
+		this.macName = macName;
+	}
+
+	public String getJurisdictionName() {
+		return jurisdictionName;
+	}
+
+	public void setJurisdictionName(String jurisdictionName) {
+		this.jurisdictionName = jurisdictionName;
+	}
+
+	public String getCallResult() {
    		return callResult;
    	}
 

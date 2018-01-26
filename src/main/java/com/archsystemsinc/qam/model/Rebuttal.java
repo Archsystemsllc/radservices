@@ -92,11 +92,44 @@ public class Rebuttal implements Serializable {
 	
 	@Column(name="mac_call_ref_number")
 	private String macCallReferenceNumber;
+	
+	@Column(name="mac_id")
+	private Integer macId;
+	
+	@Column(name="juris_id")
+	private Integer jurisId;
 
 	public Rebuttal() {
 	}
 	
-	
+	public Integer getMacId() {
+		return macId;
+	}
+
+
+
+
+	public void setMacId(Integer macId) {
+		this.macId = macId;
+	}
+
+
+
+
+	public Integer getJurisId() {
+		return jurisId;
+	}
+
+
+
+
+	public void setJurisId(Integer jurisId) {
+		this.jurisId = jurisId;
+	}
+
+
+
+
 	public String getMacCallReferenceNumber() {
 		return macCallReferenceNumber;
 	}

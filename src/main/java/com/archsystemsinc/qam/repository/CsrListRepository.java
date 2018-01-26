@@ -64,8 +64,8 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 	@Query("SELECT c FROM CsrLists c WHERE c.macLookupId = :macLookupId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
     public List<CsrLists> existingCsrListByUserMonthYear(@Param("macLookupId") Long macLookupId,@Param("monthYear") Integer monthYear);
 	
-	@Query("SELECT c FROM CsrLists c WHERE c.userId = :userId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
-    public List<CsrLists> existingCsrListByMacMonthYear(@Param("userId") Long userId,@Param("monthYear") Integer monthYear);
+	@Query("SELECT c FROM CsrLists c WHERE c.macLookupId = :macLookupId and c.jurisdiction=:jurisdiction and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
+    public List<CsrLists> existingCsrListByMacMonthYear(@Param("macLookupId") Long macLookupId,@Param("monthYear") Integer monthYear,@Param("jurisdiction") String jurisdiction);
 	
 	@Query("SELECT c FROM CsrLists c WHERE c.macLookupId = :macLookupId and c.jurisdiction = :jurisdiction  and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear and c.recordStatus = 1")
     public List<CsrLists> existingCsrListByMacJurisdictionMonthYear(@Param("macLookupId") Long macLookupId,@Param("jurisdiction") String jurisdiction,@Param("monthYear") Integer monthYear);
@@ -79,6 +79,6 @@ public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
 	int markStatusDeleted(@Param("status") Long status, @Param("userId") Long userId,@Param("monthYear") Integer monthYear,@Param("updatedDate") Date updatedDate);
 	
 	@Modifying
-	@Query("update CsrLists c set c.recordStatus = :status, c.updateddDate = :updatedDate where c.macLookupId = :macLookupId and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear")
-	int markStatusDeletedForAdmin(@Param("status") Long status, @Param("macLookupId") Long macLookupId,@Param("monthYear") Integer monthYear,@Param("updatedDate") Date updatedDate);
+	@Query("update CsrLists c set c.recordStatus = :status, c.updateddDate = :updatedDate where c.macLookupId = :macLookupId and c.jurisdiction=:jurisdiction and EXTRACT(YEAR_MONTH FROM c.createdDate) = :monthYear")
+	int markStatusDeletedForAdmin(@Param("status") Long status, @Param("macLookupId") Long macLookupId,@Param("monthYear") Integer monthYear,@Param("updatedDate") Date updatedDate,@Param("jurisdiction") String jurisdiction);
 }

@@ -55,9 +55,16 @@ public class CommonUtils {
 		cal.setTime(new Date());
 		int month = cal.get(Calendar.MONTH);
 		month = month+1;
+		String monthString = "";
+		if(month<10) {
+			monthString ="0"+month;
+		} else {
+			monthString = String.valueOf(month);
+		}
+		
 		int year = cal.get(Calendar.YEAR);
 		log.debug("isUploadCompliance-year: "+year);
-		String temp = year+""+month;
+		String temp = year+""+monthString;
 		log.debug("isUploadCompliance-year: "+temp);
 		return new Integer(temp);
 		

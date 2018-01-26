@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.archsystemsinc.qam.model.CsrLog;
+import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.ReportsForm;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.service.ReportsService;
@@ -40,7 +42,7 @@ public class ReportsRestService {
 		HashMap <Integer, ScoreCard> resultsMap = new HashMap<Integer, ScoreCard> ();
 		try {
 			log.debug("--> getMacJurisReport:");
-			data = reportsService.retrieveMacJurisReport(reportsForm.getMacId(), reportsForm.getJurisId(), 
+			data = reportsService.retrieveMacJurisScorecardReport(reportsForm.getMacId(), reportsForm.getJurisId(), 
 					reportsForm.getFromDate(), reportsForm.getToDate(), reportsForm.getScoreCardType(), reportsForm.getCallResult());
 			
 			for(ScoreCard scoreCard: data) {
@@ -54,5 +56,43 @@ public class ReportsRestService {
 		return resultsMap;
 	}		
 	
+	@RequestMapping(value = "/getComplianceReport", method = RequestMethod.POST)
+	public @ResponseBody HashMap<Long, CsrLog> getComplianceReportData(@RequestBody  ReportsForm reportsForm){
+		List<CsrLog> data=null;
+		HashMap <Long, CsrLog> resultsMap = new HashMap<Long, CsrLog> ();
+		try {
+			log.debug("--> getComplianceReportData:");
+			data = reportsService.retrieveComplianceReport(reportsForm.getMacId(), reportsForm.getJurisdictionName(), 
+					reportsForm.getFromDate(), reportsForm.getToDate());
+			
+			for(CsrLog csrLog: data) {
+				resultsMap.put(csrLog.getId(), csrLog);
+			}
+			log.debug("<-- getComplianceReportData");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultsMap;
+	}	
 	
+	@RequestMapping(value = "/getRebuttalReport", method = RequestMethod.POST)
+	public @ResponseBody HashMap<Integer, Rebuttal> getRebuttalReportData(@RequestBody  ReportsForm reportsForm){
+		List<Rebuttal> data=null;
+		HashMap <Integer, Rebuttal> resultsMap = new HashMap<Integer, Rebuttal> ();
+		try {
+			log.debug("--> getRebuttalReportData:");
+			data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), 
+					reportsForm.getFromDate(), reportsForm.getToDate());
+			
+			for(Rebuttal rebuttal: data) {
+				resultsMap.put(rebuttal.getId(), rebuttal);
+			}
+			log.debug("<-- getRebuttalReportData");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultsMap;
+	}
 }
