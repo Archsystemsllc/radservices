@@ -1,13 +1,13 @@
-package com.archsystemsinc.qam.model;
+/*package com.archsystemsinc.qam.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
 
-/**
+*//**
  * The persistent class for the rebuttal_qm_log database table.
  * 
- */
+ *//*
 @Entity
 @Table(name="rebuttal_qm_log")
 @NamedQuery(name="RebuttalQmLog.findAll", query="SELECT r FROM RebuttalQmLog r")
@@ -130,4 +130,4 @@ public class RebuttalQmLog implements Serializable {
 		this.rebuttal = rebuttal;
 	}
 
-}
+}*/

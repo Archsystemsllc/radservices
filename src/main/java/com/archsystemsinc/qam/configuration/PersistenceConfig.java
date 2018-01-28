@@ -99,7 +99,6 @@ public class PersistenceConfig {
        public PlatformTransactionManager transactionManager() {
            final JpaTransactionManager transactionManager = new JpaTransactionManager();
            transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-
            return transactionManager;
        }
 

@@ -69,9 +69,7 @@ public class Rebuttal implements Serializable {
 	@OneToOne(mappedBy="rebuttal")
 	private RebuttalQmLog rebuttalQmLog;
 	*/
-	@Column(name="mac_pcc_name")
-	private String macPCCName;
-	
+		
 	@Column(name="csr_full_name")
 	private String csrFullName;
 	
@@ -98,16 +96,125 @@ public class Rebuttal implements Serializable {
 	
 	@Column(name="juris_id")
 	private Integer jurisId;
-
+	
+	@Column(name="program_id")
+	private Integer programId;
+	
+	@Column(name="rebuttal_status")
+	private String rebuttalStatus;
+	
+	@Column(name="rebuttal_result")
+	private String rebuttalResult;
+	
+	@Column(name="accuracy_call_failure_reason")
+	private String accuracyCallFailureReason;
+	
+	@Column(name="completeness_call_failure_reason")
+	private String completenessCallFailureReason;
+	
+	@Column(name="privacy_call_failure_reason")
+	private String privacyCallFailureReason;
+	
+	@Column(name="customer_skills_call_failure_reason")
+	private String customerSkillsCallFailureReason;
+	
+	@Column(name="pcc_location_id")
+	private Integer pccLocationId;
+	
 	public Rebuttal() {
 	}
 	
-	public Integer getMacId() {
-		return macId;
+	
+	public Integer getPccLocationId() {
+		return pccLocationId;
+	}
+
+
+	public void setPccLocationId(Integer pccLocationId) {
+		this.pccLocationId = pccLocationId;
+	}
+
+
+	public String getRebuttalResult() {
+		return rebuttalResult;
+	}
+
+	public void setRebuttalResult(String rebuttalResult) {
+		this.rebuttalResult = rebuttalResult;
+	}
+
+	public String getAccuracyCallFailureReason() {
+		return accuracyCallFailureReason;
+	}
+
+
+	public void setAccuracyCallFailureReason(String accuracyCallFailureReason) {
+		this.accuracyCallFailureReason = accuracyCallFailureReason;
+	}
+
+
+	public String getCompletenessCallFailureReason() {
+		return completenessCallFailureReason;
+	}
+
+	public void setCompletenessCallFailureReason(String completenessCallFailureReason) {
+		this.completenessCallFailureReason = completenessCallFailureReason;
+	}
+
+
+	public String getPrivacyCallFailureReason() {
+		return privacyCallFailureReason;
+	}
+
+
+	public void setPrivacyCallFailureReason(String privacyCallFailureReason) {
+		this.privacyCallFailureReason = privacyCallFailureReason;
 	}
 
 
 
+
+
+	public String getCustomerSkillsCallFailureReason() {
+		return customerSkillsCallFailureReason;
+	}
+
+
+
+
+
+	public void setCustomerSkillsCallFailureReason(String customerSkillsCallFailureReason) {
+		this.customerSkillsCallFailureReason = customerSkillsCallFailureReason;
+	}
+
+
+
+
+
+	public Integer getProgramId() {
+		return programId;
+	}
+
+
+
+	public void setProgramId(Integer programId) {
+		this.programId = programId;
+	}
+
+
+
+	public Integer getMacId() {
+		return macId;
+	}
+	
+
+	public String getRebuttalStatus() {
+		return rebuttalStatus;
+	}
+
+	public void setRebuttalStatus(String rebuttalStatus) {
+		this.rebuttalStatus = rebuttalStatus;
+	}
 
 	public void setMacId(Integer macId) {
 		this.macId = macId;
@@ -139,20 +246,6 @@ public class Rebuttal implements Serializable {
 
 	public void setMacCallReferenceNumber(String macCallReferenceNumber) {
 		this.macCallReferenceNumber = macCallReferenceNumber;
-	}
-
-
-
-
-	public String getMacPCCName() {
-		return macPCCName;
-	}
-
-
-
-
-	public void setMacPCCName(String macPCCName) {
-		this.macPCCName = macPCCName;
 	}
 
 
