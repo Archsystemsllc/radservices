@@ -62,7 +62,7 @@ public class ReportsRestService {
 		HashMap <Long, CsrLog> resultsMap = new HashMap<Long, CsrLog> ();
 		try {
 			log.debug("--> getComplianceReportData:");
-			data = reportsService.retrieveComplianceReport(reportsForm.getMacId(), reportsForm.getJurisdictionName(), 
+			data = reportsService.retrieveComplianceReport(reportsForm.getMacId(), reportsForm.getJurisdictionName(), reportsForm.getComplianceReportType(),
 					reportsForm.getFromDate(), reportsForm.getToDate());
 			
 			for(CsrLog csrLog: data) {
@@ -82,7 +82,7 @@ public class ReportsRestService {
 		HashMap <Integer, Rebuttal> resultsMap = new HashMap<Integer, Rebuttal> ();
 		try {
 			log.debug("--> getRebuttalReportData:");
-			data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), 
+			data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getCallCategoryType(), reportsForm.getRebuttalStatus(),
 					reportsForm.getFromDate(), reportsForm.getToDate());
 			
 			for(Rebuttal rebuttal: data) {

@@ -43,13 +43,19 @@ public class ReportsService {
 		List<ScoreCard> finalResultsList = null;
 		
 		if(macId.equalsIgnoreCase("ALL") && jurisId.equalsIgnoreCase("ALL") && programId.equalsIgnoreCase("ALL")) {
-			reportResults = scoreCardRepository.macJuriReport_AllMacAllJuris(fromDate, toDate);	
-		} else if(macId.equalsIgnoreCase("ALL") ) {
-			reportResults = scoreCardRepository.macJuriReport_AllMac(Integer.valueOf(jurisId), fromDate, toDate);	
-		} else if(jurisId.equalsIgnoreCase("ALL")) {
-			reportResults = scoreCardRepository.macJuriReport_AllJuris(Integer.valueOf(macId), fromDate, toDate);	
-		} else {
-			reportResults = scoreCardRepository.macJurisReport(Integer.valueOf(macId), Integer.valueOf(jurisId), fromDate, toDate);			
+			reportResults = scoreCardRepository.scoreCardReport_AllMacAllJurisAllProgram(fromDate, toDate);	
+		} else if(macId.equalsIgnoreCase("ALL") && jurisId.equalsIgnoreCase("ALL")&& !programId.equalsIgnoreCase("")) {
+			reportResults = scoreCardRepository.scoreCardReport_AllMacAllJuriProgramValue(Integer.valueOf(programId),fromDate, toDate);	
+		} else if(macId.equalsIgnoreCase("ALL") && !jurisId.equalsIgnoreCase("")&& programId.equalsIgnoreCase("ALL") ) {
+			reportResults = scoreCardRepository.scoreCardReport_AllMacValueJuriAllProgram(Integer.valueOf(jurisId), fromDate, toDate);	
+		} else if(macId.equalsIgnoreCase("ALL") && !jurisId.equalsIgnoreCase("") && !programId.equalsIgnoreCase("") ) {
+			reportResults = scoreCardRepository.scoreCardReport_AllMacValueJuriValueProgram(Integer.valueOf(programId),Integer.valueOf(jurisId), fromDate, toDate);	
+		} else if(!macId.equalsIgnoreCase("") && jurisId.equalsIgnoreCase("ALL")&& programId.equalsIgnoreCase("ALL") ) {
+			reportResults = scoreCardRepository.scoreCardReport_ValueMacAllJuriAllProgram(Integer.valueOf(macId), fromDate, toDate);	
+		} else if(!macId.equalsIgnoreCase("") && !jurisId.equalsIgnoreCase("")&& programId.equalsIgnoreCase("ALL") ) {
+			reportResults = scoreCardRepository.scoreCardReport_ValueMacValueJuriAllProgram(Integer.valueOf(macId),Integer.valueOf(jurisId), fromDate, toDate);	
+		}else if(!macId.equalsIgnoreCase("") && !jurisId.equalsIgnoreCase("") && !programId.equalsIgnoreCase("") ){
+			reportResults = scoreCardRepository.scoreCardReport(Integer.valueOf(macId), Integer.valueOf(jurisId), Integer.valueOf(programId),fromDate, toDate);			
 		}
 		
 		if(scoreCardType.equalsIgnoreCase("")) {
@@ -99,9 +105,9 @@ public class ReportsService {
 		return finalResultsList;
 	}	
 	
-	public List<CsrLog> retrieveComplianceReport(String macId, String jurisdiction, Date fromDate, Date toDate){
+	public List<CsrLog> retrieveComplianceReport(String macId, String jurisdiction, String complianceReportType, Date fromDate, Date toDate){
 		List<CsrLog> reportResults = null;
-		//List<CsrLog> finalResultsList = null;
+		List<CsrLog> finalResultsList = null;
 		
 		if(macId.equalsIgnoreCase("ALL") && jurisdiction.equalsIgnoreCase("ALL")) {
 			reportResults = csrLogRepository.complianceReport_AllMacAllJuris(fromDate, toDate);	
@@ -112,12 +118,32 @@ public class ReportsService {
 		} else {
 			reportResults = csrLogRepository.complianceReport(Integer.valueOf(macId), jurisdiction, fromDate, toDate);			
 		}
-		return reportResults;
+		
+		if(complianceReportType.equalsIgnoreCase("") || complianceReportType.equalsIgnoreCase("ALL")) {
+			finalResultsList = reportResults;
+		} else if (complianceReportType.equalsIgnoreCase("Compliant")) {
+			finalResultsList = new ArrayList<CsrLog>();
+			for(CsrLog csrLogTemp:reportResults) {
+				if (csrLogTemp.getComplianceStatus() == 1) {
+					finalResultsList.add(csrLogTemp);
+				}
+			}
+			
+		}  else if (complianceReportType.equalsIgnoreCase("Non-Compliant")) {
+			finalResultsList = new ArrayList<CsrLog>();
+			for(CsrLog csrLogTemp:reportResults) {
+				if (csrLogTemp.getComplianceStatus() == 0) {
+					finalResultsList.add(csrLogTemp);
+				}
+			}
+			
+		} 
+		return finalResultsList;
 	}	
 	
-	public List<Rebuttal> retrieveRebuttalReportData(String macId, String jurisdiction, Date fromDate, Date toDate){
+	public List<Rebuttal> retrieveRebuttalReportData(String macId, String jurisdiction, String callCategoryType, String rebuttalStatus, Date fromDate, Date toDate){
 		List<Rebuttal> reportResults = null;
-		//List<CsrLog> finalResultsList = null;
+		List<Rebuttal> finalResultsList = null;
 		
 		if(macId.equalsIgnoreCase("ALL") && jurisdiction.equalsIgnoreCase("ALL")) {
 			reportResults = rebuttalRepository.rebuttalReport_AllMacAllJuris(fromDate, toDate);	
@@ -128,6 +154,34 @@ public class ReportsService {
 		} else {
 			reportResults = rebuttalRepository.rebuttalReport(Integer.valueOf(macId), Integer.valueOf(jurisdiction), fromDate, toDate);			
 		}
-		return reportResults;
+		
+		if(callCategoryType.equalsIgnoreCase("ALL") && rebuttalStatus.equalsIgnoreCase("ALL")) {
+			finalResultsList = reportResults;
+		} else if(callCategoryType.equalsIgnoreCase("ALL")) {
+			finalResultsList = new ArrayList<Rebuttal>();
+			for(Rebuttal rebuttalTemp:reportResults) {
+				if (rebuttalTemp.getRebuttalStatus().equalsIgnoreCase(rebuttalStatus)) {
+					finalResultsList.add(rebuttalTemp);
+				}
+			}
+			
+		}  else if (rebuttalStatus.equalsIgnoreCase("ALL")) {
+			finalResultsList = new ArrayList<Rebuttal>();
+			for(Rebuttal rebuttalTemp:reportResults) {
+				if (rebuttalTemp.getCallCategory().equalsIgnoreCase(callCategoryType)) {
+					finalResultsList.add(rebuttalTemp);
+				}
+			}
+			
+		} else {
+			finalResultsList = new ArrayList<Rebuttal>();
+			for(Rebuttal rebuttalTemp:reportResults) {
+				if (rebuttalTemp.getCallCategory().equalsIgnoreCase(callCategoryType) && rebuttalTemp.getRebuttalStatus().equalsIgnoreCase(rebuttalStatus)) {
+					finalResultsList.add(rebuttalTemp);
+				}
+			}
+		}
+		
+		return finalResultsList;
 	}	
 }

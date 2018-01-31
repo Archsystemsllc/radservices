@@ -19,17 +19,26 @@ public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long>, Jpa
 	
 	//AllScoreCardReport
 	
-	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and s.jurId = :jurisId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
-    public List<ScoreCard> macJurisReport(@Param("macId") Integer macId,@Param("jurisId") Integer jurisId,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
-	
 	@Query("SELECT s FROM ScoreCard s WHERE STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
-    public List<ScoreCard> macJuriReport_AllMacAllJuris(@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+    public List<ScoreCard> scoreCardReport_AllMacAllJurisAllProgram(@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+	
+	@Query("SELECT s FROM ScoreCard s WHERE s.programId = :programId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+    public List<ScoreCard> scoreCardReport_AllMacAllJuriProgramValue(@Param("programId") Integer programId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+	
+	@Query("SELECT s FROM ScoreCard s WHERE s.jurId = :jurId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+    public List<ScoreCard> scoreCardReport_AllMacValueJuriAllProgram(@Param("jurId") Integer jurId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+	
+	@Query("SELECT s FROM ScoreCard s WHERE s.jurId = :jurId and s.programId = :programId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+    public List<ScoreCard> scoreCardReport_AllMacValueJuriValueProgram(@Param("programId") Integer programId,@Param("jurId") Integer jurId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 	
 	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
-    public List<ScoreCard> macJuriReport_AllJuris(@Param("macId") Integer macId,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+    public List<ScoreCard> scoreCardReport_ValueMacAllJuriAllProgram(@Param("macId") Integer macId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 	
-	@Query("SELECT s FROM ScoreCard s WHERE s.jurId = :jurisId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
-    public List<ScoreCard> macJuriReport_AllMac(@Param("jurisId") Integer jurisId,@Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+	@Query("SELECT s FROM ScoreCard s WHERE s.jurId = :jurId and s.macId = :macId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+    public List<ScoreCard> scoreCardReport_ValueMacValueJuriAllProgram(@Param("macId") Integer macId,@Param("jurId") Integer jurId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
+
 	
+	@Query("SELECT s FROM ScoreCard s WHERE s.macId = :macId and s.jurId = :jurId and  s.programId = :programId and STR_TO_DATE(s.qamEnddateTime,'%m/%d/%Y %h:%i:%s %p') between :fromDate and :toDate ")
+    public List<ScoreCard> scoreCardReport(@Param("macId") Integer macId,@Param("jurId") Integer jurId,@Param("programId") Integer programId, @Param("fromDate") Date fromDate,@Param("toDate") Date toDate);
 	
 }

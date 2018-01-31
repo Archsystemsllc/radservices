@@ -33,8 +33,40 @@ public class ReportsForm {
     private String macName;
     
     private String jurisdictionName;
+    
+    private String complianceReportType;
+    
+    private String callCategoryType;
+    
+    private String rebuttalStatus;    
+    
+    
 
-   	public String getMacName() {
+   	public String getComplianceReportType() {
+		return complianceReportType;
+	}
+
+	public void setComplianceReportType(String complianceReportType) {
+		this.complianceReportType = complianceReportType;
+	}
+
+	public String getCallCategoryType() {
+		return callCategoryType;
+	}
+
+	public void setCallCategoryType(String callCategoryType) {
+		this.callCategoryType = callCategoryType;
+	}
+
+	public String getRebuttalStatus() {
+		return rebuttalStatus;
+	}
+
+	public void setRebuttalStatus(String rebuttalStatus) {
+		this.rebuttalStatus = rebuttalStatus;
+	}
+
+	public String getMacName() {
 		return macName;
 	}
 

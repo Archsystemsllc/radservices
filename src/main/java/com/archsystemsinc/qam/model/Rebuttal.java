@@ -121,10 +121,27 @@ public class Rebuttal implements Serializable {
 	@Column(name="pcc_location_id")
 	private Integer pccLocationId;
 	
+	@Column(name="rebuttal_call_category")
+	private String rebuttalCallCategory;
+	
 	public Rebuttal() {
 	}
 	
 	
+	public String getRebuttalCallCategory() {
+		return rebuttalCallCategory;
+	}
+
+
+
+
+	public void setRebuttalCallCategory(String rebuttalCallCategory) {
+		this.rebuttalCallCategory = rebuttalCallCategory;
+	}
+
+
+
+
 	public Integer getPccLocationId() {
 		return pccLocationId;
 	}
