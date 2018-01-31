@@ -38,11 +38,11 @@ public class ReportsService {
 	@Autowired
 	private RebuttalRepository rebuttalRepository;
 	
-	public List<ScoreCard> retrieveMacJurisScorecardReport(String macId, String jurisId, Date fromDate, Date toDate, String scoreCardType, String callResult){
+	public List<ScoreCard> retrieveMacJurisScorecardReport(String macId, String jurisId, String programId, Date fromDate, Date toDate, String scoreCardType, String callResult){
 		List<ScoreCard> reportResults = null;
 		List<ScoreCard> finalResultsList = null;
 		
-		if(macId.equalsIgnoreCase("ALL") && jurisId.equalsIgnoreCase("ALL")) {
+		if(macId.equalsIgnoreCase("ALL") && jurisId.equalsIgnoreCase("ALL") && programId.equalsIgnoreCase("ALL")) {
 			reportResults = scoreCardRepository.macJuriReport_AllMacAllJuris(fromDate, toDate);	
 		} else if(macId.equalsIgnoreCase("ALL") ) {
 			reportResults = scoreCardRepository.macJuriReport_AllMac(Integer.valueOf(jurisId), fromDate, toDate);	

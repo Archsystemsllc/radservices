@@ -42,7 +42,7 @@ public class ReportsRestService {
 		HashMap <Integer, ScoreCard> resultsMap = new HashMap<Integer, ScoreCard> ();
 		try {
 			log.debug("--> getMacJurisReport:");
-			data = reportsService.retrieveMacJurisScorecardReport(reportsForm.getMacId(), reportsForm.getJurisId(), 
+			data = reportsService.retrieveMacJurisScorecardReport(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getProgramId(),
 					reportsForm.getFromDate(), reportsForm.getToDate(), reportsForm.getScoreCardType(), reportsForm.getCallResult());
 			
 			for(ScoreCard scoreCard: data) {

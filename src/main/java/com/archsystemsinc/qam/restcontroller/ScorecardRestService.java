@@ -10,15 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.service.ScoreCardService;
-import com.archsystemsinc.qam.utils.UploadResponse;
 	
 	/**
  * @author Abdul Nissar Shaik
@@ -33,13 +29,27 @@ public class ScorecardRestService {
 	private ScoreCardService scoreCardService;
 	
 	
-	@RequestMapping(value = "/scorecardlist", method = RequestMethod.GET)
-	public List<ScoreCard> getScoreCardList(){
+	@RequestMapping(value = "/findAllScorecard", method = RequestMethod.GET)
+	public List<ScoreCard> findAllScorecard(){
 		List<ScoreCard> data=null;
 		try {
-			log.debug("--> getScoreCardList:");
+			log.debug("--> findAllScorecard:");
 			data = scoreCardService.findAll();
-			log.debug("<-- getScoreCardList");
+			log.debug("<-- findAllScorecard");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}		
+	
+	@RequestMapping(value = "/searchScoreCard", method = RequestMethod.POST)
+	public List<ScoreCard> searchScoreCard(@RequestBody  ScoreCard scoreCard){
+		List<ScoreCard> data=null;
+		try {
+			log.debug("--> searchScoreCard:");
+			data = scoreCardService.search(scoreCard);
+			log.debug("<-- searchScoreCard");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

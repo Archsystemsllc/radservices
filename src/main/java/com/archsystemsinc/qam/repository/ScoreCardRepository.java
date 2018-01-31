@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -11,7 +12,7 @@ import com.archsystemsinc.qam.model.ScoreCard;
 
 /**
  */
-public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long>{
+public interface ScoreCardRepository extends JpaRepository<ScoreCard, Long>, JpaSpecificationExecutor<ScoreCard> {
 	
 	@Query("SELECT s FROM ScoreCard s WHERE s.callResult= :callResult ")
     public List<ScoreCard> findAllByFailedReason(@Param("callResult") String failureResult);

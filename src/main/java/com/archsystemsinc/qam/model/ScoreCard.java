@@ -136,8 +136,35 @@ public class ScoreCard implements Serializable {
 	@Column(name="customer_skills_call_failure_time")
 	private String customerSkillsCallFailureTime;
 	
+	@Transient
+	private Date filterFromDate;
+	
+	@Transient
+	private Date filterToDate;
+	
 	public ScoreCard() {
-	}	
+	}
+	
+
+	public Date getFilterFromDate() {
+		return filterFromDate;
+	}
+
+
+	public void setFilterFromDate(Date filterFromDate) {
+		this.filterFromDate = filterFromDate;
+	}
+
+
+	public Date getFilterToDate() {
+		return filterToDate;
+	}
+
+
+	public void setFilterToDate(Date filterToDate) {
+		this.filterToDate = filterToDate;
+	}
+
 
 	public String getAccuracyCallFailureReason() {
 		return accuracyCallFailureReason;
