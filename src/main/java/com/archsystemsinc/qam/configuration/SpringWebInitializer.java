@@ -1,14 +1,47 @@
 package com.archsystemsinc.qam.configuration;
 
+import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+@Configuration
+@EnableWebMvc
 public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
  
-    @Override
+	@Bean
+   	public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+		//Development Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active",	"local");
+    	
+    	//Test Environment
+    	String activeProfile = System.getProperty("spring.profiles.active", "test");
+    	
+    	//UAT Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active", "uat");
+    	
+    	//Prod Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active", "prod");
+    	
+   		String propertiesFilename = "application-" + activeProfile	+ ".properties";
+   		System.out.println("propertiesFilename:" + propertiesFilename);
+   		PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+   		configurer.setLocation(new ClassPathResource(propertiesFilename));
+
+   		return configurer;
+   	}
+	
+	@Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] { SpringConfiguration.class, CustomWebSecurityConfigurerAdapter.class };
     }
@@ -28,15 +61,19 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     	Filter [] singleton = { new CORSFilter() };
     	return singleton;
 	}
+    
+    @Value("${rad.uploadfile.server.location}")
+    public static String SERVER_UPLOAD_FILE_LOCATION;
  
-    private static final String LOCATION = "/usr/share/tomcat8/work/Catalina/localhost/ROOT/"; 
+    //private static final String LOCATION = "/usr/share/tomcat8/work/Catalina/localhost/ROOT/"; 
    
-    //private static final String LOCATION = "C:/temp/";
+    private static final String LOCATION = SERVER_UPLOAD_FILE_LOCATION;
     private static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.
                                                        // Beyond that size spring will throw exception.
     private static final long MAX_REQUEST_SIZE = 20971520; // 20MB : Total request size containing Multi part.
     private static final int FILE_SIZE_THRESHOLD = 0; // Size threshold after which files will be written to disk
-    private MultipartConfigElement getMultipartConfigElement() {
+    
+    /*private MultipartConfigElement getMultipartConfigElement() {
 
     MultipartConfigElement multipartConfigElement = new MultipartConfigElement(
                 LOCATION, MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
@@ -45,6 +82,20 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(getMultipartConfigElement());
+        registration.setMultipartConfig(getResolver());
+    }*/
+    
+    @Bean(name="multipartResolver") 
+    public CommonsMultipartResolver getResolver() throws IOException{
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+         
+        //Set the maximum allowed size (in bytes) for each individual file.
+        resolver.setMaxUploadSizePerFile(5242880);//5MB
+         
+        //You may also set other available properties.
+         
+        return resolver;
     }
+    
+    
 }

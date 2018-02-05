@@ -6,6 +6,7 @@ package com.archsystemsinc.qam.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.archsystemsinc.qam.utils.DateSerializer;
+import com.archsystemsinc.qam.utils.StringToDateConverter;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
@@ -21,7 +23,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @Entity
 @Table(name = "csr_lists")
-public class CsrLists {
+public class CsrLists implements Comparable<CsrLists>{
 
 	private Long id;
 	private String firstName;
@@ -38,11 +40,18 @@ public class CsrLists {
 	private String updatedBy;
 	private Long recordStatus;
 	
+	
+	
 	@JsonSerialize(using=DateSerializer.class)
 	private Date createdDate;
 	
 	@JsonSerialize(using=DateSerializer.class)
 	private Date updateddDate;
+	
+	@Column(name = "CREATED_DATE")
+	@Convert(converter = StringToDateConverter.class)
+	private Date createdDateYearMonth;
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -191,5 +200,13 @@ public class CsrLists {
 		this.updateddDate = updateddDate;
 	}
 
-	
+	@Override
+	public int compareTo(CsrLists o) {
+		
+		String thisValue = this.jurisdiction+"_"+this.lastName;
+		String objectValue = o.jurisdiction+"_"+o.lastName;
+		
+		//ascending order
+		return thisValue.compareTo(objectValue);
+	}
 }

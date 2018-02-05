@@ -10,4 +10,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan({"com.archsystemsinc.qam","com.archsystems"})
 public class SpringConfiguration extends WebMvcConfigurerAdapter{
 	
+	
 }

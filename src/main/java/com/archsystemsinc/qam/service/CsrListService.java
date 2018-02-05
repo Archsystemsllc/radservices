@@ -11,14 +11,18 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.archsystemsinc.exception.FileUploadException;
 import com.archsystemsinc.qam.model.CsrLists;
 import com.archsystemsinc.qam.model.CsrLog;
+import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.repository.CsrListRepository;
 import com.archsystemsinc.qam.repository.CsrLogRepository;
+import com.archsystemsinc.qam.repository.specifications.CsrListsSpecifications;
+import com.archsystemsinc.qam.repository.specifications.ScoreCardSpecifications;
 import com.archsystemsinc.qam.utils.CommonUtils;
 import com.archsystemsinc.qam.utils.PoiUtils;
 
@@ -357,20 +361,24 @@ public List<CsrLists> getCsrNames(String csrLName,Long macLookupId,String jurisd
 			boolean macAllFlag = false;
 			
 			tempCsrList = csrListRepository.existingCsrListByMacIdJurisProgram(csrLName,macLookupId,jurisdiction,program);
-			/*for (CsrLists tempCsrListObject: tempCsrList) {
-				String firstName = tempCsrListObject.getFirstName();
-				String middleName = tempCsrListObject.getMiddleName();
-				String lastName = tempCsrListObject.getLastName();
-				String csrFullName = firstName + "," + middleName + "," + lastName;
-				String csrLevl = tempCsrListObject.getLevel();			
-				resultArray[0] = csrFullName;
-				resultArray[1] = csrLevl;
-				csrFullNameList.add(resultArray);
-			}*/
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		return tempCsrList;
 	}
+
+	public List< CsrLists > search( CsrLists csrLists ){
+	
+	Specifications< CsrLists > specifications = Specifications.where
+				(CsrListsSpecifications.searchByJurisdiction(csrLists.getJurisdiction()))
+			.and(CsrListsSpecifications.searchByMacId(csrLists.getMacLookupId().intValue()))				
+			.and(CsrListsSpecifications.searchByProgram(csrLists.getProgram()))
+			.and(CsrListsSpecifications.findByCreatedDateBetween(csrLists.getCreatedDate(), null))
+			.and(CsrListsSpecifications.searchByRecordStatus(csrLists.getRecordStatus()))			
+			;
+														
+	return csrListRepository.findAll(specifications);
+}
 }

@@ -12,9 +12,12 @@ public abstract class ScoreCard_ {
 	public static volatile SingularAttribute<ScoreCard, String> callResult;
 	public static volatile SingularAttribute<ScoreCard, String> qamFullName;
 	public static volatile SingularAttribute<ScoreCard, Integer> jurId;
+	public static volatile SingularAttribute<ScoreCard, Integer> macId;
+	public static volatile SingularAttribute<ScoreCard, Integer> programId;
 	public static volatile SingularAttribute<ScoreCard, Integer> recordStatus;
 	public static volatile SingularAttribute<ScoreCard, String> macCallReferenceNumber;
 	public static volatile SingularAttribute<ScoreCard, String> scorecardType;
 	public static volatile SingularAttribute<ScoreCard, Date> qamEnddateTime;	
 	public static volatile SingularAttribute<ScoreCard, Date> qamStartdateTime;
+	
 }

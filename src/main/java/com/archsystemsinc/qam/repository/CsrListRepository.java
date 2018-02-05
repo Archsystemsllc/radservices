@@ -5,15 +5,17 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.archsystemsinc.qam.model.CsrLists;
+import com.archsystemsinc.qam.model.ScoreCard;
 
 /**
  */
-public interface CsrListRepository extends JpaRepository<CsrLists, Long>{
+public interface CsrListRepository extends JpaRepository<CsrLists, Long>, JpaSpecificationExecutor<CsrLists>{
 	
 	//Queries to Find CSR Lists by From Date and To Date
 	

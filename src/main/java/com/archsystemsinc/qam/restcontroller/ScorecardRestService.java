@@ -29,7 +29,7 @@ public class ScorecardRestService {
 	private ScoreCardService scoreCardService;
 	
 	
-	@RequestMapping(value = "/findAllScorecard", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/findAllScorecard", method = RequestMethod.GET)
 	public List<ScoreCard> findAllScorecard(){
 		List<ScoreCard> data=null;
 		try {
@@ -41,7 +41,7 @@ public class ScorecardRestService {
 			e.printStackTrace();
 		}
 		return data;
-	}		
+	}		*/
 	
 	@RequestMapping(value = "/searchScoreCard", method = RequestMethod.POST)
 	public List<ScoreCard> searchScoreCard(@RequestBody  ScoreCard scoreCard){

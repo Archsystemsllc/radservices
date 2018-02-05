@@ -35,15 +35,33 @@ public class ReportsRestService {
 	@Autowired
 	private ReportsService reportsService;
 	
+	@Autowired
+	private ScoreCardService scoreCardService;
+	
 	
 	@RequestMapping(value = "/getMacJurisReport", method = RequestMethod.POST)
 	public @ResponseBody HashMap<Integer, ScoreCard> getMacJurisReport(@RequestBody  ReportsForm reportsForm){
 		List<ScoreCard> data=null;
 		HashMap <Integer, ScoreCard> resultsMap = new HashMap<Integer, ScoreCard> ();
+		ScoreCard scoreCardReportObject = new ScoreCard();
 		try {
 			log.debug("--> getMacJurisReport:");
-			data = reportsService.retrieveMacJurisScorecardReport(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getProgramId(),
-					reportsForm.getFromDate(), reportsForm.getToDate(), reportsForm.getScoreCardType(), reportsForm.getCallResult());
+			if(!reportsForm.getMacId().equalsIgnoreCase("")) {
+				scoreCardReportObject.setMacIdReportSearchString(reportsForm.getMacId());
+			}
+			if(!reportsForm.getJurisId().equalsIgnoreCase("")) {
+				scoreCardReportObject.setJurisIdReportSearchString(reportsForm.getJurisId());
+			}
+			if(!reportsForm.getProgramId().equalsIgnoreCase("")) {
+				scoreCardReportObject.setProgramIdReportSearchString(reportsForm.getProgramId());
+			}		
+			
+			scoreCardReportObject.setFilterFromDate(reportsForm.getFromDate());
+			scoreCardReportObject.setFilterToDate(reportsForm.getToDate());
+			scoreCardReportObject.setScorecardType(reportsForm.getScoreCardType());
+			scoreCardReportObject.setCallResult(reportsForm.getCallResult());
+						
+			data = scoreCardService.search(scoreCardReportObject);
 			
 			for(ScoreCard scoreCard: data) {
 				resultsMap.put(scoreCard.getId(), scoreCard);

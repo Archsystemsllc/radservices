@@ -4,6 +4,8 @@
 package com.archsystemsinc.qam.restcontroller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -76,6 +78,10 @@ public class CsrListRestService {
 	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
 		log.debug("--> getCsrList:");
 		List<CsrLists> data = csrListService.getCsrList(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
+		
+		if(data!=null || data.size()>0) {
+			Collections.sort(data);
+		} 
 		log.debug("<-- getCsrList");
 		
 		return data;
@@ -84,6 +90,10 @@ public class CsrListRestService {
 	@RequestMapping(value = "/csrListMonths", method = RequestMethod.GET)
 	public List<Object[]> getCsrListMonths(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
 		log.debug("--> getCsrListMonths:");
+		//CsrLists testCsr = new CsrLists();
+		//testCsr.setMacLookupId(2l);
+		//testCsr.setCreatedDate(new Date());
+		//List<CsrLists> testData = csrListService.search(testCsr);
 		List<Object[]> data = csrListService.getCsrListMonths(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
 		if(data == null || data.size() == 0) {
 			data = new ArrayList();
@@ -106,7 +116,9 @@ public class CsrListRestService {
 			csrListTemp.setLastName("");
 			csrListTemp.setLevel("");
 			data.add(csrListTemp);
-		}		
+		} else {
+			Collections.sort(data);
+		}
 		return data;
 	}
 }

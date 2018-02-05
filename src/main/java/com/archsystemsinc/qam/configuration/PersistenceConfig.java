@@ -44,15 +44,27 @@ public class PersistenceConfig {
 	
 	@Value("${hibernate.dialect}")
     String hibernateDialect;
+	
+	
 
     public PersistenceConfig() {
         super();
     }
 
-    @Bean
+   /* @Bean
    	public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
-   		String activeProfile = System.getProperty("spring.profiles.active",
-   				"local");
+   		//Development Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active",	"local");
+    	
+    	//Test Environment
+    	String activeProfile = System.getProperty("spring.profiles.active", "test");
+    	
+    	//UAT Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active", "uat");
+    	
+    	//Prod Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active", "prod");
+    	
    		String propertiesFilename = "application-" + activeProfile
    				+ ".properties";
    		System.out.println("propertiesFilename:" + propertiesFilename);
@@ -60,7 +72,7 @@ public class PersistenceConfig {
    		configurer.setLocation(new ClassPathResource(propertiesFilename));
 
    		return configurer;
-   	}
+   	}*/
        @Bean
        public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
            final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();

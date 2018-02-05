@@ -1,12 +1,18 @@
 package com.archsystemsinc.qam.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.archsystemsinc.qam.utils.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 
 /**
@@ -87,14 +93,16 @@ public class ScoreCard implements Serializable {
 	@Column(name="program_id")
 	private Integer programId;
 	
-	@Column(name="qam_enddate_time")
-	private String qamEnddateTime;
+	@Column(name="qam_enddate_time_2")
+	//@Convert(converter = StringToDateConverter.class)
+	private Date qamEnddateTime;
 
 	@Column(name="qam_full_name")
 	private String qamFullName;
 	
-	@Column(name="qam_startdate_time")
-	private String qamStartdateTime;
+	@Column(name="qam_startdate_time_2")
+	//@Convert(converter = StringToDateConverter.class)
+	private Date qamStartdateTime;
 
 	@Column(name="scorecard_comments")
 	private String scorecardComments;
@@ -142,9 +150,118 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private Date filterToDate;
 	
+	@Transient
+	private String macIdReportSearchString;	
+	
+	@Transient
+	private String jurisIdReportSearchString;
+	
+	@Transient
+	private String programIdReportSearchString;
+	
+	
+	
+	
+	
 	public ScoreCard() {
 	}
-	
+
+
+
+
+	public String getMacIdReportSearchString() {
+		return macIdReportSearchString;
+	}
+
+
+
+
+
+
+
+
+	public void setMacIdReportSearchString(String macIdReportSearchString) {
+		this.macIdReportSearchString = macIdReportSearchString;
+	}
+
+
+
+
+
+
+
+
+	public String getJurisIdReportSearchString() {
+		return jurisIdReportSearchString;
+	}
+
+
+
+
+
+
+
+
+	public void setJurisIdReportSearchString(String jurisIdReportSearchString) {
+		this.jurisIdReportSearchString = jurisIdReportSearchString;
+	}
+
+
+
+
+
+
+
+
+	public String getProgramIdReportSearchString() {
+		return programIdReportSearchString;
+	}
+
+
+
+
+
+
+
+
+	public void setProgramIdReportSearchString(String programIdReportSearchString) {
+		this.programIdReportSearchString = programIdReportSearchString;
+	}
+
+
+
+
+
+
+
+
+	public Date getQamEnddateTime() {
+		return qamEnddateTime;
+	}
+
+
+
+
+	public void setQamEnddateTime(Date qamEnddateTime) {
+		this.qamEnddateTime = qamEnddateTime;
+	}
+
+
+
+
+	public Date getQamStartdateTime() {
+		return qamStartdateTime;
+	}
+
+
+
+
+	public void setQamStartdateTime(Date qamStartdateTime) {
+		this.qamStartdateTime = qamStartdateTime;
+	}
+
+
+
 
 	public Date getFilterFromDate() {
 		return filterFromDate;
@@ -276,8 +393,6 @@ public class ScoreCard implements Serializable {
 	}
 
 
-
-
 	public String getCallMonitoringDate() {
 		return callMonitoringDate;
 	}
@@ -285,28 +400,6 @@ public class ScoreCard implements Serializable {
 	public void setCallMonitoringDate(String callMonitoringDate) {
 		this.callMonitoringDate = callMonitoringDate;
 	}
-
-	public String getQamEnddateTime() {
-		return qamEnddateTime;
-	}
-
-	public void setQamEnddateTime(String qamEnddateTime) {
-		this.qamEnddateTime = qamEnddateTime;
-	}
-
-
-
-	public String getQamStartdateTime() {
-		return qamStartdateTime;
-	}
-
-
-
-	public void setQamStartdateTime(String qamStartdateTime) {
-		this.qamStartdateTime = qamStartdateTime;
-	}
-
-
 
 	public String getLob() {
 		return lob;

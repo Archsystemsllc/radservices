@@ -38,19 +38,20 @@ public class ScoreCardService {
 	
 	public List<ScoreCard> retrieveFailedCallList(){
 		return scoreCardRepository.findAllByFailedReason("Fail");
-	}	
-	
-	
+	}
 
 	public List< ScoreCard > search( ScoreCard scoreCard ){
-		/*Specifications< ScoreCard > specifications = Specifications.where(ScoreCardSpecifications.searchByQamFullName(scoreCard.getQamFullName()))
-															.and(ScoreCardSpecifications.searchByCallResult(scoreCard.getCallResult()))
-															.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
-															.and(ScoreCardSpecifications.searchByScorecardType(scoreCard.getScorecardType()))
-															.and(ScoreCardSpecifications.findByQamEndDateBetween(scoreCard));*/
 		
-		Specifications< ScoreCard > specifications = Specifications.where((ScoreCardSpecifications.findByQamEndDateBetween(scoreCard)));
+		Specifications< ScoreCard > specifications = Specifications.where
+					(ScoreCardSpecifications.searchByQamFullName(scoreCard.getQamFullName()))
+				.and(ScoreCardSpecifications.searchByCallResult(scoreCard.getCallResult()))				
+				.and(ScoreCardSpecifications.searchByScorecardType(scoreCard.getScorecardType()))
+				.and(ScoreCardSpecifications.searchByMacId(scoreCard.getMacIdReportSearchString()))
+				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurisIdReportSearchString()))
+				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
+				.and(ScoreCardSpecifications.findByQamEnddateTimeBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
+				;
 															
-		return scoreCardRepository.findAll( specifications );
+		return scoreCardRepository.findAll(specifications);
 	}
 }
