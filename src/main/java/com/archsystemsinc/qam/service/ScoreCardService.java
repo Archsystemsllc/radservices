@@ -47,7 +47,7 @@ public class ScoreCardService {
 				.and(ScoreCardSpecifications.searchByCallResult(scoreCard.getCallResult()))				
 				.and(ScoreCardSpecifications.searchByScorecardType(scoreCard.getScorecardType()))
 				.and(ScoreCardSpecifications.searchByMacId(scoreCard.getMacIdReportSearchString()))
-				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurisIdReportSearchString()))
+				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
 				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
 				.and(ScoreCardSpecifications.findByQamEnddateTimeBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
 				;

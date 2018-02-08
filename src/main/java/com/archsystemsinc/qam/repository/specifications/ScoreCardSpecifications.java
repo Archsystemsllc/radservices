@@ -82,13 +82,13 @@ public final class ScoreCardSpecifications {
 		};
 	}
 	
-	public static Specification<ScoreCard> searchByJurId(final String jurIdReportString) {
+	public static Specification<ScoreCard> searchByJurId(final Integer jurId) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
-				if(jurIdReportString != null && !jurIdReportString.equalsIgnoreCase("") && !jurIdReportString.equalsIgnoreCase("ALL")) {
-					final Predicate matchingByJurId =  builder.equal(root.get(ScoreCard_.jurId), Integer.valueOf(jurIdReportString));
+				if(jurId != null && jurId != 0) {
+					final Predicate matchingByJurId =  builder.equal(root.get(ScoreCard_.jurId), jurId);
 					return matchingByJurId;
 				} else 
 					return null;

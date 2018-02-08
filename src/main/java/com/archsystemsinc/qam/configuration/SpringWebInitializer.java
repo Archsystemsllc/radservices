@@ -21,16 +21,16 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
  
 	@Bean
    	public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
-		//Development Environment
-    	//String activeProfile = System.getProperty("spring.profiles.active",	"local");
+		//Local Development Environment
+    	String activeProfile = System.getProperty("spring.profiles.active",	"local");
     	
-    	//Test Environment
-    	String activeProfile = System.getProperty("spring.profiles.active", "test");
+    	//AWS Development Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active",	"development");
     	
-    	//UAT Environment
+    	//AWS UAT Environment
     	//String activeProfile = System.getProperty("spring.profiles.active", "uat");
     	
-    	//Prod Environment
+    	//AWS Prod Environment
     	//String activeProfile = System.getProperty("spring.profiles.active", "prod");
     	
    		String propertiesFilename = "application-" + activeProfile	+ ".properties";
