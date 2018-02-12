@@ -49,6 +49,7 @@ public class ScoreCardService {
 				.and(ScoreCardSpecifications.searchByMacId(scoreCard.getMacIdReportSearchString()))
 				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
 				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
+				.and(ScoreCardSpecifications.searchByUserId(scoreCard.getUserId()))
 				.and(ScoreCardSpecifications.findByQamEnddateTimeBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
 				;
 															

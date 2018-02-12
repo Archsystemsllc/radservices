@@ -124,6 +124,20 @@ public final class ScoreCardSpecifications {
 			}
 		};
 	}		
+	
+	public static Specification<ScoreCard> searchByUserId(final Integer userId) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(userId != null && userId != 0) {
+					final Predicate matchingByUserId = builder.equal(root.get(ScoreCard_.userId), userId);
+					return matchingByUserId;
+				} else 
+					return null;				
+			}
+		};
+	}		
 		
 	
 	/*

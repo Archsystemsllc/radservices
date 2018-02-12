@@ -30,12 +30,12 @@ public class RebuttalRestService {
 	private RebuttalService rebuttalService;
 	
 	
-	@RequestMapping(value = "/rebuttallist", method = RequestMethod.GET)
-	public List<Rebuttal> getRebuttalList(){
+	@RequestMapping(value = "/rebuttallist", method = RequestMethod.POST)
+	public List<Rebuttal> getRebuttalList(@RequestBody Rebuttal rebuttal){
 		List<Rebuttal> data=null;
 		try {
 			log.debug("--> getRebuttalList:");
-			data = rebuttalService.findAll();
+			data = rebuttalService.search(rebuttal);
 			log.debug("<-- getRebuttalList");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

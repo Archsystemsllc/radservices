@@ -17,7 +17,7 @@ public class Rebuttal implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(name="call_date")
 	private String callDate;
@@ -35,7 +35,7 @@ public class Rebuttal implements Serializable {
 	private String createdDate;
 
 	@Column(name="csr_id")
-	private int csrId;
+	private Integer csrId;
 
 	@Column(name="date_posted")
 	private String datePosted;
@@ -43,13 +43,13 @@ public class Rebuttal implements Serializable {
 	private String description;
 
 	@Column(name="failure_reason_id")
-	private int failureReasonId;
+	private Integer failureReasonId;
 
 	@Column(name="mac_reference_id")
 	private String macReferenceId;
 
 	@Column(name="rebuttal_qm_log_id")
-	private int rebuttalQmLogId;
+	private Integer rebuttalQmLogId;
 
 	@Column(name="updated_by")
 	private String updatedBy;
@@ -58,7 +58,7 @@ public class Rebuttal implements Serializable {
 	private String updatedDate;
 
 	@Column(name="user_id")
-	private int userId;
+	private Integer userId;
 
 	/*//bi-directional many-to-one association to MacLookup
 	@ManyToOne
@@ -341,11 +341,11 @@ public class Rebuttal implements Serializable {
 
 
 
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -389,11 +389,11 @@ public class Rebuttal implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getCsrId() {
+	public Integer getCsrId() {
 		return this.csrId;
 	}
 
-	public void setCsrId(int csrId) {
+	public void setCsrId(Integer csrId) {
 		this.csrId = csrId;
 	}
 
@@ -413,11 +413,11 @@ public class Rebuttal implements Serializable {
 		this.description = description;
 	}
 
-	public int getFailureReasonId() {
+	public Integer getFailureReasonId() {
 		return this.failureReasonId;
 	}
 
-	public void setFailureReasonId(int failureReasonId) {
+	public void setFailureReasonId(Integer failureReasonId) {
 		this.failureReasonId = failureReasonId;
 	}
 
@@ -429,11 +429,11 @@ public class Rebuttal implements Serializable {
 		this.macReferenceId = macReferenceId;
 	}
 
-	public int getRebuttalQmLogId() {
+	public Integer getRebuttalQmLogId() {
 		return this.rebuttalQmLogId;
 	}
 
-	public void setRebuttalQmLogId(int rebuttalQmLogId) {
+	public void setRebuttalQmLogId(Integer rebuttalQmLogId) {
 		this.rebuttalQmLogId = rebuttalQmLogId;
 	}
 
@@ -453,11 +453,11 @@ public class Rebuttal implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
