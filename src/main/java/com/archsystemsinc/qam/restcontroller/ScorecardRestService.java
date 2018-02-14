@@ -29,20 +29,6 @@ public class ScorecardRestService {
 	private ScoreCardService scoreCardService;
 	
 	
-	/*@RequestMapping(value = "/findAllScorecard", method = RequestMethod.GET)
-	public List<ScoreCard> findAllScorecard(){
-		List<ScoreCard> data=null;
-		try {
-			log.debug("--> findAllScorecard:");
-			data = scoreCardService.findAll();
-			log.debug("<-- findAllScorecard");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return data;
-	}		*/
-	
 	@RequestMapping(value = "/searchScoreCard", method = RequestMethod.POST)
 	public List<ScoreCard> searchScoreCard(@RequestBody  ScoreCard scoreCard){
 		List<ScoreCard> data=null;

@@ -46,7 +46,7 @@ public class ScoreCardService {
 					(ScoreCardSpecifications.searchByQamFullName(scoreCard.getQamFullName()))
 				.and(ScoreCardSpecifications.searchByCallResult(scoreCard.getCallResult()))				
 				.and(ScoreCardSpecifications.searchByScorecardType(scoreCard.getScorecardType()))
-				.and(ScoreCardSpecifications.searchByMacId(scoreCard.getMacIdReportSearchString()))
+				.and(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
 				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
 				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
 				.and(ScoreCardSpecifications.searchByUserId(scoreCard.getUserId()))

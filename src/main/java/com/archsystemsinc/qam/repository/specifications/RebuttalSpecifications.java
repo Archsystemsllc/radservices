@@ -1,5 +1,7 @@
 package com.archsystemsinc.qam.repository.specifications;
 
+import java.util.Date;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -57,6 +59,26 @@ public final class RebuttalSpecifications {
 					return matchingByMacId;
 				} else 
 					return null;
+			}
+		};
+	}
+	
+	/*
+	 * Select the eps inbetween dates
+	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
+	 */
+	
+	public static Specification<ScoreCard> findByQamEnddateTimeBetween(final Date filterFromDate, final Date filterToDate) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				Predicate matchingByQamEndDateTime = null;
+				
+				if(filterFromDate != null && filterToDate != null){					
+					matchingByQamEndDateTime = builder.between(root.get(ScoreCard_.qamEnddateTime), filterFromDate, filterToDate);
+				}
+				return matchingByQamEndDateTime;							
 			}
 		};
 	}

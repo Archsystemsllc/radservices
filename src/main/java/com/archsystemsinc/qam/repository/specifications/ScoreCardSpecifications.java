@@ -49,14 +49,14 @@ public final class ScoreCardSpecifications {
 		};
 	}
 	
-	public static Specification<ScoreCard> searchByMacId(final String macIdReportString) {
+	public static Specification<ScoreCard> searchByMacId(final Integer macId) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(macIdReportString != null && !macIdReportString.equalsIgnoreCase("") && !macIdReportString.equalsIgnoreCase("ALL")) {
-					final Predicate matchingByMacId = builder.equal(root.get(ScoreCard_.macId), Integer.valueOf(macIdReportString));
+				if(macId != null && macId != 0) { 
+					final Predicate matchingByMacId = builder.equal(root.get(ScoreCard_.macId), macId);
 					return matchingByMacId;
 				} else 
 					return null;			
