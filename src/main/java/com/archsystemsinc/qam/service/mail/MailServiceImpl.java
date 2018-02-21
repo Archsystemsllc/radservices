@@ -49,22 +49,22 @@ public class MailServiceImpl implements MailService {
                 		iAdressArray);
                 
                 if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_CREATE)) {
-                	mimeMessage.setText("Scorecard created successfully for <<MAC Name>>. << Link>>\r\n" );
+                	mimeMessage.setText("Scorecard created successfully. \n Thanks Admin" );
                     mimeMessage.setSubject("New Scorecard Created");
                 } else  if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_UPDATE)) {
-                	mimeMessage.setText("Score card updated successfully for <<MAC Name>><<Link>>\r\n");
+                	mimeMessage.setText("Score card updated successfully. \n Thanks Admin");
                     mimeMessage.setSubject("Scorecard Updated");
                 } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_CSRLIST)) {
-                	mimeMessage.setText("CSR list uploaded successfully for <<MAC>>\r\n" );
+                	mimeMessage.setText("CSR list uploaded successfully. \n Thanks Admin" );
                     mimeMessage.setSubject("CSR List Uploaded Succesfully");
                 } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_CREATE)) {
-                	mimeMessage.setText("Rebuttal created successfully.<< Link>>\r\n" );
+                	mimeMessage.setText("Rebuttal created successfully. \n Thanks Admin" );
                     mimeMessage.setSubject("Rebuttal Created Successfully");
                 } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_UPDATE)) {
-                	mimeMessage.setText("Rebuttal updated successfully.<<link>>\r\n" );
+                	mimeMessage.setText("Rebuttal updated successfully. \n Thanks Admin" );
                     mimeMessage.setSubject("Rebuttal Updated Successfully");
                 } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE)) {
-                	mimeMessage.setText("User created successfully.<<link>>\r\n" );
+                	mimeMessage.setText("User created successfully. \n Thanks Admin" );
                     mimeMessage.setSubject("User Created Succesffully");
                 }
                 
