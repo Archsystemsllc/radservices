@@ -59,6 +59,10 @@ public class RebuttalRestService {
 		boolean newRebuttal = false;
 		
 		try {
+			
+			if (rebuttal.getId() == 0) {
+				newRebuttal = true;
+			}
 			rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
 			
 			if(newRebuttal) {
