@@ -8,15 +8,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
 import com.archsystemsinc.qam.service.RadUserService;
+import com.archsystemsinc.qam.service.mail.MailService;
 	
 /**
  * @author Prakash T
@@ -30,7 +33,11 @@ public class UserRestService {
 	@Autowired
 	private RadUserService radUserService;
 	
+	@Autowired
+    MailService mailService;
 	
+	@Value("${mail.fromEmail}")
+    String fromEmail;
 	
 	/**
 	 * 
@@ -153,6 +160,7 @@ public class UserRestService {
 	public RadUser createUser(RadUser radUser){
 		log.debug("--> createUser:");
 		radUser = radUserService.createUser(radUser);
+		mailService.sendEmail(GenericConstants.EMAIL_TYPE_UM_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
 		log.debug("<-- createUser");
 		return radUser;
 	}

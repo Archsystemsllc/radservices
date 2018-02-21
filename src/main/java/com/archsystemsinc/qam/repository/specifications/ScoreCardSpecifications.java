@@ -21,6 +21,21 @@ public final class ScoreCardSpecifications {
 	}
 	
 	// API
+	public static Specification<ScoreCard> searchByFailureReason(final String failureString) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(failureString != null && !failureString.equalsIgnoreCase("")) {
+					final Predicate matchingByFailureString = builder.like(root.get(ScoreCard_.callResult), failureString );
+					return matchingByFailureString;
+				} else 
+					return null;
+			}
+		};
+	}
+	
+	
 	public static Specification<ScoreCard> searchByCallResult(final String callResult) {
 		return new Specification<ScoreCard>() {
 			@Override

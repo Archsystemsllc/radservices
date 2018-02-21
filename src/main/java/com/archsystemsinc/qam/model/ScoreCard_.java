@@ -21,4 +21,5 @@ public abstract class ScoreCard_ {
 	public static volatile SingularAttribute<ScoreCard, Date> qamStartdateTime;
 	public static volatile SingularAttribute<ScoreCard, Integer> userId;
 	
+	
 }

@@ -39,6 +39,16 @@ public class ScoreCardService {
 	public List<ScoreCard> retrieveFailedCallList(){
 		return scoreCardRepository.findAllByFailedReason("Fail");
 	}
+	
+	public List<ScoreCard> retrieveFailedCallListByMacIdJurisId(ScoreCard scoreCard){
+		
+		Specifications< ScoreCard > specifications = Specifications.where
+				(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
+				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
+				.and(ScoreCardSpecifications.searchByFailureReason("Fail"))
+			;
+		return scoreCardRepository.findAll(specifications);
+	}
 
 	public List< ScoreCard > search( ScoreCard scoreCard ){
 		

@@ -7,14 +7,17 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.service.RebuttalService;
+import com.archsystemsinc.qam.service.mail.MailService;
 
 	
 	/**
@@ -29,6 +32,11 @@ public class RebuttalRestService {
 	@Autowired
 	private RebuttalService rebuttalService;
 	
+	@Autowired
+    MailService mailService;
+	
+	@Value("${mail.fromEmail}")
+    String fromEmail;
 	
 	@RequestMapping(value = "/rebuttallist", method = RequestMethod.POST)
 	public List<Rebuttal> getRebuttalList(@RequestBody Rebuttal rebuttal){
@@ -48,9 +56,16 @@ public class RebuttalRestService {
 	public @ResponseBody Rebuttal saveOrUpdateRebuttal(@RequestBody  Rebuttal rebuttal){
 		log.debug("--> saveOrUpdateRebuttal:");		
 		Rebuttal rebuttalResult = null;
+		boolean newRebuttal = false;
 		
 		try {
 			rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
+			
+			if(newRebuttal) {
+				mailService.sendEmail(GenericConstants.EMAIL_TYPE_RB_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+			} else {
+				mailService.sendEmail(GenericConstants.EMAIL_TYPE_RB_UPDATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+			}
 			
 		} catch (Exception e) {
 			log.error("Error while uploading data",e);
