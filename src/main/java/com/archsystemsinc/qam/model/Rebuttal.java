@@ -133,10 +133,12 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private String jurisName;
 	
+
 	public Rebuttal() {
 	}
 	
 	
+
 	public String getMacName() {
 		return macName;
 	}
@@ -164,8 +166,6 @@ public class Rebuttal implements Serializable {
 	public void setJurisName(String jurisName) {
 		this.jurisName = jurisName;
 	}
-
-
 
 
 
