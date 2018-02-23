@@ -127,11 +127,48 @@ public class Rebuttal implements Serializable {
 	@Column(name="lob")
 	private String lob;
 	
+	@Transient
+	private String macName;
+	
+	@Transient
+	private String jurisName;
+	
 	public Rebuttal() {
 	}
 	
 	
-	
+	public String getMacName() {
+		return macName;
+	}
+
+
+
+
+
+	public void setMacName(String macName) {
+		this.macName = macName;
+	}
+
+
+
+
+
+	public String getJurisName() {
+		return jurisName;
+	}
+
+
+
+
+
+	public void setJurisName(String jurisName) {
+		this.jurisName = jurisName;
+	}
+
+
+
+
+
 	public String getLob() {
 		return lob;
 	}
