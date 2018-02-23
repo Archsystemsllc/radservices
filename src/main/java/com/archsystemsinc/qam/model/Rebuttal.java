@@ -124,10 +124,24 @@ public class Rebuttal implements Serializable {
 	@Column(name="rebuttal_call_category")
 	private String rebuttalCallCategory;
 	
+	@Column(name="lob")
+	private String lob;
+	
 	public Rebuttal() {
 	}
 	
 	
+	
+	public String getLob() {
+		return lob;
+	}
+
+	public void setLob(String lob) {
+		this.lob = lob;
+	}
+
+
+
 	public String getRebuttalCallCategory() {
 		return rebuttalCallCategory;
 	}
