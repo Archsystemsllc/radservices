@@ -28,13 +28,16 @@ public class SpringConfiguration extends WebMvcConfigurerAdapter{
 	@Value("${mail.port}")
     Integer mailPort;
 	
+	@Value("${mail.fromName}")
+    String mailFromName;
+	
 	 	@Bean
 	    public JavaMailSender getMailSender(){
 	        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 	         
 	        //Using gmail
 	        mailSender.setHost(mailHost);
-	        mailSender.setPort(587);
+	        mailSender.setPort(mailPort);
 	        mailSender.setUsername(mailUserName);
 	        mailSender.setPassword(mailPassword);
 	         

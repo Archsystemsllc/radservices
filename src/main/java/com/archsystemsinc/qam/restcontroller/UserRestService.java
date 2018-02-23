@@ -160,7 +160,8 @@ public class UserRestService {
 	public RadUser createUser(RadUser radUser){
 		log.debug("--> createUser:");
 		radUser = radUserService.createUser(radUser);
-		mailService.sendEmail(GenericConstants.EMAIL_TYPE_UM_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+		//mailService.sendEmail(GenericConstants.EMAIL_TYPE_UM_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+		mailService.sendEmail(null);
 		log.debug("<-- createUser");
 		return radUser;
 	}

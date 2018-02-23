@@ -18,6 +18,7 @@ import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.service.ScoreCardService;
 import com.archsystemsinc.qam.service.mail.MailService;
+import com.archsystemsinc.qam.utils.EmailObject;
 	
 	/**
  * @author Abdul Nissar Shaik
@@ -57,6 +58,7 @@ public class ScorecardRestService {
 		log.debug("--> saveOrUpdateScoreCard:");		
 		ScoreCard scoreCardResult = null;
 		boolean newScorecard = false;
+		EmailObject emailObject = null;
 		try {
 			if (scoreCard.getId() == 0) {
 				newScorecard = true;
@@ -64,9 +66,22 @@ public class ScorecardRestService {
 			scoreCardResult = scoreCardService.saveOrUpdateScoreCard(scoreCard);
 			
 			if(newScorecard) {
-				mailService.sendEmail(GenericConstants.EMAIL_TYPE_SC_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+				emailObject = new EmailObject();
+				emailObject.setFromEmail(fromEmail);
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_SC_CREATE);
+				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
+				emailObject.setMacName(scoreCard.getMacName());
+				emailObject.setJurisidctionName(scoreCard.getJurisdictionName());
+				mailService.sendEmail(emailObject);
 			} else {
-				mailService.sendEmail(GenericConstants.EMAIL_TYPE_SC_UPDATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+				
+				emailObject = new EmailObject();
+				emailObject.setFromEmail(fromEmail);
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_SC_UPDATE);
+				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
+				emailObject.setMacName(scoreCard.getMacName());
+				emailObject.setJurisidctionName(scoreCard.getJurisdictionName());
+				mailService.sendEmail(emailObject);
 			}
 			
 		} catch (Exception e) {

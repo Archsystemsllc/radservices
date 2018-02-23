@@ -18,6 +18,7 @@ import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.service.RebuttalService;
 import com.archsystemsinc.qam.service.mail.MailService;
+import com.archsystemsinc.qam.utils.EmailObject;
 
 	
 	/**
@@ -37,6 +38,9 @@ public class RebuttalRestService {
 	
 	@Value("${mail.fromEmail}")
     String fromEmail;
+	
+	@Value("${radui.endpoint}")
+    String radUIEndPoint;
 	
 	@RequestMapping(value = "/rebuttallist", method = RequestMethod.POST)
 	public List<Rebuttal> getRebuttalList(@RequestBody Rebuttal rebuttal){
@@ -66,9 +70,29 @@ public class RebuttalRestService {
 			rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
 			
 			if(newRebuttal) {
-				mailService.sendEmail(GenericConstants.EMAIL_TYPE_RB_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+				EmailObject emailObject;
+				
+				emailObject = new EmailObject();
+				emailObject.setFromEmail(fromEmail);
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_SC_CREATE);
+				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
+				emailObject.setMacName(rebuttal.getMacName());
+				emailObject.setJurisidctionName(rebuttal.getJurisName());
+				emailObject.setLink(radUIEndPoint);
+				mailService.sendEmail(emailObject);
+				
 			} else {
-				mailService.sendEmail(GenericConstants.EMAIL_TYPE_RB_UPDATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
+				
+				EmailObject emailObject;
+				
+				emailObject = new EmailObject();
+				emailObject.setFromEmail(fromEmail);
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_RB_UPDATE);
+				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
+				emailObject.setMacName(rebuttal.getMacName());
+				emailObject.setJurisidctionName(rebuttal.getJurisName());
+				emailObject.setLink(radUIEndPoint);
+				mailService.sendEmail(emailObject);
 			}
 			
 		} catch (Exception e) {

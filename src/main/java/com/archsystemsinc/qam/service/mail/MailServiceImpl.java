@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import com.archsystemsinc.cmts.sec.util.GenericConstants;
+import com.archsystemsinc.qam.utils.EmailObject;
  
 
  
@@ -21,9 +22,9 @@ public class MailServiceImpl implements MailService {
     JavaMailSender mailSender;
  
     @Override
-    public boolean sendEmail(String emailType, String fromEmail, String toEmail) {
+    public boolean sendEmail(EmailObject emailObject) {
  
-       MimeMessagePreparator preparator = getMessagePreparator(emailType, fromEmail, toEmail);
+       MimeMessagePreparator preparator = getMessagePreparator(emailObject);
  
         try {
             mailSender.send(preparator);
@@ -35,36 +36,70 @@ public class MailServiceImpl implements MailService {
         return true;
     }
  
-    private MimeMessagePreparator getMessagePreparator(String emailType, String fromEmail, String toEmail) {
+    private MimeMessagePreparator getMessagePreparator(EmailObject emailObject) {
  
         MimeMessagePreparator preparator = null;
         
+        String emailBody = "";
+        
+        if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_CREATE)) {
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nScorecard created successfully. \n View Link: <<LINK>> \nThanks Admin";        	
+        	
+        } else  if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_UPDATE)) {
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nScorecard updated successfully. \n View Link: <<LINK>> \nThanks Admin";
+           
+        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_CSRLIST)) {
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nCSR List uploaded successfully. \n Thanks Admin";
+           
+        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_CREATE)) {
+        	
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nRebuttal created successfully. \n Thanks Admin";
+        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_UPDATE)) {
+        	
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nRebuttal updated successfully. \n Thanks Admin";
+        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE)) {
+        	
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>>, Role: <<ROLE>> \nUser created successfully. \n Thanks Admin";
+            
+        }
+        
+        if (emailBody.contains("<<MAC_NAME>>")) {
+        	emailBody = emailBody.replace("<<MAC_NAME>>", emailObject.getMacName());
+        }
+        
+        if (emailBody.contains("<<JURIS_NAME>>")) {
+        	emailBody = emailBody.replace("<<JURIS_NAME>>", emailObject.getJurisidctionName());
+        }
+        	
+        
+        final String finalEmailBOdy = emailBody;
         preparator = new MimeMessagePreparator() {
  
             public void prepare(MimeMessage mimeMessage) throws Exception {
             	
-            	InternetAddress[] iAdressArray = InternetAddress.parse(toEmail);
-                mimeMessage.setFrom(fromEmail);
+            	InternetAddress[] iAdressArray = InternetAddress.parse(emailObject.getToEmail());
+                mimeMessage.setFrom(emailObject.getFromEmail());
                 mimeMessage.setRecipients(Message.RecipientType.TO,
                 		iAdressArray);
                 
-                if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_CREATE)) {
-                	mimeMessage.setText("Scorecard created successfully. \n Thanks Admin" );
+                if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_CREATE)) {
+                	
+                	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("New Scorecard Created");
-                } else  if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_UPDATE)) {
-                	mimeMessage.setText("Score card updated successfully. \n Thanks Admin");
+                } else  if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_SC_UPDATE)) {
+                	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("Scorecard Updated");
-                } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_CSRLIST)) {
-                	mimeMessage.setText("CSR list uploaded successfully. \n Thanks Admin" );
+                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_CSRLIST)) {
+                	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("CSR List Uploaded Succesfully");
-                } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_CREATE)) {
-                	mimeMessage.setText("Rebuttal created successfully. \n Thanks Admin" );
+                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_CREATE)) {
+                	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("Rebuttal Created Successfully");
-                } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_UPDATE)) {
-                	mimeMessage.setText("Rebuttal updated successfully. \n Thanks Admin" );
+                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_UPDATE)) {
+                	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("Rebuttal Updated Successfully");
-                } else if (emailType.equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE)) {
-                	mimeMessage.setText("User created successfully. \n Thanks Admin" );
+                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE)) {
+                	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("User Created Succesffully");
                 }
                 

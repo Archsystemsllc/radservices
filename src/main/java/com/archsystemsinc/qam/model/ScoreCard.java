@@ -159,12 +159,46 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private String programIdReportSearchString;
 	
+	//Temporary Variables
+	@Transient
+	private String jurisdictionName;	
 	
-	
+	@Transient
+	private String macName;	
 	
 	
 	public ScoreCard() {
 	}
+
+
+	public String getJurisdictionName() {
+		return jurisdictionName;
+	}
+
+
+
+
+
+	public void setJurisdictionName(String jurisdictionName) {
+		this.jurisdictionName = jurisdictionName;
+	}
+
+
+
+
+
+	public String getMacName() {
+		return macName;
+	}
+
+
+
+
+
+	public void setMacName(String macName) {
+		this.macName = macName;
+	}
+
 
 
 
