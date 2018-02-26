@@ -15,8 +15,12 @@ import com.archsystemsinc.qam.model.RadUser;
 public interface RadUserRepository extends JpaRepository<RadUser, Long>{
 	
 	RadUser findByUserName(String userName);
+	
 	@Query("SELECT r FROM RadUser r where r.firstName = :firstName and r.lastName = :lastName and r.middleName = :middleName") 
     String findByName(@Param("firstName") String firstName, @Param("lastName") String lastName, @Param("middleName") String middleName);
+	
+	@Query("SELECT r FROM RadUser r where r.macId = :macId and r.jurId = :jurisId") 
+	List<RadUser> findByMacIdAndJurisId(@Param("macId") Long macId, @Param("jurisId") Long jurisId);
 	
 	@Modifying
 	@Query("update RadUser c set c.status = :status, c.updateDate = :updatedDate, c.updatedBy = :updatedBy where c.id = :userId")

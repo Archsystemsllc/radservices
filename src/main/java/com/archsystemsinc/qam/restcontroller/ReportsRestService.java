@@ -60,6 +60,7 @@ public class ReportsRestService {
 			scoreCardReportObject.setFilterToDate(reportsForm.getToDate());
 			scoreCardReportObject.setScorecardType(reportsForm.getScoreCardType());
 			scoreCardReportObject.setCallResult(reportsForm.getCallResult());
+			scoreCardReportObject.setJurIdList(reportsForm.getJurIdList());
 						
 			data = scoreCardService.search(scoreCardReportObject);
 			

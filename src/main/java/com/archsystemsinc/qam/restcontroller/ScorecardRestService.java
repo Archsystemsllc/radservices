@@ -38,6 +38,9 @@ public class ScorecardRestService {
 	@Value("${mail.fromEmail}")
     String fromEmail;
 	
+	@Value("${radui.endpoint}")
+    String radUIEndPoint;
+	
 	@RequestMapping(value = "/searchScoreCard", method = RequestMethod.POST)
 	public List<ScoreCard> searchScoreCard(@RequestBody  ScoreCard scoreCard){
 		List<ScoreCard> data=null;
@@ -65,6 +68,8 @@ public class ScorecardRestService {
 			}
 			scoreCardResult = scoreCardService.saveOrUpdateScoreCard(scoreCard);
 			
+			String link = radUIEndPoint +"quality_manager/view-scorecard/"+scoreCard.getId();
+			
 			if(newScorecard) {
 				emailObject = new EmailObject();
 				emailObject.setFromEmail(fromEmail);
@@ -72,6 +77,7 @@ public class ScorecardRestService {
 				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
 				emailObject.setMacName(scoreCard.getMacName());
 				emailObject.setJurisidctionName(scoreCard.getJurisdictionName());
+				emailObject.setLink(link);
 				mailService.sendEmail(emailObject);
 			} else {
 				
@@ -81,6 +87,7 @@ public class ScorecardRestService {
 				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
 				emailObject.setMacName(scoreCard.getMacName());
 				emailObject.setJurisidctionName(scoreCard.getJurisdictionName());
+				emailObject.setLink(link);
 				mailService.sendEmail(emailObject);
 			}
 			

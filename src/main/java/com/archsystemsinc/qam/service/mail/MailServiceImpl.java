@@ -53,13 +53,19 @@ public class MailServiceImpl implements MailService {
            
         } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_CREATE)) {
         	
-        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nRebuttal created successfully. \n Thanks Admin";
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>>, Status:<<STATUS>> \nRebuttal created successfully. \n Thanks Admin";
         } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_UPDATE)) {
         	
-        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>> \nRebuttal updated successfully. \n Thanks Admin";
-        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE)) {
+        	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>>, Status:<<STATUS>> \nRebuttal updated successfully. \n Thanks Admin";
+        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE_ADMIN_EMAIL)) {
         	
         	emailBody = "MAC Name: <<MAC_NAME>>, Jurisdiction: <<JURIS_NAME>>, Role: <<ROLE>> \nUser created successfully. \n Thanks Admin";
+            
+        } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE_USER_EMAIL)) {
+        	
+        	emailBody = "Following user has been created with, \nUsername: <<USERNAME>>, Password:<<system generated password>> \n"
+        			+ "Link to RAD Application:<<LINK>>.\n" + 
+        			" Thanks Admin";
             
         }
         
@@ -70,6 +76,24 @@ public class MailServiceImpl implements MailService {
         if (emailBody.contains("<<JURIS_NAME>>")) {
         	emailBody = emailBody.replace("<<JURIS_NAME>>", emailObject.getJurisidctionName());
         }
+        
+        if (emailBody.contains("<<LINK>>")) {
+        	emailBody = emailBody.replace("<<LINK>>", emailObject.getLink());
+        }
+        if (emailBody.contains("<<ROLE>>")) {
+        	emailBody = emailBody.replace("<<ROLE>>", emailObject.getLink());
+        }
+        if (emailBody.contains("<<USERNAME>>")) {
+        	emailBody = emailBody.replace("<<USERNAME>>", emailObject.getLink());
+        }
+        if (emailBody.contains("<<PASSWORD>>")) {
+        	emailBody = emailBody.replace("<<PASSWORD>>", emailObject.getLink());
+        }
+        
+        if (emailBody.contains("<<STATUS>>")) {
+        	emailBody = emailBody.replace("<<STATUS>>", emailObject.getStatus());
+        }
+        	
         	
         
         final String finalEmailBOdy = emailBody;
@@ -98,7 +122,10 @@ public class MailServiceImpl implements MailService {
                 } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_RB_UPDATE)) {
                 	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("Rebuttal Updated Successfully");
-                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE)) {
+                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE_ADMIN_EMAIL)) {
+                	mimeMessage.setText(finalEmailBOdy );
+                    mimeMessage.setSubject("User Created Succesffully");
+                } else if (emailObject.getEmailType().equalsIgnoreCase(GenericConstants.EMAIL_TYPE_UM_CREATE_USER_EMAIL)) {
                 	mimeMessage.setText(finalEmailBOdy );
                     mimeMessage.setSubject("User Created Succesffully");
                 }

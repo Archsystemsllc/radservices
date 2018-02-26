@@ -111,6 +111,25 @@ public final class ScoreCardSpecifications {
 		};
 	}
 	
+	
+	public static Specification<ScoreCard> searchByJurIdList(final ArrayList<Integer> jurIdList) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(jurIdList != null ) {
+					
+					Expression<Integer> exp = root.get(ScoreCard_.jurId);
+					final Predicate matchingByJurIdList = exp.in(jurIdList);
+					return matchingByJurIdList;
+					
+				} else 
+					return null;
+			}
+		};
+	}
+	
 	public static Specification<ScoreCard> searchByProgramId(final String programIdString) {
 		return new Specification<ScoreCard>() {
 			@Override

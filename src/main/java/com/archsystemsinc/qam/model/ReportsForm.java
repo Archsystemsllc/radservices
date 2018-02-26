@@ -1,5 +1,6 @@
 package com.archsystemsinc.qam.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -40,9 +41,18 @@ public class ReportsForm {
     
     private String rebuttalStatus;    
     
+    private ArrayList<Integer> jurIdList;
     
 
-   	public String getComplianceReportType() {
+   	public ArrayList<Integer> getJurIdList() {
+		return jurIdList;
+	}
+
+	public void setJurIdList(ArrayList<Integer> jurIdList) {
+		this.jurIdList = jurIdList;
+	}
+
+	public String getComplianceReportType() {
 		return complianceReportType;
 	}
 

@@ -13,7 +13,8 @@ public final class GenericConstants {
 	public static final String EMAIL_TYPE_CSRLIST = "CsrList";
 	public static final String EMAIL_TYPE_RB_CREATE = "RebuttalCreate";
 	public static final String EMAIL_TYPE_RB_UPDATE = "RebuttalUpdate";
-	public static final String EMAIL_TYPE_UM_CREATE = "UserCreate";
+	public static final String EMAIL_TYPE_UM_CREATE_ADMIN_EMAIL = "UserCreate";
+	public static final String EMAIL_TYPE_UM_CREATE_USER_EMAIL = "UserCreate";
 	
 	
 }

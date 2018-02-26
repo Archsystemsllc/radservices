@@ -20,6 +20,7 @@ import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
 import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.service.mail.MailService;
+import com.archsystemsinc.qam.utils.EmailObject;
 	
 /**
  * @author Prakash T
@@ -38,6 +39,9 @@ public class UserRestService {
 	
 	@Value("${mail.fromEmail}")
     String fromEmail;
+	
+	@Value("${radui.endpoint}")
+    String radUIEndPoint;
 	
 	/**
 	 * 
@@ -128,12 +132,13 @@ public class UserRestService {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/findUser/{lastName}/{roleId}/{orgId}", method = RequestMethod.GET)
-	public List<RadUser> filterUser(@PathVariable("lastName") String lastName,@PathVariable("roleId") String roleId,@PathVariable("orgId") String orgId){
+	@RequestMapping(value = "/findUser/{lastName}/{roleId}/{orgId}/{macId}/{jurisId}", method = RequestMethod.GET)
+	public List<RadUser> filterUser(@PathVariable("lastName") String lastName,@PathVariable("roleId") String roleId,@PathVariable("orgId") String orgId,
+			@PathVariable("macId") String macId,@PathVariable("jurisId") String jurisId){
 		log.debug("--> filterUser:"+lastName);
 		log.debug("--> roleId:"+roleId);
 		log.debug("--> orgId:"+orgId);
-		List<RadUser> radUser = radUserService.filterUser(lastName,roleId,orgId);
+		List<RadUser> radUser = radUserService.filterUser(lastName,roleId,orgId,macId,jurisId);
 		log.debug("<-- roleId");
 		return radUser;
 	}
@@ -147,7 +152,7 @@ public class UserRestService {
 		log.debug("--> filterUserById:");
 		log.debug("--> roleId:"+roleId);
 		log.debug("--> orgId:"+orgId);
-		List<RadUser> radUser = radUserService.filterUser(null,roleId,orgId);
+		List<RadUser> radUser = radUserService.filterUser(null,roleId,orgId,null,null);
 		log.debug("<-- filterUserById");
 		return radUser;
 	}
@@ -161,7 +166,26 @@ public class UserRestService {
 		log.debug("--> createUser:");
 		radUser = radUserService.createUser(radUser);
 		//mailService.sendEmail(GenericConstants.EMAIL_TYPE_UM_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
-		mailService.sendEmail(null);
+		//mailService.sendEmail(null);
+		String link = radUIEndPoint ;
+		
+		
+		EmailObject emailObject = new EmailObject();
+		emailObject.setFromEmail(fromEmail);
+		emailObject.setEmailType(GenericConstants.EMAIL_TYPE_UM_CREATE_ADMIN_EMAIL);
+		emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
+		//emailObject.setMacName(scoreCard.getMacName());
+		//emailObject.setJurisidctionName(scoreCard.getJurisdictionName());
+		
+		//Send Admin Email
+		mailService.sendEmail(emailObject);
+		
+		emailObject.setUsername(radUser.getUserName());
+		emailObject.setPassword(radUser.getPassword());
+		emailObject.setEmailType(GenericConstants.EMAIL_TYPE_UM_CREATE_USER_EMAIL);
+		emailObject.setLink(link);
+		mailService.sendEmail(emailObject);
+		
 		log.debug("<-- createUser");
 		return radUser;
 	}

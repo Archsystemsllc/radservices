@@ -137,12 +137,15 @@ public class RadUserService {
 		return count;
 	}
 
-	public List<RadUser> filterUser(String lastName, String roleId, String orgId) {
+	public List<RadUser> filterUser(String lastName, String roleId, String orgId, String macId, String jurisId) {
 		log.debug("--> filterUser:");
 		List<RadUser> data = null;
-		if (lastName != null && !"".equals(lastName.trim())) {
+		if (lastName != null && !"".equals(lastName.trim()) && !lastName.equalsIgnoreCase("null")) {
 			data = radUserRepository.filterUser(lastName, new Long(roleId),
 					new Integer(orgId));
+		} else if(macId !=null && !macId.equalsIgnoreCase("")) {
+			data = radUserRepository.findByMacIdAndJurisId(Long.valueOf(macId), Long.valueOf(jurisId));
+			
 		} else {
 			data = radUserRepository.filterUser(new Long(roleId), new Integer(
 					orgId));

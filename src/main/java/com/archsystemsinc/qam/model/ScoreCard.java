@@ -1,6 +1,7 @@
 package com.archsystemsinc.qam.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -166,9 +167,43 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private String macName;	
 	
+	@Transient
+	private ArrayList<Integer> jurIdList;	
+	
+	@Transient
+	private ArrayList<Integer> macIdList;	
+	
 	
 	public ScoreCard() {
 	}
+
+
+	public ArrayList<Integer> getJurIdList() {
+		return jurIdList;
+	}
+
+
+
+
+	public void setJurIdList(ArrayList<Integer> jurIdList) {
+		this.jurIdList = jurIdList;
+	}
+
+
+
+
+	public ArrayList<Integer> getMacIdList() {
+		return macIdList;
+	}
+
+
+
+
+	public void setMacIdList(ArrayList<Integer> macIdList) {
+		this.macIdList = macIdList;
+	}
+
+
 
 
 	public String getJurisdictionName() {
