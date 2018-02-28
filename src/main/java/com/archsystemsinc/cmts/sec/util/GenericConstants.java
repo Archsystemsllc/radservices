@@ -16,5 +16,4 @@ public final class GenericConstants {
 	public static final String EMAIL_TYPE_UM_CREATE_ADMIN_EMAIL = "UserCreate";
 	public static final String EMAIL_TYPE_UM_CREATE_USER_EMAIL = "UserCreate";
 	
-	
 }

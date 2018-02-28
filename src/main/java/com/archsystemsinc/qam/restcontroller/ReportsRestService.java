@@ -79,10 +79,15 @@ public class ReportsRestService {
 	public @ResponseBody HashMap<Long, CsrLog> getComplianceReportData(@RequestBody  ReportsForm reportsForm){
 		List<CsrLog> data=null;
 		HashMap <Long, CsrLog> resultsMap = new HashMap<Long, CsrLog> ();
+		Long userId = null;
 		try {
 			log.debug("--> getComplianceReportData:");
+			if(reportsForm.getUserId() !=null) {
+				userId = Long.valueOf(reportsForm.getUserId());
+			}
+			 
 			data = reportsService.retrieveComplianceReport(reportsForm.getMacId(), reportsForm.getJurisdictionName(), reportsForm.getComplianceReportType(),
-					reportsForm.getFromDate(), reportsForm.getToDate());
+					reportsForm.getFromDate(), reportsForm.getToDate(), reportsForm.getMacIdList(), reportsForm.getJurisdictionNameList(), userId);
 			
 			for(CsrLog csrLog: data) {
 				resultsMap.put(csrLog.getId(), csrLog);

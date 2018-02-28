@@ -43,8 +43,29 @@ public class ReportsForm {
     
     private ArrayList<Integer> jurIdList;
     
+    private ArrayList<String> jurisdictionNameList;
+    
+    private ArrayList<Integer> macIdList;
+    
+    
 
-   	public ArrayList<Integer> getJurIdList() {
+	public ArrayList<String> getJurisdictionNameList() {
+		return jurisdictionNameList;
+	}
+
+	public void setJurisdictionNameList(ArrayList<String> jurisdictionNameList) {
+		this.jurisdictionNameList = jurisdictionNameList;
+	}
+
+	public ArrayList<Integer> getMacIdList() {
+		return macIdList;
+	}
+
+	public void setMacIdList(ArrayList<Integer> macIdList) {
+		this.macIdList = macIdList;
+	}
+
+	public ArrayList<Integer> getJurIdList() {
 		return jurIdList;
 	}
 

@@ -3,6 +3,7 @@
  */
 package com.archsystemsinc.qam.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,9 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.archsystemsinc.qam.utils.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import javax.persistence.Transient;
 
 /**
  * @author PrakashTotta
@@ -34,6 +33,11 @@ public class CsrLog {
 	private String jurisdiction;
 	
 	
+	private ArrayList<String> jurisdictionNameList;
+	
+	private ArrayList<Integer> macIdList;
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
@@ -42,6 +46,27 @@ public class CsrLog {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	@Transient	
+	public ArrayList<Integer> getMacIdList() {
+		return macIdList;
+	}
+	
+	@Transient
+	public void setMacIdList(ArrayList<Integer> macIdList) {
+		this.macIdList = macIdList;
+	}
+
+	
+	@Transient
+	public ArrayList<String> getJurisdictionNameList() {
+		return jurisdictionNameList;
+	}
+	
+	@Transient
+	public void setJurisdictionNameList(ArrayList<String> jurisdictionNameList) {
+		this.jurisdictionNameList = jurisdictionNameList;
 	}
 
 	
