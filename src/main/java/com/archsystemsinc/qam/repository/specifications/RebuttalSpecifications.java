@@ -1,9 +1,11 @@
 package com.archsystemsinc.qam.repository.specifications;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -43,6 +45,24 @@ public final class RebuttalSpecifications {
 				if(jurisId != null && jurisId != 0) {
 					final Predicate matchingByJurId =  builder.equal(root.get(Rebuttal_.jurisId), jurisId);
 					return matchingByJurId;
+				} else 
+					return null;
+			}
+		};
+	}
+	
+	public static Specification<Rebuttal> searchByJurIdList(final ArrayList<Integer> jurIdList) {
+		return new Specification<Rebuttal>() {
+			@Override
+			public final Predicate toPredicate(final Root<Rebuttal> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(jurIdList != null ) {
+					
+					Expression<Integer> exp = root.get(Rebuttal_.jurisId);
+					final Predicate matchingByJurIdList = exp.in(jurIdList);
+					return matchingByJurIdList;
+					
 				} else 
 					return null;
 			}

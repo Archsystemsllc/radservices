@@ -78,7 +78,7 @@ public class RadUser {
 	private Long macId;
 
 	private Long status;
-	private Long jurId;
+	private String jurId;
 	private Long pccId;
 	
 	private Date lastLoggedinDate;
@@ -241,11 +241,11 @@ public class RadUser {
 	}
 	
 	@Column(name = "JUR_ID")
-	public Long getJurId() {
+	public String getJurId() {
 		return jurId;
 	}
 
-	public void setJurId(Long jurId) {
+	public void setJurId(String jurId) {
 		this.jurId = jurId;
 	}
 }

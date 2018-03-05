@@ -44,7 +44,7 @@ public class ScoreCardService {
 		
 		Specifications< ScoreCard > specifications = Specifications.where
 				(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
-				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
+				.and(ScoreCardSpecifications.searchByJurIdList(scoreCard.getJurIdList()))		
 				.and(ScoreCardSpecifications.searchByFailureReason("Fail"))
 			;
 		return scoreCardRepository.findAll(specifications);
@@ -57,7 +57,7 @@ public class ScoreCardService {
 				.and(ScoreCardSpecifications.searchByCallResult(scoreCard.getCallResult()))				
 				.and(ScoreCardSpecifications.searchByScorecardType(scoreCard.getScorecardType()))
 				.and(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
-				.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
+				//.and(ScoreCardSpecifications.searchByJurId(scoreCard.getJurId()))
 				.and(ScoreCardSpecifications.searchByJurIdList(scoreCard.getJurIdList()))				
 				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
 				.and(ScoreCardSpecifications.searchByUserId(scoreCard.getUserId()))

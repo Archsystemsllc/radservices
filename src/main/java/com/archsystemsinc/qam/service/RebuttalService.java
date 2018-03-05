@@ -43,6 +43,7 @@ public class RebuttalService {
 		Specifications< Rebuttal > specifications = Specifications.where
 					(RebuttalSpecifications.searchByUserId(rebuttal.getUserId()))
 							.and(RebuttalSpecifications.searchByMacId(rebuttal.getMacId()))
+							.and(RebuttalSpecifications.searchByJurIdList(rebuttal.getJurisIdList()))	
 							.and(RebuttalSpecifications.searchByJurId(rebuttal.getJurisId()));
 															
 		return rebuttalRepository.findAll(specifications);

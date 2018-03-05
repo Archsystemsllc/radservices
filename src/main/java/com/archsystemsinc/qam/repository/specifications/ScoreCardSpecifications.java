@@ -97,7 +97,7 @@ public final class ScoreCardSpecifications {
 		};
 	}
 	
-	public static Specification<ScoreCard> searchByJurId(final Integer jurId) {
+	/*public static Specification<ScoreCard> searchByJurId(final Integer jurId) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
@@ -110,7 +110,7 @@ public final class ScoreCardSpecifications {
 			}
 		};
 	}
-	
+	*/
 	
 	public static Specification<ScoreCard> searchByJurIdList(final ArrayList<Integer> jurIdList) {
 		return new Specification<ScoreCard>() {

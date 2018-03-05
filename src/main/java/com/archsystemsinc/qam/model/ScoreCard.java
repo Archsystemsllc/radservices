@@ -145,6 +145,24 @@ public class ScoreCard implements Serializable {
 	@Column(name="customer_skills_call_failure_time")
 	private String customerSkillsCallFailureTime;
 	
+	//New Fields
+	@Column(name="qam_calibration_status")
+	private String qamCalibrationStatus;
+	
+	@Column(name="cms_calibration_status")
+	private String cmsCalibrationStatus;
+	
+	@Column(name="qam_calibration_datetime")
+	private Date qamCalibrationUpdateDateTime;
+	
+	@Column(name="cms_calibration_datetime")
+	private Date cmsCalibrationUpdateDateTime;
+	
+	@Column(name="scorecard_status_update_datetime")
+	private Date scoreCardStatusUpdateDateTime;
+	
+	
+	//Trainsient Variables
 	@Transient
 	private Date filterFromDate;
 	
@@ -176,6 +194,93 @@ public class ScoreCard implements Serializable {
 	
 	public ScoreCard() {
 	}
+	
+
+	
+
+
+
+	public String getQamCalibrationStatus() {
+		return qamCalibrationStatus;
+	}
+
+
+
+
+
+
+	public void setQamCalibrationStatus(String qamCalibrationStatus) {
+		this.qamCalibrationStatus = qamCalibrationStatus;
+	}
+
+
+
+
+
+
+	public Date getQamCalibrationUpdateDateTime() {
+		return qamCalibrationUpdateDateTime;
+	}
+
+
+
+
+
+
+	public void setQamCalibrationUpdateDateTime(Date qamCalibrationUpdateDateTime) {
+		this.qamCalibrationUpdateDateTime = qamCalibrationUpdateDateTime;
+	}
+
+
+
+
+
+
+	public String getCmsCalibrationStatus() {
+		return cmsCalibrationStatus;
+	}
+
+
+
+
+	public void setCmsCalibrationStatus(String cmsCalibrationStatus) {
+		this.cmsCalibrationStatus = cmsCalibrationStatus;
+	}
+
+
+
+
+	
+
+
+
+
+	public Date getCmsCalibrationUpdateDateTime() {
+		return cmsCalibrationUpdateDateTime;
+	}
+
+
+
+
+	public void setCmsCalibrationUpdateDateTime(Date cmsCalibrationUpdateDateTime) {
+		this.cmsCalibrationUpdateDateTime = cmsCalibrationUpdateDateTime;
+	}
+
+
+
+
+	public Date getScoreCardStatusUpdateDateTime() {
+		return scoreCardStatusUpdateDateTime;
+	}
+
+
+
+
+	public void setScoreCardStatusUpdateDateTime(Date scoreCardStatusUpdateDateTime) {
+		this.scoreCardStatusUpdateDateTime = scoreCardStatusUpdateDateTime;
+	}
+
+
 
 
 	public ArrayList<Integer> getJurIdList() {
@@ -185,9 +290,13 @@ public class ScoreCard implements Serializable {
 
 
 
+
+
 	public void setJurIdList(ArrayList<Integer> jurIdList) {
 		this.jurIdList = jurIdList;
 	}
+
+
 
 
 

@@ -69,28 +69,28 @@ public class MailServiceImpl implements MailService {
             
         }
         
-        if (emailBody.contains("<<MAC_NAME>>")) {
+        if (emailBody.contains("<<MAC_NAME>>") && emailObject.getMacName() !=null) {
         	emailBody = emailBody.replace("<<MAC_NAME>>", emailObject.getMacName());
         }
         
-        if (emailBody.contains("<<JURIS_NAME>>")) {
+        if (emailBody.contains("<<JURIS_NAME>>") && emailObject.getJurisidctionName() !=null) {
         	emailBody = emailBody.replace("<<JURIS_NAME>>", emailObject.getJurisidctionName());
         }
         
-        if (emailBody.contains("<<LINK>>")) {
+        if (emailBody.contains("<<LINK>>") && emailObject.getLink() !=null) {
         	emailBody = emailBody.replace("<<LINK>>", emailObject.getLink());
         }
-        if (emailBody.contains("<<ROLE>>")) {
-        	emailBody = emailBody.replace("<<ROLE>>", emailObject.getLink());
+        if (emailBody.contains("<<ROLE>>")  && emailObject.getRole() !=null) {
+        	emailBody = emailBody.replace("<<ROLE>>", emailObject.getRole());
         }
-        if (emailBody.contains("<<USERNAME>>")) {
-        	emailBody = emailBody.replace("<<USERNAME>>", emailObject.getLink());
+        if (emailBody.contains("<<USERNAME>>")  && emailObject.getUsername() !=null) {
+        	emailBody = emailBody.replace("<<USERNAME>>", emailObject.getUsername());
         }
-        if (emailBody.contains("<<PASSWORD>>")) {
-        	emailBody = emailBody.replace("<<PASSWORD>>", emailObject.getLink());
+        if (emailBody.contains("<<PASSWORD>>")  && emailObject.getPassword() !=null) {
+        	emailBody = emailBody.replace("<<PASSWORD>>", emailObject.getPassword());
         }
         
-        if (emailBody.contains("<<STATUS>>")) {
+        if (emailBody.contains("<<STATUS>>")  && emailObject.getStatus() !=null) {
         	emailBody = emailBody.replace("<<STATUS>>", emailObject.getStatus());
         }
         	

@@ -2,6 +2,8 @@ package com.archsystemsinc.qam.model;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import javax.persistence.*;
 
 
@@ -133,11 +135,32 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private String jurisName;
 	
+	@Transient
+	private ArrayList<Integer> jurisIdList;
+	
 
 	public Rebuttal() {
 	}
-	
-	
+
+	public ArrayList<Integer> getJurisIdList() {
+		return jurisIdList;
+	}
+
+
+
+
+
+
+
+	public void setJurisIdList(ArrayList<Integer> jurisIdList) {
+		this.jurisIdList = jurisIdList;
+	}
+
+
+
+
+
+
 
 	public String getMacName() {
 		return macName;
