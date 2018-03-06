@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.persistence.*;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  * The persistent class for the rebuttal database table.
@@ -129,6 +131,19 @@ public class Rebuttal implements Serializable {
 	@Column(name="lob")
 	private String lob;
 	
+	@Lob @Basic(fetch = FetchType.LAZY)
+    @Column(name="rebuttal_file_attachment")
+    private byte[] rebuttalFileAttachment;
+	
+	@Column(name="file_name")
+	private String fileName;
+	
+	@Column(name="file_description")
+	private String fileDescription;
+	
+	@Column(name="file_type")
+	private String fileType;
+	
 	@Transient
 	private String macName;
 	
@@ -138,9 +153,78 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private ArrayList<Integer> jurisIdList;
 	
+	@Transient
+	private MultipartFile rebuttalFileObject;
+	
 
 	public Rebuttal() {
 	}
+	
+	
+
+	public MultipartFile getRebuttalFileObject() {
+		return rebuttalFileObject;
+	}
+
+
+
+
+
+	public void setRebuttalFileObject(MultipartFile rebuttalFileObject) {
+		this.rebuttalFileObject = rebuttalFileObject;
+	}
+
+
+
+
+
+	public String getFileName() {
+		return fileName;
+	}
+
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
+
+	public String getFileDescription() {
+		return fileDescription;
+	}
+
+
+
+	public void setFileDescription(String fileDescription) {
+		this.fileDescription = fileDescription;
+	}
+
+
+
+	public String getFileType() {
+		return fileType;
+	}
+
+
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+
+
+	public byte[] getRebuttalFileAttachment() {
+		return rebuttalFileAttachment;
+	}
+
+
+
+	public void setRebuttalFileAttachment(byte[] rebuttalFileAttachment) {
+		this.rebuttalFileAttachment = rebuttalFileAttachment;
+	}
+
+
 
 	public ArrayList<Integer> getJurisIdList() {
 		return jurisIdList;

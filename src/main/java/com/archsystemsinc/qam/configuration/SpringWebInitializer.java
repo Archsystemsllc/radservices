@@ -62,7 +62,7 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     	return singleton;
 	}
     
-    @Value("${rad.uploadfile.server.location}")
+    @Value("${radui.uploadfile.server.location}")
     public static String SERVER_UPLOAD_FILE_LOCATION;
  
     //private static final String LOCATION = "/usr/share/tomcat8/work/Catalina/localhost/ROOT/"; 
@@ -73,7 +73,7 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     private static final long MAX_REQUEST_SIZE = 20971520; // 20MB : Total request size containing Multi part.
     private static final int FILE_SIZE_THRESHOLD = 0; // Size threshold after which files will be written to disk
     
-    /*private MultipartConfigElement getMultipartConfigElement() {
+    private MultipartConfigElement getMultipartConfigElement() {
 
     MultipartConfigElement multipartConfigElement = new MultipartConfigElement(
                 LOCATION, MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD);
@@ -82,10 +82,10 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(getResolver());
-    }*/
+        registration.setMultipartConfig(getMultipartConfigElement());
+    }
     
-    @Bean(name="multipartResolver") 
+   /* @Bean(name="multipartResolver") 
     public CommonsMultipartResolver getResolver() throws IOException{
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
          
@@ -95,7 +95,7 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
         //You may also set other available properties.
          
         return resolver;
-    }
+    }*/
     
     
 }

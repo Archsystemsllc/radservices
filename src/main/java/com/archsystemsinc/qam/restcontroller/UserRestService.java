@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +48,18 @@ public class UserRestService {
 	 * 
 	 * @return
 	 */
+	@RequestMapping(value = "/searchUsers", method = RequestMethod.POST)
+	public List<RadUser> searchUsers(@RequestBody RadUser radUser){
+		log.debug("--> searchUsers:");
+		List<RadUser> data = radUserService.search(radUser);
+		log.debug("<-- searchUsers");
+		return data;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/listRoles", method = RequestMethod.GET)
 	public List<Role> listRoles(){
 		log.debug("--> listRoles:");
@@ -66,6 +79,8 @@ public class UserRestService {
 		log.debug("<-- listUsers");
 		return data;
 	}
+	
+	
 	
 	/**
 	 * 

@@ -11,5 +11,5 @@ import com.archsystemsinc.qam.model.Role;
 public interface RoleRepository extends JpaRepository<Role, Long>{
 	
 	@Query("SELECT r FROM Role r where r.roleName = :roleName") 
-    String findByRoleName(@Param("roleName") String roleName);
+    Role findByRoleName(@Param("roleName") String roleName);
 }

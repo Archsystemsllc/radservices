@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
 import com.archsystemsinc.qam.repository.RadUserRepository;
 import com.archsystemsinc.qam.repository.RoleRepository;
+import com.archsystemsinc.qam.repository.specifications.RadUserSpecifications;
 
 /**
  * @author Prakash T
@@ -36,6 +38,26 @@ public class RadUserService {
 	 * 
 	 * @return
 	 */
+	
+	public List< RadUser > search( RadUser radUser ){
+		
+		if(radUser.getRoleString() != null && !radUser.getRoleString().equalsIgnoreCase("")) {
+			Role roleTemp = roleRepository.findByRoleName(radUser.getRoleString());
+			radUser.setRole(roleTemp);
+		}
+		
+		Specifications< RadUser > specifications = Specifications.where
+					(RadUserSpecifications.searchById(radUser.getId()))
+				.and(RadUserSpecifications.searchByUserName(radUser.getUserName()))				
+				.and(RadUserSpecifications.searchByMacId(radUser.getMacId()))
+				.and(RadUserSpecifications.searchByJurIdList(radUser.getJurIdList()))				
+				.and(RadUserSpecifications.searchByRole(radUser.getRole()))
+				.and(RadUserSpecifications.searchByLastName(radUser.getLastName()))
+				.and(RadUserSpecifications.searchByOrganizationLookup(radUser.getOrganizationLookup()))
+				;
+															
+		return radUserRepository.findAll(specifications);
+	}
 
 	public List<Role> listRoles() {
 		log.debug("--> listRoles:");
