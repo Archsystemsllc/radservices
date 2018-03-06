@@ -3,6 +3,7 @@
  */
 package com.archsystemsinc.qam.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * @author Prakash T
@@ -58,33 +60,106 @@ public class RadUser {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	private Long id;
-	private String userName;
-	private String password;
-	private Role role;
-	
-	private OrganizationLookup organizationLookup;
-	private String createdBy;
-	private String updatedBy;
-	private Date createdDate;
-	private Date updateDate;
-	private String emailId;
-	
-	private String firstName;
-	private String middleName;
-	private String lastName;
-	
-	private Long macId;
-
-	private Long status;
-	private String jurId;
-	private Long pccId;
-	
-	private Date lastLoggedinDate;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column(name = "USER_NAME")
+	private String userName;
+	
+	@Column(name = "PASSWORD")
+	private String password;
+	
+	@OneToOne
+	@JoinColumn(name="role_id")
+	private Role role;
+	
+	
+	@OneToOne
+	@JoinColumn(name="org_id")
+	private OrganizationLookup organizationLookup;
+	
+	@Column(name = "CREATED_BY")
+	private String createdBy;
+	
+	@Column(name = "UPDATED_BY")
+	private String updatedBy;
+	
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
+	
+	@Column(name = "UPDATED_DATE")
+	private Date updateDate;
+	
+	@Column(name = "EMAIL_ID")
+	private String emailId;
+	
+	
+	@Column(name = "FIRST_NAME")
+	private String firstName;
+	
+	@Column(name = "MIDDLE_NAME")
+	private String middleName;
+	
+	@Column(name = "LAST_NAME")
+	private String lastName;
+	
+	@Column(name = "MAC_ID")
+	private Long macId;
+	
+	
+	@Column(name = "RECORD_STATUS")
+	private Long status;
+	
+	@Column(name = "JUR_ID")
+	private String jurId;
+	
+	@Column(name = "PCC_ID")
+	private Long pccId;
+	
+	@Column(name = "last_loggedin_date")
+	private Date lastLoggedinDate;
+	
+	@Transient
+	private ArrayList<String> jurIdList;
+	
+	@Transient
+	private String roleString;
+	
+	@Transient
+	private String passwordConfirm;
+	
+	@Transient
+	private String passwordFromdb;
+	
+	
+	
+	
+	public String getPasswordFromdb() {
+		return passwordFromdb;
+	}
+
+	public void setPasswordFromdb(String passwordFromdb) {
+		this.passwordFromdb = passwordFromdb;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getRoleString() {
+		return roleString;
+	}
+
+	public void setRoleString(String roleString) {
+		this.roleString = roleString;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -92,8 +167,15 @@ public class RadUser {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public ArrayList<String> getJurIdList() {
+		return jurIdList;
+	}
 
-	@Column(name = "last_loggedin_date")
+	public void setJurIdList(ArrayList<String> jurIdList) {
+		this.jurIdList = jurIdList;
+	}
+
 	public Date getLastLoggedinDate() {
 		return lastLoggedinDate;
 	}
@@ -102,7 +184,7 @@ public class RadUser {
 		this.lastLoggedinDate = lastLoggedinDate;
 	}
 
-	@Column(name = "USER_NAME")
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -111,7 +193,7 @@ public class RadUser {
 		this.userName = userName;
 	}
 
-	@Column(name = "PASSWORD")
+
 	public String getPassword() {
 		return password;
 	}
@@ -120,8 +202,7 @@ public class RadUser {
 		this.password = password;
 	}
 
-	@OneToOne
-	@JoinColumn(name="role_id")
+	
 	public Role getRole() {
 		return role;
 	}
@@ -130,8 +211,7 @@ public class RadUser {
 		this.role = role;
 	}
 	
-	@OneToOne
-	@JoinColumn(name="org_id")
+	
 	public OrganizationLookup getOrganizationLookup() {
 		return organizationLookup;
 	}
@@ -140,7 +220,7 @@ public class RadUser {
 		this.organizationLookup = organizationLookup;
 	}
 
-	@Column(name = "CREATED_BY")
+	
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -149,7 +229,7 @@ public class RadUser {
 		this.createdBy = createdBy;
 	}
 
-	@Column(name = "UPDATED_BY")
+	
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
@@ -158,7 +238,7 @@ public class RadUser {
 		this.updatedBy = updatedBy;
 	}
 
-	@Column(name = "CREATED_DATE")
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -168,7 +248,7 @@ public class RadUser {
 	}
 
 	
-	@Column(name = "UPDATED_DATE")
+
 	public Date getUpdateDate() {
 		return updateDate;
 	}
@@ -177,7 +257,7 @@ public class RadUser {
 		this.updateDate = updateDate;
 	}
 	
-	@Column(name = "EMAIL_ID")
+	
 	public String getEmailId() {
 		return emailId;
 	}
@@ -186,7 +266,7 @@ public class RadUser {
 		this.emailId = emailId;
 	}
 
-	@Column(name = "RECORD_STATUS")
+
 	public Long getStatus() {
 		return status;
 	}
@@ -195,7 +275,7 @@ public class RadUser {
 		this.status = status;
 	}
 
-	@Column(name = "FIRST_NAME")
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -204,7 +284,7 @@ public class RadUser {
 		this.firstName = firstName;
 	}
 
-	@Column(name = "MIDDLE_NAME")
+	
 	public String getMiddleName() {
 		return middleName;
 	}
@@ -213,7 +293,7 @@ public class RadUser {
 		this.middleName = middleName;
 	}
 
-	@Column(name = "LAST_NAME")
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -222,12 +302,12 @@ public class RadUser {
 		this.lastName = lastName;
 	}
 
-	@Column(name = "MAC_ID")
+
 	public Long getMacId() {
 		return macId;
 	}
 
-	@Column(name = "PCC_ID")
+	
 	public Long getPccId() {
 		return pccId;
 	}
@@ -240,7 +320,7 @@ public class RadUser {
 		this.macId = macId;
 	}
 	
-	@Column(name = "JUR_ID")
+
 	public String getJurId() {
 		return jurId;
 	}
