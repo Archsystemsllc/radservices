@@ -134,7 +134,7 @@ public class UserRestService {
 		log.debug("--> findUser:"+radUser.getUserName());
 		List<RadUser> radUserReturnList = radUserService.search(radUser);
 		RadUser radUserReturn = null;
-		if (radUserReturnList != null) {
+		if (radUserReturnList != null && radUserReturnList.size() > 0) {
 			radUserReturn = radUserReturnList.get(0);
 		}
 		log.debug("<-- findUser");
@@ -187,7 +187,7 @@ public class UserRestService {
 	 * @return
 	 */
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public RadUser createUser(RadUser radUser){
+	public RadUser createUser(@RequestBody RadUser radUser){
 		log.debug("--> createUser:");
 		radUser = radUserService.createUser(radUser);
 		//mailService.sendEmail(GenericConstants.EMAIL_TYPE_UM_CREATE, fromEmail, "nissar.msis@gmail.com,mmohammed@archsystemsinc.com,ashaik@archsystemsinc.com");
