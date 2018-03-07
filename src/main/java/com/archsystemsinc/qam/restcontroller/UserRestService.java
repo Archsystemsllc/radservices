@@ -89,9 +89,11 @@ public class UserRestService {
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	public Integer updateUser(RadUser radUser){
 		log.debug("--> updateUser:"+radUser);
-		Integer count = radUserService.updateUser(radUser);
+		radUser.setStatus(1l);
+		radUser.setUpdateDate(new Date());
+		radUser = radUserService.updateUser(radUser);
 		log.debug("<-- updateUser");
-		return count;
+		return 1;
 	}
 	
 	/**

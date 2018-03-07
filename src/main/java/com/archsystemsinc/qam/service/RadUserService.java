@@ -86,19 +86,21 @@ public class RadUserService {
 	 * @return
 	 */
 
-	public Integer updateUser(RadUser radUser) {
+	public RadUser updateUser(RadUser radUser) {
 		log.debug("--> updateUser:" + radUser);
 		//The callee is sending encoded pwd
 		//BCryptPasswordEncoder b = new BCryptPasswordEncoder();
 		//radUser.setPassword(b.encode(radUser.getPassword()));
-		Integer count = radUserRepository.updateUserData(radUser.getPassword(),
+		
+		radUser = radUserRepository.save(radUser);
+		/*Integer count = radUserRepository.updateUserData(radUser.getPassword(),
 				radUser.getRole().getId(), radUser.getOrganizationLookup()
 						.getId(), radUser.getMacId(), radUser.getPccId(),
 				radUser.getEmailId(), radUser.getFirstName(), radUser
 						.getMiddleName(), radUser.getLastName(), radUser
-						.getId(), new Date(), radUser.getUserName());
+						.getId(), new Date(), radUser.getUserName());*/
 		log.debug("<-- updateUser");
-		return count;
+		return radUser;
 	}
 
 	/**
