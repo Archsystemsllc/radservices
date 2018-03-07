@@ -191,12 +191,33 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private ArrayList<Integer> macIdList;	
 	
+	@Transient
+	private ArrayList<String> macCallResultList;	
+	
 	
 	public ScoreCard() {
 	}
 	
 
 	
+
+
+
+	public ArrayList<String> getMacCallResultList() {
+		return macCallResultList;
+	}
+
+
+
+
+
+
+	public void setMacCallResultList(ArrayList<String> macCallResultList) {
+		this.macCallResultList = macCallResultList;
+	}
+
+
+
 
 
 

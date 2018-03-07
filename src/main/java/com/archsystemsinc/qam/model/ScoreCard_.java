@@ -20,6 +20,8 @@ public abstract class ScoreCard_ {
 	public static volatile SingularAttribute<ScoreCard, Date> qamEnddateTime;	
 	public static volatile SingularAttribute<ScoreCard, Date> qamStartdateTime;
 	public static volatile SingularAttribute<ScoreCard, Integer> userId;
-	
+	public static volatile SingularAttribute<ScoreCard, String> scorecardStatus;
+	public static volatile SingularAttribute<ScoreCard, String> qamCalibrationStatus;
+	public static volatile SingularAttribute<ScoreCard, String> cmsCalibrationStatus;
 	
 }

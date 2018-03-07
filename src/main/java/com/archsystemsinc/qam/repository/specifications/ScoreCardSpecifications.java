@@ -50,6 +50,54 @@ public final class ScoreCardSpecifications {
 		};
 	}	
 	
+	
+	public static Specification<ScoreCard> searchByCallResultList(final ArrayList<String> callResultList) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(callResultList != null ) {
+					
+					Expression<String> exp = root.get(ScoreCard_.callResult);
+					final Predicate matchingByCallResultList = exp.in(callResultList);
+					return matchingByCallResultList;
+					
+				} else 
+					return null;
+			}
+		};
+	}
+	
+	public static Specification<ScoreCard> searchByQamCalibrationStatus(final String qamCalibrationStatus) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(qamCalibrationStatus != null && !qamCalibrationStatus.equalsIgnoreCase("") && !qamCalibrationStatus.equalsIgnoreCase("ALL")) {
+					final Predicate matchingQamCalibrationStatus = builder.like(root.get(ScoreCard_.qamCalibrationStatus), qamCalibrationStatus + "%");
+					return matchingQamCalibrationStatus;
+				} else 
+					return null;
+			}
+		};
+	}	
+	
+	
+	public static Specification<ScoreCard> searchByCmsCalibrationStatus(final String cmsCalibrationStatus) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(cmsCalibrationStatus != null && !cmsCalibrationStatus.equalsIgnoreCase("") && !cmsCalibrationStatus.equalsIgnoreCase("ALL")) {
+					final Predicate matchingCmsCalibrationStatus = builder.like(root.get(ScoreCard_.cmsCalibrationStatus), cmsCalibrationStatus + "%");
+					return matchingCmsCalibrationStatus;
+				} else 
+					return null;
+			}
+		};
+	}	
+	
 	public static Specification<ScoreCard> searchByQamFullName(final String qamFullName) {
 		return new Specification<ScoreCard>() {
 			@Override

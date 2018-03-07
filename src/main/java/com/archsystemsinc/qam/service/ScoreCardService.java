@@ -61,6 +61,9 @@ public class ScoreCardService {
 				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
 				.and(ScoreCardSpecifications.searchByUserId(scoreCard.getUserId()))
 				.and(ScoreCardSpecifications.findByQamEnddateTimeBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
+				.and(ScoreCardSpecifications.searchByCallResultList(scoreCard.getMacCallResultList()))
+				.and(ScoreCardSpecifications.searchByQamCalibrationStatus(scoreCard.getQamCalibrationStatus()))
+				.and(ScoreCardSpecifications.searchByCmsCalibrationStatus(scoreCard.getCmsCalibrationStatus()))
 				;
 															
 		return scoreCardRepository.findAll(specifications);
