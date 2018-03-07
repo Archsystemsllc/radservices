@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
+import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.service.mail.MailService;
 import com.archsystemsinc.qam.utils.EmailObject;
@@ -125,12 +127,18 @@ public class UserRestService {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/findUser/{userName}", method = RequestMethod.GET)
-	public RadUser findUser(@PathVariable("userName") String userName){
-		log.debug("--> findUser:"+userName);
-		RadUser radUser = radUserService.findUser(userName);
+	
+
+	@RequestMapping(value = "/findUser",method = RequestMethod.POST)
+	public @ResponseBody RadUser findUser(@RequestBody RadUser radUser ){
+		log.debug("--> findUser:"+radUser.getUserName());
+		List<RadUser> radUserReturnList = radUserService.search(radUser);
+		RadUser radUserReturn = null;
+		if (radUserReturnList != null) {
+			radUserReturn = radUserReturnList.get(0);
+		}
 		log.debug("<-- findUser");
-		return radUser;
+		return radUserReturn;
 	}
 	
 	/**
