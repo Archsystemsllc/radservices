@@ -49,9 +49,7 @@ public class ReportsRestService {
 			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("")) {
 				scoreCardReportObject.setMacIdReportSearchString(reportsForm.getMacId());
 			}
-			if(!reportsForm.getJurisId().equalsIgnoreCase("")) {
-				scoreCardReportObject.setJurisIdReportSearchString(reportsForm.getJurisId());
-			}
+			
 			if(!reportsForm.getProgramId().equalsIgnoreCase("")) {
 				scoreCardReportObject.setProgramIdReportSearchString(reportsForm.getProgramId());
 			}		

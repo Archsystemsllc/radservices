@@ -173,7 +173,7 @@ public class ScoreCard implements Serializable {
 	private String macIdReportSearchString;	
 	
 	@Transient
-	private String jurisIdReportSearchString;
+	private String[] jurisIdReportSearchString;
 	
 	@Transient
 	private String programIdReportSearchString;
@@ -387,10 +387,7 @@ public class ScoreCard implements Serializable {
 
 
 
-
-
-
-	public String getJurisIdReportSearchString() {
+	public String[] getJurisIdReportSearchString() {
 		return jurisIdReportSearchString;
 	}
 
@@ -399,13 +396,9 @@ public class ScoreCard implements Serializable {
 
 
 
-
-
-	public void setJurisIdReportSearchString(String jurisIdReportSearchString) {
+	public void setJurisIdReportSearchString(String[] jurisIdReportSearchString) {
 		this.jurisIdReportSearchString = jurisIdReportSearchString;
 	}
-
-
 
 
 
