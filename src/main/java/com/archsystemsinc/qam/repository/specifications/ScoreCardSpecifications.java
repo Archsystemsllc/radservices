@@ -166,7 +166,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(jurIdList != null ) {
+				if(jurIdList != null && jurIdList.size() > 0) {
 					
 					Expression<Integer> exp = root.get(ScoreCard_.jurId);
 					final Predicate matchingByJurIdList = exp.in(jurIdList);
