@@ -42,7 +42,7 @@ public class ScorecardRestService {
     String radUIEndPoint;
 	
 	@RequestMapping(value = "/searchScoreCard", method = RequestMethod.POST)
-	public List<ScoreCard> searchScoreCard(@RequestBody  ScoreCard scoreCard){
+	public @ResponseBody List<ScoreCard> searchScoreCard(@RequestBody  ScoreCard scoreCard){
 		List<ScoreCard> data=null;
 		try {
 			log.debug("--> searchScoreCard:");
