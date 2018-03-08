@@ -46,7 +46,7 @@ public class ReportsRestService {
 		ScoreCard scoreCardReportObject = new ScoreCard();
 		try {
 			log.debug("--> getMacJurisReport:");
-			if(!reportsForm.getMacId().equalsIgnoreCase("")) {
+			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("")) {
 				scoreCardReportObject.setMacIdReportSearchString(reportsForm.getMacId());
 			}
 			if(!reportsForm.getJurisId().equalsIgnoreCase("")) {
