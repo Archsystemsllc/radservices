@@ -13,10 +13,9 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
 import com.archsystemsinc.qam.model.Rebuttal;
-import com.archsystemsinc.qam.model.ScoreCard;
+import com.archsystemsinc.qam.model.ReportsForm;
 import com.archsystemsinc.qam.repository.RebuttalRepository;
 import com.archsystemsinc.qam.repository.specifications.RebuttalSpecifications;
-import com.archsystemsinc.qam.repository.specifications.ScoreCardSpecifications;
 
 /**
  * @author Abdul Nissar S
@@ -47,6 +46,21 @@ public class RebuttalService {
 							.and(RebuttalSpecifications.searchByJurId(rebuttal.getJurisId()));
 															
 		return rebuttalRepository.findAll(specifications);
+	}
+	
+public List< Rebuttal > searchRebuttalForReport( ReportsForm reportsForm ){	
+		
+		Specifications< Rebuttal > specifications = Specifications.where
+					(RebuttalSpecifications.searchByMacId(Integer.valueOf(reportsForm.getMacId())))
+							.and(RebuttalSpecifications.searchByJurIdList(reportsForm.getJurIdList()))
+							.and(RebuttalSpecifications.searchByRebuttalStatus(reportsForm.getRebuttalStatus()))
+							.and(RebuttalSpecifications.findByDatePostedBetween(reportsForm.getFromDate(),reportsForm.getToDate()))
+							.and(RebuttalSpecifications.searchByCallCategory(reportsForm.getCallCategoryType()))
+							;
+															
+		return rebuttalRepository.findAll(specifications);
+		
+
 	}
 }
 

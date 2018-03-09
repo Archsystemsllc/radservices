@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
+import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.repository.ScoreCardRepository;
 import com.archsystemsinc.qam.repository.specifications.ScoreCardSpecifications;
@@ -45,7 +46,9 @@ public class ScoreCardService {
 		Specifications< ScoreCard > specifications = Specifications.where
 				(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
 				.and(ScoreCardSpecifications.searchByJurIdList(scoreCard.getJurIdList()))		
-				.and(ScoreCardSpecifications.searchByFailureReason("Fail"))
+				.and(ScoreCardSpecifications.searchByFailureReason(GenericConstants.FAIL_STRING))
+				.and(ScoreCardSpecifications.searchByQamCalibrationStatus(GenericConstants.FAIL_STRING))
+				.and(ScoreCardSpecifications.searchByCmsCalibrationStatus(GenericConstants.FAIL_STRING))
 			;
 		return scoreCardRepository.findAll(specifications);
 	}

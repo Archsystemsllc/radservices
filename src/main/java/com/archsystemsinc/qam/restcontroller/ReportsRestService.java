@@ -20,6 +20,7 @@ import com.archsystemsinc.qam.model.CsrLog;
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.ReportsForm;
 import com.archsystemsinc.qam.model.ScoreCard;
+import com.archsystemsinc.qam.service.RebuttalService;
 import com.archsystemsinc.qam.service.ReportsService;
 import com.archsystemsinc.qam.service.ScoreCardService;
 	
@@ -37,6 +38,9 @@ public class ReportsRestService {
 	
 	@Autowired
 	private ScoreCardService scoreCardService;
+	
+	@Autowired
+	private RebuttalService rebuttalService;
 	
 	
 	@RequestMapping(value = "/getMacJurisReport", method = RequestMethod.POST)
@@ -104,8 +108,10 @@ public class ReportsRestService {
 		HashMap <Integer, Rebuttal> resultsMap = new HashMap<Integer, Rebuttal> ();
 		try {
 			log.debug("--> getRebuttalReportData:");
-			data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getCallCategoryType(), reportsForm.getRebuttalStatus(),
-					reportsForm.getFromDate(), reportsForm.getToDate());
+			/*data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getCallCategoryType(), reportsForm.getRebuttalStatus(),
+					reportsForm.getFromDate(), reportsForm.getToDate());*/
+			
+			data = rebuttalService.searchRebuttalForReport(reportsForm);
 			
 			for(Rebuttal rebuttal: data) {
 				resultsMap.put(rebuttal.getId(), rebuttal);

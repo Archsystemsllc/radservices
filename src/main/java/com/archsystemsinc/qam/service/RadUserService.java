@@ -42,7 +42,7 @@ public class RadUserService {
 	public List< RadUser > search( RadUser radUser ){
 		
 		if(radUser.getRoleString() != null && !radUser.getRoleString().equalsIgnoreCase("")) {
-			Role roleTemp = roleRepository.findByRoleName(radUser.getRoleString());
+			Role roleTemp = roleRepository.findOne(Long.valueOf(radUser.getRoleString()));
 			radUser.setRole(roleTemp);
 		}
 		

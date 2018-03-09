@@ -3,6 +3,7 @@ package com.archsystemsinc.qam.model;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -41,8 +42,8 @@ public class Rebuttal implements Serializable {
 	@Column(name="csr_id")
 	private Integer csrId;
 
-	@Column(name="date_posted")
-	private String datePosted;
+	@Column(name="date_posted_2")
+	private Date datePosted;
 
 	private String description;
 
@@ -555,13 +556,17 @@ public class Rebuttal implements Serializable {
 		this.csrId = csrId;
 	}
 
-	public String getDatePosted() {
-		return this.datePosted;
+	public Date getDatePosted() {
+		return datePosted;
 	}
 
-	public void setDatePosted(String datePosted) {
+
+
+	public void setDatePosted(Date datePosted) {
 		this.datePosted = datePosted;
 	}
+
+
 
 	public String getDescription() {
 		return this.description;

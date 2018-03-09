@@ -1,6 +1,7 @@
 package com.archsystemsinc.qam.repository.specifications;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -68,22 +69,25 @@ public final class RadUserSpecifications {
 	
 	public static Specification<RadUser> searchByJurIdList(final ArrayList<String> jurIdList) {
 		return new Specification<RadUser>() {
-			@Override
+			
 			public final Predicate toPredicate(final Root<RadUser> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				final List<Predicate> matchingByJurIdLists = new ArrayList<>();
 				
-				if(jurIdList != null ) {
-					
-					Expression<String> exp = root.get(RadUser_.jurId);
-					final Predicate matchingByJurIdList = exp.in(jurIdList);
-					return matchingByJurIdList;
+				if(jurIdList != null && jurIdList.size() > 0) {
+					for(String jurisId: jurIdList) {
+						matchingByJurIdLists.add(builder.like(root.get(RadUser_.jurId), "%"+jurisId+"%"));
+						
+					}
+					return builder.and(matchingByJurIdLists.toArray(new Predicate[matchingByJurIdLists.size()]));
 					
 				} else 
 					return null;
+				
+				
 			}
 		};
-	}
-	
+	}	
 	
 	public static Specification<RadUser> searchByRole(final Role role) {
 		return new Specification<RadUser>() {

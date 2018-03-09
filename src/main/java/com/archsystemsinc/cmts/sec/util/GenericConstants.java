@@ -19,4 +19,7 @@ public final class GenericConstants {
 	public static final String UI_JURIS_SEPERATOR = ",";	
 	public static final String DB_JURIS_SEPERATOR = ":";
 	
+	public static final String FAIL_STRING = "Fail";
+	public static final String PASS_STRING = "Pass,";
+	
 }

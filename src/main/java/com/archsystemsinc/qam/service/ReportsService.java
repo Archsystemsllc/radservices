@@ -37,6 +37,9 @@ public class ReportsService {
 	@Autowired
 	private CsrLogRepository csrLogRepository;
 	
+	@Autowired
+	private RebuttalService rebuttalService;
+	
 	
 	@Autowired
 	private RebuttalRepository rebuttalRepository;
@@ -161,6 +164,8 @@ public class ReportsService {
 	public List<Rebuttal> retrieveRebuttalReportData(String macId, String jurisdiction, String callCategoryType, String rebuttalStatus, Date fromDate, Date toDate){
 		List<Rebuttal> reportResults = null;
 		List<Rebuttal> finalResultsList = null;
+		
+		
 		
 		if(macId.equalsIgnoreCase("ALL") && jurisdiction.equalsIgnoreCase("ALL")) {
 			reportResults = rebuttalRepository.rebuttalReport_AllMacAllJuris(fromDate, toDate);	

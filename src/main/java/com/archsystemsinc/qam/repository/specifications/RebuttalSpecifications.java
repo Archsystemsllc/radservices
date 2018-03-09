@@ -13,8 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.Rebuttal_;
-import com.archsystemsinc.qam.model.ScoreCard;
-import com.archsystemsinc.qam.model.ScoreCard_;
 
 public final class RebuttalSpecifications {
 
@@ -83,24 +81,55 @@ public final class RebuttalSpecifications {
 		};
 	}
 	
+	
+	public static Specification<Rebuttal> searchByCallCategory(final String callCategory) {
+		return new Specification<Rebuttal>() {
+			@Override
+			public final Predicate toPredicate(final Root<Rebuttal> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(callCategory != null && !callCategory.equalsIgnoreCase("") && !callCategory.equalsIgnoreCase("ALL")) {
+					final Predicate matchingCallCategory = builder.like(root.get(Rebuttal_.callCategory), callCategory + "%");
+					return matchingCallCategory;
+				} else 
+					return null;
+			}
+		};
+	}	
+	
+	
+	public static Specification<Rebuttal> searchByRebuttalStatus(final String rebuttalStatus) {
+		return new Specification<Rebuttal>() {
+			@Override
+			public final Predicate toPredicate(final Root<Rebuttal> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(rebuttalStatus != null && !rebuttalStatus.equalsIgnoreCase("") && !rebuttalStatus.equalsIgnoreCase("ALL")) {
+					final Predicate matchingRebuttalStatus = builder.like(root.get(Rebuttal_.rebuttalStatus), rebuttalStatus + "%");
+					return matchingRebuttalStatus;
+				} else 
+					return null;
+			}
+		};
+	}	
+	
 	/*
 	 * Select the eps inbetween dates
 	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
 	 */
 	
-	public static Specification<ScoreCard> findByQamEnddateTimeBetween(final Date filterFromDate, final Date filterToDate) {
-		return new Specification<ScoreCard>() {
+	public static Specification<Rebuttal> findByDatePostedBetween(final Date filterFromDate, final Date filterToDate) {
+		return new Specification<Rebuttal>() {
 			@Override
-			public final Predicate toPredicate(final Root<ScoreCard> root,
+			public final Predicate toPredicate(final Root<Rebuttal> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
-				Predicate matchingByQamEndDateTime = null;
+				Predicate matchingByDatePostedDateTime = null;
 				
 				if(filterFromDate != null && filterToDate != null){					
-					matchingByQamEndDateTime = builder.between(root.get(ScoreCard_.qamEnddateTime), filterFromDate, filterToDate);
+					matchingByDatePostedDateTime = builder.between(root.get(Rebuttal_.datePosted), filterFromDate, filterToDate);
 				}
-				return matchingByQamEndDateTime;							
+				return matchingByDatePostedDateTime;							
 			}
 		};
 	}
-
+	
+	
 }
