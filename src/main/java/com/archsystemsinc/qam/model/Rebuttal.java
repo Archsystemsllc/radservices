@@ -25,6 +25,9 @@ public class Rebuttal implements Serializable {
 
 	@Column(name="call_date")
 	private String callDate;
+	
+	@Column(name="agree")
+	private String agree;
 
 	@Column(name="call_type")
 	private String callType;
@@ -619,20 +622,18 @@ public class Rebuttal implements Serializable {
 		this.userId = userId;
 	}
 
-	/*public MacLookup getMacLookup() {
-		return this.macLookup;
+
+
+	public String getAgree() {
+		return agree;
 	}
 
-	public void setMacLookup(MacLookup macLookup) {
-		this.macLookup = macLookup;
+
+
+	public void setAgree(String agree) {
+		this.agree = agree;
 	}
 
-	public RebuttalQmLog getRebuttalQmLog() {
-		return this.rebuttalQmLog;
-	}
-
-	public void setRebuttalQmLog(RebuttalQmLog rebuttalQmLog) {
-		this.rebuttalQmLog = rebuttalQmLog;
-	}*/
+	
 
 }
