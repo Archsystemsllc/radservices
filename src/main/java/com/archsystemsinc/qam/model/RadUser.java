@@ -133,9 +133,40 @@ public class RadUser {
 	@Transient
 	private String passwordFromdb;
 	
+	@Column(name = "TOKEN")
+	private String token;
+	
+	@Column(name = "ENABLED")
+	private Boolean enabled;	
+	
+	@Column(name = "expiry_date")
+	private Boolean expiryDate;
 	
 	
-	
+	public Boolean getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Boolean expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getPasswordFromdb() {
 		return passwordFromdb;
 	}

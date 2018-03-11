@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -107,14 +108,35 @@ public class RadUserService {
 	 * 
 	 * @return
 	 */
+	
+	@Autowired
+	ApplicationEventPublisher eventPublisher;
 
 	public RadUser createUser(RadUser radUser) {
 		log.debug("--> createUser:");
-		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
-		radUser.setPassword(b.encode(radUser.getPassword()));
-		radUser.setCreatedDate(new Date());
-		radUser.setUpdateDate(new Date());
-		radUser = radUserRepository.save(radUser);
+		try {
+			BCryptPasswordEncoder b = new BCryptPasswordEncoder();
+			radUser.setPassword(b.encode(radUser.getPassword()));
+			radUser.setCreatedDate(new Date());
+			radUser.setUpdateDate(new Date());
+			radUser = radUserRepository.save(radUser);
+			
+			if (radUser == null) {
+				radUser = null;
+		    }
+		  /*  try {
+		        //String appUrl = request.getContextPath();
+		        eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+		          (radUser, request.getLocale(), appUrl));
+		    } catch (Exception me) {
+		    	radUser = null;
+		    }
+		   */
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		log.debug("<-- createUser");
 		return radUser;
 	}
