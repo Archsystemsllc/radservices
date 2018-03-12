@@ -352,11 +352,10 @@ public class CsrListService {
 	}
 	
 	
-public List<CsrLists> getCsrNames(String csrLName,Long macLookupId,String jurisdiction, String program) {
+	public List<CsrLists> getCsrNames(String csrLName,Long macLookupId,String jurisdiction, String program) {
 		
 		List<CsrLists> tempCsrList = null;		
-		List<String[]> csrFullNameList = new ArrayList<String[]>();
-		String resultArray[] = new String[2];
+		
 		try {
 			boolean macAllFlag = false;
 			
