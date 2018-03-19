@@ -116,6 +116,10 @@ public class ReportsService {
 		List<CsrLog> reportResults = null;
 		List<CsrLog> finalResultsList = null;
 		
+		if(macId.equalsIgnoreCase("ALL")) {
+			macId = "0";
+		}
+		
 		Specifications< CsrLog > specifications = Specifications.where
 				(CsrLogSpecifications.searchByJurisdiction(jurisdiction))
 			.and(CsrLogSpecifications.searchByMacId(Integer.valueOf(macId)))				

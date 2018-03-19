@@ -111,6 +111,9 @@ public class ReportsRestService {
 			/*data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getCallCategoryType(), reportsForm.getRebuttalStatus(),
 					reportsForm.getFromDate(), reportsForm.getToDate());*/
 			
+			if(reportsForm.getMacId() != null && reportsForm.getMacId().equalsIgnoreCase("ALL")) {
+				reportsForm.setMacId("0");
+			}
 			data = rebuttalService.searchRebuttalForReport(reportsForm);
 			
 			for(Rebuttal rebuttal: data) {

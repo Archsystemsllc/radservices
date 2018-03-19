@@ -4,8 +4,10 @@
 package com.archsystemsinc.qam.restcontroller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.archsystemsinc.qam.model.CsrLists;
+import com.archsystemsinc.qam.model.MacLookup;
 import com.archsystemsinc.qam.service.CsrListService;
+import com.archsystemsinc.qam.service.MacLookupService;
 import com.archsystemsinc.qam.utils.UploadResponse;
 	
 	/**
@@ -74,6 +78,9 @@ public class CsrListRestService {
 		return response;
 	}
 	
+	@Autowired
+	private MacLookupService macLookupService;
+	
 	@RequestMapping(value = "/csrList", method = RequestMethod.GET)
 	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
 		log.debug("--> getCsrList:");
@@ -84,7 +91,19 @@ public class CsrListRestService {
 		} 
 		log.debug("<-- getCsrList");
 		
-		return data;
+		HashMap <Long, String> macIdHashMap = new HashMap<Long, String>();
+		List<MacLookup> macData = macLookupService.findAll();
+		for(MacLookup macLookup: macData) {
+			macIdHashMap.put(macLookup.getId(), macLookup.getMacName());
+		}
+		
+		List<CsrLists> finalList = new ArrayList<CsrLists>();
+		for (CsrLists csrListTemp: data) {
+			csrListTemp.setMacName(macIdHashMap.get(csrListTemp.getMacLookupId()));
+			finalList.add(csrListTemp);
+		}
+		
+		return finalList;
 	}	
 	
 	@RequestMapping(value = "/csrListMonths", method = RequestMethod.GET)
@@ -108,17 +127,32 @@ public class CsrListRestService {
 		
 		macLookupId = macLookupId.toLowerCase();
 		List<CsrLists> data = csrListService.getCsrNames(csrLName, Long.valueOf(macLookupId), jurisdiction,program);			
-		if(data==null || data.size()==0) {
-			data = new ArrayList<CsrLists>();
+		HashMap<String, CsrLists> csrListUniqMap = new HashMap<String, CsrLists> ();
+		for(CsrLists csrListTemp: data) {
+			
+			csrListUniqMap.put(csrListTemp.getFirstName()+"_"+csrListTemp.getLastName(),csrListTemp);
+		}
+		
+		
+		Collection<CsrLists> values = csrListUniqMap.values();
+        
+		//Creating an ArrayList of values
+		         
+		ArrayList<CsrLists> finalNameData = new ArrayList<CsrLists>(values);
+		
+		
+		if(finalNameData==null || finalNameData.size()==0) {
+			finalNameData = new ArrayList<CsrLists>();
 			CsrLists csrListTemp= new CsrLists();
 			csrListTemp.setFirstName("No CSR's Found");
 			csrListTemp.setMiddleName("");
 			csrListTemp.setLastName("");
 			csrListTemp.setLevel("");
-			data.add(csrListTemp);
+			finalNameData.add(csrListTemp);
 		} else {
-			Collections.sort(data);
+			Collections.sort(finalNameData);
 		}
-		return data;
+		
+		return finalNameData;
 	}
 }

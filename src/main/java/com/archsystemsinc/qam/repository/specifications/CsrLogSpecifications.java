@@ -57,7 +57,7 @@ public final class CsrLogSpecifications {
 			public final Predicate toPredicate(final Root<CsrLog> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(macIdList != null ) {
+				if(macIdList != null && macIdList.size() > 0) {
 					
 					Expression<Integer> exp = root.get(CsrLog_.macId);
 					final Predicate matchingByMacIdList = exp.in(macIdList);
@@ -75,7 +75,7 @@ public final class CsrLogSpecifications {
 			public final Predicate toPredicate(final Root<CsrLog> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(jurisdictionNameList != null ) {
+				if(jurisdictionNameList != null && jurisdictionNameList.size() > 0) {
 					
 					Expression<String> exp = root.get(CsrLog_.jurisdiction);
 					final Predicate matchingByJurisdictionNameList = exp.in(jurisdictionNameList);

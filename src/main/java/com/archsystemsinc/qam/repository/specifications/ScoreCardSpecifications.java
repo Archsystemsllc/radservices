@@ -57,7 +57,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(callResultList != null ) {
+				if(callResultList != null && callResultList.size() > 0) {
 					
 					Expression<String> exp = root.get(ScoreCard_.callResult);
 					final Predicate matchingByCallResultList = exp.in(callResultList);
@@ -133,7 +133,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(macIdList != null ) {
+				if(macIdList != null && macIdList.size() > 0) {
 					
 					Expression<Integer> exp = root.get(ScoreCard_.macId);
 					final Predicate matchingByMacIdList = exp.in(macIdList);
@@ -143,22 +143,7 @@ public final class ScoreCardSpecifications {
 					return null;
 			}
 		};
-	}
-	
-	/*public static Specification<ScoreCard> searchByJurId(final Integer jurId) {
-		return new Specification<ScoreCard>() {
-			@Override
-			public final Predicate toPredicate(final Root<ScoreCard> root,
-					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
-				if(jurId != null && jurId != 0) {
-					final Predicate matchingByJurId =  builder.equal(root.get(ScoreCard_.jurId), jurId);
-					return matchingByJurId;
-				} else 
-					return null;
-			}
-		};
-	}
-	*/
+	}	
 	
 	public static Specification<ScoreCard> searchByJurIdList(final ArrayList<Integer> jurIdList) {
 		return new Specification<ScoreCard>() {
@@ -241,8 +226,4 @@ public final class ScoreCardSpecifications {
 			}
 		};
 	}
-	
-	
-	
-
 }

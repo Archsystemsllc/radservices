@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.archsystemsinc.qam.utils.DateSerializer;
 import com.archsystemsinc.qam.utils.StringToDateConverter;
@@ -24,37 +25,76 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @Entity
 @Table(name = "csr_lists")
 public class CsrLists implements Comparable<CsrLists>{
-
-	private Long id;
-	private String firstName;
-	private String middleName;
-	private String lastName;
-	private String location;
-	private String level;
-	private String jurisdiction;
-	private String program;
-	private Long userId;
-	private Long macLookupId;
-	private String status;
-	private String createdBy;
-	private String updatedBy;
-	private Long recordStatus;
-	
-	
-	
-	@JsonSerialize(using=DateSerializer.class)
-	private Date createdDate;
-	
-	@JsonSerialize(using=DateSerializer.class)
-	private Date updateddDate;
-	
-	@Column(name = "CREATED_DATE")
-	@Convert(converter = StringToDateConverter.class)
-	private Date createdDateYearMonth;
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column(name = "CSR_FIRST_NAME")
+	private String firstName;
+	
+	@Column(name = "CSR_MIDDLE_NAME")
+	private String middleName;
+	
+	@Column(name = "CSR_LAST_NAME")
+	private String lastName;
+	
+	@Column(name = "CSR_LOCATION")
+	private String location;
+	
+	@Column(name = "CSR_LEVEL")
+	private String level;
+	
+	@Column(name = "JURISDICTION")
+	private String jurisdiction;
+	
+	@Column(name = "PROGRAM")
+	private String program;
+	
+	@Column(name = "USER_ID")
+	private Long userId;
+	
+	@Column(name = "MAC_LOOKUP_ID")
+	private Long macLookupId;
+	
+	@Column(name = "CSR_STATUS")
+	private String status;
+	
+	@Column(name = "CREATED_BY")
+	private String createdBy;
+	
+	@Column(name = "UPDATED_BY")
+	private String updatedBy;
+	
+	@Column(name = "RECORD_STATUS")
+	private Long recordStatus;
+	
+	
+	@Column(name = "CREATED_DATE")
+	@JsonSerialize(using=DateSerializer.class)
+	private Date createdDate;
+	
+	
+	@Column(name = "UPDATED_DATE")
+	@JsonSerialize(using=DateSerializer.class)
+	private Date updateddDate;
+	
+	@Transient
+	@Convert(converter = StringToDateConverter.class)
+	private Date createdDateYearMonth;
+	
+	@Transient
+	private String macName;
+	
+	public String getMacName() {
+		return macName;
+	}
+
+	public void setMacName(String macName) {
+		this.macName = macName;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -63,7 +103,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.id = id;
 	}
 
-	@Column(name = "CSR_FIRST_NAME")
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -72,7 +112,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.firstName = firstName;
 	}
 
-	@Column(name = "CSR_MIDDLE_NAME")
+	
 	public String getMiddleName() {
 		return middleName;
 	}
@@ -82,7 +122,7 @@ public class CsrLists implements Comparable<CsrLists>{
 	}
 
 	
-	@Column(name = "CSR_LAST_NAME")
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -92,7 +132,7 @@ public class CsrLists implements Comparable<CsrLists>{
 	}
 
 	
-	@Column(name = "CSR_LOCATION")
+	
 	public String getLocation() {
 		return location;
 	}
@@ -101,7 +141,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.location = location;
 	}
 
-	@Column(name = "CSR_LEVEL")
+	
 	public String getLevel() {
 		return level;
 	}
@@ -110,7 +150,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.level = level;
 	}
 
-	@Column(name = "JURISDICTION")
+	
 	public String getJurisdiction() {
 		return jurisdiction;
 	}
@@ -119,7 +159,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.jurisdiction = jurisdiction;
 	}
 
-	@Column(name = "PROGRAM")
+	
 	public String getProgram() {
 		return program;
 	}
@@ -128,7 +168,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.program = program;
 	}
 
-	@Column(name = "USER_ID")
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -137,7 +177,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.userId = userId;
 	}
 
-	@Column(name = "MAC_LOOKUP_ID")
+	
 	public Long getMacLookupId() {
 		return macLookupId;
 	}
@@ -146,7 +186,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.macLookupId = macLookupId;
 	}
 
-	@Column(name = "CSR_STATUS")
+	
 	public String getStatus() {
 		return status;
 	}
@@ -155,7 +195,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.status = status;
 	}
 	
-	@Column(name = "CREATED_DATE")
+	
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -164,7 +204,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.createdDate = createdDate;
 	}
 
-	@Column(name = "CREATED_BY")
+	
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -173,7 +213,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.createdBy = createdBy;
 	}
 
-	@Column(name = "UPDATED_BY")
+	
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
@@ -182,7 +222,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.updatedBy = updatedBy;
 	}
 	
-	@Column(name = "RECORD_STATUS")
+	
 	public Long getRecordStatus() {
 		return recordStatus;
 	}
@@ -191,7 +231,7 @@ public class CsrLists implements Comparable<CsrLists>{
 		this.recordStatus = recordStatus;
 	}
 	
-	@Column(name = "UPDATED_DATE")
+	
 	public Date getUpdateddDate() {
 		return updateddDate;
 	}
@@ -203,8 +243,8 @@ public class CsrLists implements Comparable<CsrLists>{
 	@Override
 	public int compareTo(CsrLists o) {
 		
-		String thisValue = this.jurisdiction+"_"+this.lastName;
-		String objectValue = o.jurisdiction+"_"+o.lastName;
+		String thisValue = this.macLookupId+"_"+this.jurisdiction+"_"+this.lastName;
+		String objectValue = o.macLookupId+"_"+o.jurisdiction+"_"+o.lastName;
 		
 		//ascending order
 		return thisValue.compareTo(objectValue);

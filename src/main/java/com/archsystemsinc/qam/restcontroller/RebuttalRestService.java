@@ -49,6 +49,7 @@ public class RebuttalRestService {
 		List<Rebuttal> data=null;
 		try {
 			log.debug("--> getRebuttalList:");
+			
 			data = rebuttalService.search(rebuttal);
 			log.debug("<-- getRebuttalList");
 		} catch (Exception e) {

@@ -13,6 +13,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.Rebuttal_;
+import com.archsystemsinc.qam.model.ScoreCard;
+import com.archsystemsinc.qam.model.ScoreCard_;
 
 public final class RebuttalSpecifications {
 
@@ -55,7 +57,7 @@ public final class RebuttalSpecifications {
 			public final Predicate toPredicate(final Root<Rebuttal> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				if(jurIdList != null ) {
+				if(jurIdList != null && jurIdList.size() >0) {
 					
 					Expression<Integer> exp = root.get(Rebuttal_.jurisId);
 					final Predicate matchingByJurIdList = exp.in(jurIdList);
@@ -112,9 +114,8 @@ public final class RebuttalSpecifications {
 	}	
 	
 	/*
-	 * Select the eps inbetween dates
-	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
-	 */
+	 
+		 */
 	
 	public static Specification<Rebuttal> findByDatePostedBetween(final Date filterFromDate, final Date filterToDate) {
 		return new Specification<Rebuttal>() {
@@ -130,6 +131,8 @@ public final class RebuttalSpecifications {
 			}
 		};
 	}
+	
+	
 	
 	
 }

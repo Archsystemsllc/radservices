@@ -89,13 +89,13 @@ public class UserRestService {
 	 * @return
 	 */
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public Integer updateUser(RadUser radUser){
+	public @ResponseBody RadUser updateUser(@RequestBody RadUser radUser){
 		log.debug("--> updateUser:"+radUser);
 		radUser.setStatus(1l);
 		radUser.setUpdateDate(new Date());
 		radUser = radUserService.updateUser(radUser);
 		log.debug("<-- updateUser");
-		return 1;
+		return radUser;
 	}
 	
 	/**
