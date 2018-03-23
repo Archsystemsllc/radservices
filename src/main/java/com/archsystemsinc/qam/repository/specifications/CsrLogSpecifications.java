@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.archsystemsinc.qam.model.CsrLists_;
 import com.archsystemsinc.qam.model.CsrLog;
 import com.archsystemsinc.qam.model.CsrLog_;
 
@@ -124,6 +125,25 @@ public final class CsrLogSpecifications {
 		};
 	}
 	
+	public static Specification<CsrLog> searchByDateMonth(Date dateObject) {
+		return new Specification<CsrLog>() {
+			@Override
+			public final Predicate toPredicate(final Root<CsrLog> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				Predicate matchingByCreatedDate = null;
+				if(dateObject != null ) {
+					matchingByCreatedDate = builder.equal(builder.function("YEAR_MONTH", Integer.class, root.get(CsrLog_.createdDate)), dateObject);
+					//cb.ge(cb.function("year", Integer.class, root.get(Contract_.endDate)), year);
+					//Expression<Integer> year = builder.function("year", Integer.class, dateObject);
+					//Expression<Integer> month = builder.function("month", Integer.class, dateObject);
+					//final Predicate matchingByDateObjectMonth = builder.equal(builder.function("year", type, args)root.get(CsrLog_.createdDate), dateObject);
+					return matchingByCreatedDate;
+				} else 
+					return null;				
+			}
+		};
+	}		
 	
 	
 

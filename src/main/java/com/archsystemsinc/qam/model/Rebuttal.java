@@ -160,11 +160,48 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private MultipartFile rebuttalFileObject;
 	
+	@Transient
+	private Date filterFromDate;
+	
+	@Transient
+	private Date filterToDate;
+	
 
 	public Rebuttal() {
 	}
 	
-	
+
+	public Date getFilterFromDate() {
+		return filterFromDate;
+	}
+
+
+
+
+
+	public void setFilterFromDate(Date filterFromDate) {
+		this.filterFromDate = filterFromDate;
+	}
+
+
+
+
+
+	public Date getFilterToDate() {
+		return filterToDate;
+	}
+
+
+
+
+
+	public void setFilterToDate(Date filterToDate) {
+		this.filterToDate = filterToDate;
+	}
+
+
+
+
 
 	public MultipartFile getRebuttalFileObject() {
 		return rebuttalFileObject;
