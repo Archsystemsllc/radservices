@@ -167,6 +167,9 @@ public class ScoreCard implements Serializable {
 	@Column(name="call_subcat_id_know_skills")
 	private String callSubCategoryIdKnoweledgeSkills;
 	
+	@Column(name="final_scorecard_status")
+	private String finalScoreCardStatus;
+	
 	
 	//Trainsient Variables
 	@Transient
@@ -207,6 +210,24 @@ public class ScoreCard implements Serializable {
 
 	
 	
+
+
+	public String getFinalScoreCardStatus() {
+		return finalScoreCardStatus;
+	}
+
+
+
+
+
+
+	public void setFinalScoreCardStatus(String finalScoreCardStatus) {
+		this.finalScoreCardStatus = finalScoreCardStatus;
+	}
+
+
+
+
 
 
 	public String getCallCategoryIdKnoweledgeSkills() {
