@@ -98,6 +98,20 @@ public final class ScoreCardSpecifications {
 		};
 	}	
 	
+	public static Specification<ScoreCard> searchByFinalScoreCardStatus(final String finalScoreCardStatus) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(finalScoreCardStatus != null && !finalScoreCardStatus.equalsIgnoreCase("") && !finalScoreCardStatus.equalsIgnoreCase("ALL")) {
+					final Predicate matchingFinalScoreCardStatus = builder.like(root.get(ScoreCard_.finalScoreCardStatus), finalScoreCardStatus + "%");
+					return matchingFinalScoreCardStatus;
+				} else 
+					return null;
+			}
+		};
+	}	
+	
 	public static Specification<ScoreCard> searchByQamFullName(final String qamFullName) {
 		return new Specification<ScoreCard>() {
 			@Override
