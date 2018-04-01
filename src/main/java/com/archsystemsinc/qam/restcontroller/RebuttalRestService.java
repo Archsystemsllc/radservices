@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,6 +48,7 @@ public class RebuttalRestService {
 	@RequestMapping(value = "/rebuttallist", method = RequestMethod.POST)
 	public List<Rebuttal> getRebuttalList(@RequestBody Rebuttal rebuttal){
 		List<Rebuttal> data=null;
+		
 		try {
 			log.debug("--> getRebuttalList:");
 			
@@ -67,10 +69,12 @@ public class RebuttalRestService {
 	    // Upload logic
 	}*/
 	
-	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST)
-	public @ResponseBody Rebuttal saveOrUpdateRebuttal(@RequestBody Rebuttal rebuttal){
+	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST,
+		    consumes = {"multipart/form-data"})
+	public @ResponseBody Rebuttal saveOrUpdateRebuttal(
+			@RequestPart("file") MultipartFile file){
 		log.debug("--> saveOrUpdateRebuttal:");		
-		
+		Rebuttal rebuttal = new Rebuttal();
 		Rebuttal rebuttalResult = null;
 		boolean newRebuttal = false;
 		

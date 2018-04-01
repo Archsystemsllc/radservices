@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -157,8 +158,11 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private ArrayList<Integer> jurisIdList;
 	
+	/*@Transient
+	private MultipartFile rebuttalFileObject;*/
+	
 	@Transient
-	private MultipartFile rebuttalFileObject;
+	private ByteArrayResource httpFileData;
 	
 	@Transient
 	private Date filterFromDate;
@@ -170,6 +174,22 @@ public class Rebuttal implements Serializable {
 	public Rebuttal() {
 	}
 	
+	
+	
+
+	public ByteArrayResource getHttpFileData() {
+		return httpFileData;
+	}
+
+
+
+
+	public void setHttpFileData(ByteArrayResource httpFileData) {
+		this.httpFileData = httpFileData;
+	}
+
+
+
 
 	public Date getFilterFromDate() {
 		return filterFromDate;
@@ -203,7 +223,7 @@ public class Rebuttal implements Serializable {
 
 
 
-	public MultipartFile getRebuttalFileObject() {
+	/*public MultipartFile getRebuttalFileObject() {
 		return rebuttalFileObject;
 	}
 
@@ -213,7 +233,7 @@ public class Rebuttal implements Serializable {
 
 	public void setRebuttalFileObject(MultipartFile rebuttalFileObject) {
 		this.rebuttalFileObject = rebuttalFileObject;
-	}
+	}*/
 
 
 

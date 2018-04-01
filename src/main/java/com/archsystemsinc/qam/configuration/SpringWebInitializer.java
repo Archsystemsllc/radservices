@@ -29,7 +29,7 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     	
     	//AWS UAT Environment
 		//String activeProfile = System.getProperty("spring.profiles.active", "uat");																																																																																																																																																																																																																																																																		
-    	
+   
     	//AWS Prod Environment
     	//String activeProfile = System.getProperty("spring.profiles.active", "prod");
     	

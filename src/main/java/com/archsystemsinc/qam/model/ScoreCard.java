@@ -170,6 +170,9 @@ public class ScoreCard implements Serializable {
 	@Column(name="final_scorecard_status")
 	private String finalScoreCardStatus;
 	
+	@Column(name="non_scoreable_reason")
+	private String nonScoreableReason;
+	
 	
 	//Trainsient Variables
 	@Transient
@@ -210,6 +213,24 @@ public class ScoreCard implements Serializable {
 
 	
 	
+
+
+	public String getNonScoreableReason() {
+		return nonScoreableReason;
+	}
+
+
+
+
+
+
+	public void setNonScoreableReason(String nonScoreableReason) {
+		this.nonScoreableReason = nonScoreableReason;
+	}
+
+
+
+
 
 
 	public String getFinalScoreCardStatus() {
