@@ -161,11 +161,7 @@ public class ScoreCard implements Serializable {
 	@Column(name="scorecard_status_update_datetime")
 	private Date scoreCardStatusUpdateDateTime;
 	
-	@Column(name="call_cat_id_know_skills")
-	private String callCategoryIdKnoweledgeSkills;	
 	
-	@Column(name="call_subcat_id_know_skills")
-	private String callSubCategoryIdKnoweledgeSkills;
 	
 	@Column(name="final_scorecard_status")
 	private String finalScoreCardStatus;
@@ -173,6 +169,14 @@ public class ScoreCard implements Serializable {
 	@Column(name="non_scoreable_reason")
 	private String nonScoreableReason;
 	
+	/*@Column(name="call_cat_id_know_skills")
+	private String callCategoryIdKnoweledgeSkills;	
+	
+	@Column(name="call_subcat_id_know_skills")
+	private String callSubCategoryIdKnoweledgeSkills;
+	*/
+	@Column(name="call_cat_sub_cat_multiselect")
+	private String callCatSubCatMsString;
 	
 	//Trainsient Variables
 	@Transient
@@ -245,14 +249,14 @@ public class ScoreCard implements Serializable {
 	public void setFinalScoreCardStatus(String finalScoreCardStatus) {
 		this.finalScoreCardStatus = finalScoreCardStatus;
 	}
+	
 
 
 
 
 
-
-	public String getCallCategoryIdKnoweledgeSkills() {
-		return callCategoryIdKnoweledgeSkills;
+	public String getCallCatSubCatMsString() {
+		return callCatSubCatMsString;
 	}
 
 
@@ -260,26 +264,8 @@ public class ScoreCard implements Serializable {
 
 
 
-	public void setCallCategoryIdKnoweledgeSkills(String callCategoryIdKnoweledgeSkills) {
-		this.callCategoryIdKnoweledgeSkills = callCategoryIdKnoweledgeSkills;
-	}
-
-
-
-
-
-
-	public String getCallSubCategoryIdKnoweledgeSkills() {
-		return callSubCategoryIdKnoweledgeSkills;
-	}
-
-
-
-
-
-
-	public void setCallSubCategoryIdKnoweledgeSkills(String callSubCategoryIdKnoweledgeSkills) {
-		this.callSubCategoryIdKnoweledgeSkills = callSubCategoryIdKnoweledgeSkills;
+	public void setCallCatSubCatMsString(String callCatSubCatMsString) {
+		this.callCatSubCatMsString = callCatSubCatMsString;
 	}
 
 
