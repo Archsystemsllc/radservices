@@ -46,9 +46,7 @@ public class ScoreCardService {
 		Specifications< ScoreCard > specifications = Specifications.where
 				(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
 				.and(ScoreCardSpecifications.searchByJurIdList(scoreCard.getJurIdList()))		
-				.and(ScoreCardSpecifications.searchByFailureReason(GenericConstants.FAIL_STRING))
-				.and(ScoreCardSpecifications.searchByQamCalibrationStatus(GenericConstants.FAIL_STRING))
-				.and(ScoreCardSpecifications.searchByCmsCalibrationStatus(GenericConstants.FAIL_STRING))
+				.and(ScoreCardSpecifications.searchByCmsCalibrationStatus(GenericConstants.CMS_FAIL_STRING))
 			;
 		return scoreCardRepository.findAll(specifications);
 	}

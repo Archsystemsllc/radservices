@@ -22,4 +22,9 @@ public final class GenericConstants {
 	public static final String FAIL_STRING = "Fail";
 	public static final String PASS_STRING = "Pass,";
 	
+	public static final String CMS_PASS_STRING = "CMS Pass";
+	public static final String CMS_FAIL_STRING = "CMS Fail";
+	public static final Long RECORD_STATUS_ACTIVE = 1l;
+	public static final Long RECORD_STATUS_INACTIVE = 0l;
+	
 }
