@@ -4,6 +4,7 @@
 package com.archsystemsinc.qam.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.archsystemsinc.qam.model.QamEnvironmentChangeForm;
 import com.archsystemsinc.qam.repository.QamEnvironmentChangeFormRepository;
-import com.archsystemsinc.qam.utils.PoiUtils;
+import com.archsystemsinc.qam.utils.CommonUtils;
+
 
 /**
  * @author Abdul Nissar S
@@ -28,19 +30,106 @@ public class QamEnvironmentChangeFormService {
 	private QamEnvironmentChangeFormRepository qamEnvironmentChangeFormRepository;
 	
 
-	
-	@Autowired
-	private PoiUtils poiUtils;
-	
 	public QamEnvironmentChangeForm createQamEnvironmentChangeForm(QamEnvironmentChangeForm data){
-		data = qamEnvironmentChangeFormRepository.save(data);
+		
+		try {
+			Integer yearMonth = CommonUtils.getCurrentYearMonth();
+			qamEnvironmentChangeFormRepository.markStatusDeleted(0l, data.getUserId(), yearMonth, new Date(), data.getMacLookupId(), data.getJurisdictionId());
+			
+			data = qamEnvironmentChangeFormRepository.save(data);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return data;
 	}
 	
+	public QamEnvironmentChangeForm getQamEnvironmentChangeForm(Long id){
+		QamEnvironmentChangeForm qamEnvironmentChangeForm = null;
+		try {
+				
+			qamEnvironmentChangeForm = qamEnvironmentChangeFormRepository.getOne(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return qamEnvironmentChangeForm;
+	}
 	
-	public List<QamEnvironmentChangeForm> getQamEnvList(String from, String to,String macLookupIds,String jurisdictions) {
+	public List<Object[]> getQamListMonths(String from, String to, String macLookupIds,String jurisdictions) {
 		
-		List<QamEnvironmentChangeForm> resultsList = null;
+		List<Object[]> resultsList = null;
+		
+		try {
+			String[] fromMonthyear = from.split("-");
+			String fromYear = fromMonthyear[0];
+			String fromMonth = fromMonthyear[1];
+			log.debug("fromMonth::"+fromMonth);
+			log.debug("fromYear::"+fromYear);
+			
+			String[] toMonthyear = to.split("-");
+			String toYear = toMonthyear[0];
+			String toMonth = toMonthyear[1];
+			log.debug("toMonth::"+toMonth);
+			log.debug("fromYear::"+toYear);
+			
+			String[] macLookupIdStringList = macLookupIds.split(",");
+			ArrayList<Long> macLookupIdArrayList = new ArrayList<Long>();
+			
+			boolean macAllFlag = false;
+			if(macLookupIdStringList.length != 0) {
+				
+				for(String macLookupIdString: macLookupIdStringList) {
+					macLookupIdString = macLookupIdString.substring(1,macLookupIdString.length()-1);
+					if(macLookupIdString.equalsIgnoreCase("ALL")) {
+						macAllFlag = true;
+						break;
+					} else {
+						macLookupIdArrayList.add (Long.valueOf(macLookupIdString));
+					}
+				}
+			}
+			
+			String[] jurisdictionStringList = jurisdictions.split(",");
+			ArrayList<Long> jurisdictionArrayList = new ArrayList<Long>();
+			
+			boolean jurisdictionAllFlag = false;
+			if(jurisdictionStringList.length != 0) {
+				
+				for(String jurisdictionString: jurisdictionStringList) {
+					jurisdictionString=jurisdictionString.substring(1,jurisdictionString.length()-1);
+					if(jurisdictionString.equalsIgnoreCase("Select ALL")) {
+						jurisdictionAllFlag = true;
+						break;
+					} else {
+						//String jurisName = jurisdictionService.
+						jurisdictionArrayList.add(Long.valueOf(jurisdictionString));
+						
+					}
+				}
+			}
+			
+			if(macAllFlag && jurisdictionAllFlag) {
+				resultsList = qamEnvironmentChangeFormRepository.findMonthsByMonthYearRangeAll(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth));
+			} else if (macAllFlag) {
+				resultsList = qamEnvironmentChangeFormRepository.findMonthsByMonthYearRangeAllMac(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), jurisdictionArrayList);
+			} else if (jurisdictionAllFlag) {
+				resultsList = qamEnvironmentChangeFormRepository.findMonthsByMonthYearRangeAllJuris(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList);
+			} else {
+				resultsList = qamEnvironmentChangeFormRepository.findMonthsByMonthYearRange(new Integer(fromYear+fromMonth), new Integer(toYear+toMonth), macLookupIdArrayList, jurisdictionArrayList);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultsList;
+	}
+	
+	
+	public List<Object[]> getQamEnvList(String from, String to,String macLookupIds,String jurisdictions) {
+		
+		List<Object[]> resultsList = null;
 		String[] fromMonthyear = from.split("-");
 		String fromYear = fromMonthyear[0];
 		String fromMonth = fromMonthyear[1];

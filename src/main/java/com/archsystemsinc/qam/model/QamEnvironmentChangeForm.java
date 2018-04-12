@@ -29,6 +29,7 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "qam_environment_change_form_id")
 	private Long qamEnvironmentChangeFormId;
 		
 	@Column(name = "USER_ID")
