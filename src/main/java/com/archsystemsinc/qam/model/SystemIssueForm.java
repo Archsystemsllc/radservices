@@ -23,14 +23,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  *
  */
 @Entity
-@Table(name = "qam_environment_change_form")
-public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChangeForm>{
+@Table(name = "system_issue_form")
+public class SystemIssueForm implements Comparable<SystemIssueForm>{
 	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "qam_environment_change_form_id")
-	private Long qamEnvironmentChangeFormId;
+	@Column(name = "system_issue_form_id")
+	private Long SystemIssueFormId;
 		
 	@Column(name = "USER_ID")
 	private Long userId;
@@ -41,8 +41,8 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	@Column(name = "JURISDICTION_ID")
 	private Long jurisdictionId;
 	
-	@Column(name = "qam_env_form_status")
-	private String qamEnvFormstatus;
+	@Column(name = "system_issue_form_status")
+	private String systemIsueFormStatus;
 	
 	@Column(name = "type")
 	private String type;
@@ -75,32 +75,15 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	@Column(name = "RECORD_STATUS")
 	private Long recordStatus;
 	
-	@Column(name = "FORM_TYPE")
-	private String formType;
-	
-	
-	
 
-	public String getFormType() {
-		return formType;
+	public Long getSystemIssueFormId() {
+		return SystemIssueFormId;
 	}
 
 
 
-	public void setFormType(String formType) {
-		this.formType = formType;
-	}
-
-
-
-	public Long getQamEnvironmentChangeFormId() {
-		return qamEnvironmentChangeFormId;
-	}
-
-
-
-	public void setQamEnvironmentChangeFormId(Long qamEnvironmentChangeFormId) {
-		this.qamEnvironmentChangeFormId = qamEnvironmentChangeFormId;
+	public void setSystemIssueFormId(Long SystemIssueFormId) {
+		this.SystemIssueFormId = SystemIssueFormId;
 	}
 
 
@@ -155,19 +138,15 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 
 
 
-	public String getQamEnvFormstatus() {
-		return qamEnvFormstatus;
+	public String getSystemIsueFormStatus() {
+		return systemIsueFormStatus;
 	}
 
 
 
-
-
-	public void setQamEnvFormstatus(String qamEnvFormstatus) {
-		this.qamEnvFormstatus = qamEnvFormstatus;
+	public void setSystemIsueFormStatus(String systemIsueFormStatus) {
+		this.systemIsueFormStatus = systemIsueFormStatus;
 	}
-
-
 
 
 
@@ -316,7 +295,7 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 
 
 	@Override
-	public int compareTo(QamEnvironmentChangeForm o) {
+	public int compareTo(SystemIssueForm o) {
 		
 		String thisValue = this.macLookupId+"_"+this.jurisdictionId;
 		String objectValue = o.macLookupId+"_"+o.jurisdictionId;
