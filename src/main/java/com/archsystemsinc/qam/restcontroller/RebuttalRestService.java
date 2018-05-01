@@ -69,12 +69,11 @@ public class RebuttalRestService {
 	    // Upload logic
 	}*/
 	
-	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST,
-		    consumes = {"multipart/form-data"})
+	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST)
 	public @ResponseBody Rebuttal saveOrUpdateRebuttal(
-			@RequestPart("file") MultipartFile file){
+			@RequestBody  Rebuttal rebuttal){
 		log.debug("--> saveOrUpdateRebuttal:");		
-		Rebuttal rebuttal = new Rebuttal();
+		//Rebuttal rebuttal = new Rebuttal();
 		Rebuttal rebuttalResult = null;
 		boolean newRebuttal = false;
 		

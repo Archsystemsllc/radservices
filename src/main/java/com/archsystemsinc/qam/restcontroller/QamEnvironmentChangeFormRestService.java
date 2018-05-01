@@ -5,6 +5,7 @@ package com.archsystemsinc.qam.restcontroller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -125,8 +126,8 @@ public class QamEnvironmentChangeFormRestService {
 	}	
 	
 	
-	 @RequestMapping(value = { "/download-document/{docId}" }, method = RequestMethod.GET)
-	    public void downloadDocument(@PathVariable Long docId, HttpServletResponse response) throws IOException {
+	 @RequestMapping(value = "/download-document", method = RequestMethod.GET)
+	    public void downloadDocument(@RequestParam("docId") Long docId, HttpServletResponse response) throws IOException {
 		 try {
 			 QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(docId);
 		 	 //UserDocument document = userDocumentService.findById(docId);
@@ -142,6 +143,7 @@ public class QamEnvironmentChangeFormRestService {
 	  
 	       
 	 }
+	 
 	 
 	 
 	 @RequestMapping(value = "/qamEnvFormList", method = RequestMethod.GET)
