@@ -48,7 +48,7 @@ public class QamEnvironmentChangeFormService {
 		QamEnvironmentChangeForm qamEnvironmentChangeForm = null;
 		try {
 				
-			qamEnvironmentChangeForm = qamEnvironmentChangeFormRepository.getOne(id);
+			qamEnvironmentChangeForm = qamEnvironmentChangeFormRepository.findOne(id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
