@@ -76,7 +76,7 @@ public class CsrListService {
 				if (validationResult.equalsIgnoreCase("ValidationSuccessful")) {
 					processCsrLists(userId, data, yearMonth,macId,jurisdiction);
 					clog.setUploadStatus(1l);
-					validationResult ="CSR List Uploaded Successfully";
+					validationResult ="CSR List uploaded successfully";
 				}				
 			}			
 		} catch (Exception e) {
