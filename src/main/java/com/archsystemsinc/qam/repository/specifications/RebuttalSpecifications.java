@@ -13,8 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.Rebuttal_;
-import com.archsystemsinc.qam.model.ScoreCard;
-import com.archsystemsinc.qam.model.ScoreCard_;
 
 public final class RebuttalSpecifications {
 
