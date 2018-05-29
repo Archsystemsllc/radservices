@@ -4,6 +4,7 @@
 package com.archsystemsinc.qam.restcontroller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -90,6 +91,11 @@ public class MacAssigmentObjectRestService {
 		try {
 			
 			for(MacAssignmentObject macAssignmentObject: macAssignmentObjectList) {
+				if(macAssignmentObject.getId() == 0) {
+					macAssignmentObject.setCreatedDate(new Date());
+				} else {
+					macAssignmentObject.setUpdatedDate(new Date());
+				}
 				macAssignmentObjectResult = macAssignmentObjectService.saveOrUpdateMacAssignmentObject(macAssignmentObject);
 			}
 			

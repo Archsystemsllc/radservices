@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.archsystemsinc.qam.utils.DateSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 /**
  * The persistent class for the score_card database table.
@@ -38,7 +41,7 @@ public class MacAssignmentObject implements Serializable {
 	
 	
 	@Column(name="assigned_calls")
-	private Integer assignedCalls;
+	private String assignedCalls;
 	
 	@Column(name="assigned_quality_monitor")
 	private String assignedQualityMonitor;
@@ -145,13 +148,19 @@ public class MacAssignmentObject implements Serializable {
 
 
 
-	public Integer getAssignedCalls() {
+	
+
+	public String getAssignedCalls() {
 		return assignedCalls;
 	}
 
-	public void setAssignedCalls(Integer assignedCalls) {
+
+
+	public void setAssignedCalls(String assignedCalls) {
 		this.assignedCalls = assignedCalls;
 	}
+
+
 
 	public String getAssignedQualityMonitor() {
 		return assignedQualityMonitor;
