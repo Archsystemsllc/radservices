@@ -106,8 +106,7 @@ public class RadUser {
 	private String lastName;
 	
 	@Column(name = "MAC_ID")
-	private Long macId;
-	
+	private Long macId;	
 	
 	@Column(name = "RECORD_STATUS")
 	private Long status;
@@ -116,7 +115,7 @@ public class RadUser {
 	private String jurId;
 	
 	@Column(name = "PCC_ID")
-	private Long pccId;
+	private String pccId;
 	
 	@Column(name = "last_loggedin_date")
 	private Date lastLoggedinDate;
@@ -339,13 +338,7 @@ public class RadUser {
 	}
 
 	
-	public Long getPccId() {
-		return pccId;
-	}
 	
-	public void setPccId(Long pccId) {
-		this.pccId = pccId;
-	}
 
 	public void setMacId(Long macId) {
 		this.macId = macId;
@@ -359,4 +352,14 @@ public class RadUser {
 	public void setJurId(String jurId) {
 		this.jurId = jurId;
 	}
+
+	public String getPccId() {
+		return pccId;
+	}
+
+	public void setPccId(String pccId) {
+		this.pccId = pccId;
+	}
+	
+	
 }

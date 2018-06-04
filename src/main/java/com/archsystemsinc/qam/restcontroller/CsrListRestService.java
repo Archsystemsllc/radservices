@@ -44,7 +44,7 @@ public class CsrListRestService {
 		String statusString = "";
 		
 		try {
-			statusString = csrListService.uploadFileData(null,userId,keepCurrentList,macId, jurisdiction);
+			statusString = csrListService.uploadFileData(null,userId,keepCurrentList,macId, jurisdiction.substring(1,jurisdiction.length()-1));
 			if(statusString.equalsIgnoreCase("")) {
 				response.setStatus("SUCCESS");
 			} else {
