@@ -75,6 +75,40 @@ public class ReportsRestService {
 			e.printStackTrace();
 		}
 		return resultsMap;
+	}	
+	
+	@RequestMapping(value = "/getQaspReport", method = RequestMethod.POST)
+	public @ResponseBody HashMap<Integer, ScoreCard> getQaspReport(@RequestBody  ReportsForm reportsForm){
+		List<ScoreCard> data=null;
+		HashMap <Integer, ScoreCard> resultsMap = new HashMap<Integer, ScoreCard> ();
+		ScoreCard scoreCardReportObject = new ScoreCard();
+		try {
+			log.debug("--> getQaspReport:");
+			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("")) {
+				scoreCardReportObject.setMacIdReportSearchString(reportsForm.getMacId());
+			}
+			
+			if(!reportsForm.getProgramId().equalsIgnoreCase("")) {
+				scoreCardReportObject.setProgramIdReportSearchString(reportsForm.getProgramId());
+			}		
+			
+			scoreCardReportObject.setFilterFromDate(reportsForm.getFromDate());
+			scoreCardReportObject.setFilterToDate(reportsForm.getToDate());
+			scoreCardReportObject.setScorecardType(reportsForm.getScoreCardType());
+			scoreCardReportObject.setCallResult(reportsForm.getCallResult());
+			scoreCardReportObject.setJurIdList(reportsForm.getJurIdList());
+						
+			data = scoreCardService.search(scoreCardReportObject);
+			
+			for(ScoreCard scoreCard: data) {
+				resultsMap.put(scoreCard.getId(), scoreCard);
+			}
+			log.debug("<-- getQaspReport");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultsMap;
 	}		
 	
 	@RequestMapping(value = "/getComplianceReport", method = RequestMethod.POST)

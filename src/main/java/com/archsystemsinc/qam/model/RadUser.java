@@ -127,47 +127,39 @@ public class RadUser {
 	private String roleString;
 	
 	@Transient
+	private Long orgIdTemp;
+	
+	
+	@Transient
 	private String passwordConfirm;
 	
 	@Transient
 	private String passwordFromdb;
 	
-	/*@Column(name = "TOKEN")
-	private String token;
-	
-	@Column(name = "ENABLED")
-	private Boolean enabled;	
-	
-	@Column(name = "expiry_date")
-	private Boolean expiryDate;*/
+	@Transient
+	private Long ignoreCurrentUserId;
 	
 	
-	/*public Boolean getExpiryDate() {
-		return expiryDate;
+	
+	
+	public Long getIgnoreCurrentUserId() {
+		return ignoreCurrentUserId;
 	}
 
-	public void setExpiryDate(Boolean expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setIgnoreCurrentUserId(Long ignoreCurrentUserId) {
+		this.ignoreCurrentUserId = ignoreCurrentUserId;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-*/
 	public String getPasswordFromdb() {
 		return passwordFromdb;
+	}
+
+	public Long getOrgIdTemp() {
+		return orgIdTemp;
+	}
+
+	public void setOrgIdTemp(Long orgIdTemp) {
+		this.orgIdTemp = orgIdTemp;
 	}
 
 	public void setPasswordFromdb(String passwordFromdb) {

@@ -38,6 +38,20 @@ public final class RadUserSpecifications {
 			}
 		};
 	}
+	public static Specification<RadUser> ignoreCurrentUserId(final Long ignoreId) {
+		return new Specification<RadUser>() {
+			@Override
+			public final Predicate toPredicate(final Root<RadUser> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(ignoreId != null && ignoreId != 0) { 
+					final Predicate matchingById = builder.notEqual(root.get(RadUser_.id), ignoreId);
+					return matchingById;
+				} else 
+					return null;			
+			}
+		};
+	}
 	public static Specification<RadUser> searchByUserName(final String userName) {
 		return new Specification<RadUser>() {
 			@Override

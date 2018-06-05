@@ -15,8 +15,10 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.archsystemsinc.qam.model.OrganizationLookup;
 import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
+import com.archsystemsinc.qam.repository.OrganizationLookupRepository;
 import com.archsystemsinc.qam.repository.RadUserRepository;
 import com.archsystemsinc.qam.repository.RoleRepository;
 import com.archsystemsinc.qam.repository.specifications.RadUserSpecifications;
@@ -34,6 +36,9 @@ public class RadUserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private OrganizationLookupRepository organizationLookupRepository;
 
 	/**
 	 * 
@@ -47,6 +52,11 @@ public class RadUserService {
 			radUser.setRole(roleTemp);
 		}
 		
+		if(radUser.getOrgIdTemp() != null ) {
+			OrganizationLookup organizationLookup = organizationLookupRepository.findOne(radUser.getOrgIdTemp().intValue());
+			radUser.setOrganizationLookup(organizationLookup);
+		}
+		
 		Specifications< RadUser > specifications = Specifications.where
 					(RadUserSpecifications.searchById(radUser.getId()))
 				.and(RadUserSpecifications.searchByUserName(radUser.getUserName()))				
@@ -55,6 +65,7 @@ public class RadUserService {
 				.and(RadUserSpecifications.searchByRole(radUser.getRole()))
 				.and(RadUserSpecifications.searchByLastName(radUser.getLastName()))
 				.and(RadUserSpecifications.searchByOrganizationLookup(radUser.getOrganizationLookup()))
+				.and(RadUserSpecifications.ignoreCurrentUserId(radUser.getIgnoreCurrentUserId()))
 				;
 															
 		return radUserRepository.findAll(specifications);
