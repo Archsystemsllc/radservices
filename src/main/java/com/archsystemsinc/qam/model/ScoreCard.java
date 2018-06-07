@@ -94,6 +94,9 @@ public class ScoreCard implements Serializable {
 	@Column(name="program_id")
 	private Integer programId;
 	
+	@Column(name="system_screen_access")
+	private String systemScreenAccess;
+	
 	@Column(name="qam_enddate_time_2")
 	//@Convert(converter = StringToDateConverter.class)
 	private Date qamEnddateTime;
@@ -215,8 +218,23 @@ public class ScoreCard implements Serializable {
 	}
 	
 
-	
-	
+
+	public String getSystemScreenAccess() {
+		return systemScreenAccess;
+	}
+
+
+
+
+
+
+	public void setSystemScreenAccess(String systemScreenAccess) {
+		this.systemScreenAccess = systemScreenAccess;
+	}
+
+
+
+
 
 
 	public String getNonScoreableReason() {
