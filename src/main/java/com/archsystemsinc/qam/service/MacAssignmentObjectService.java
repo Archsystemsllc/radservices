@@ -49,16 +49,16 @@ public class MacAssignmentObjectService {
 		
 	}
 	
-	public List<Object[]> searchMacAssignmentObjectForList( MacAssignmentObject macAssignmentObject ){	
+	public List<String> searchMacAssignmentObjectForList( MacAssignmentObject macAssignmentObject ){	
 		
-		String[] toMonthyear = macAssignmentObject.getAssignedMonthYear().split("_");
+		/*String[] toMonthyear = macAssignmentObject.getAssignedMonthYear().split("_");
 		
 		String toMonth = toMonthyear[0];
 		String toYear = toMonthyear[1];
 		log.debug("toMonth::"+toMonth);
-		log.debug("fromYear::"+toYear);
-		List<Object[]> resultsList = null;
-		resultsList = macAssignmentObjectRepository.findMonthsByMonthYearRange(new Integer(toYear+toMonth));
+		log.debug("fromYear::"+toYear);*/
+		List<String> resultsList = null;
+		resultsList = macAssignmentObjectRepository.findMacAssignmentMonths();
 												
 		return resultsList;
 	}

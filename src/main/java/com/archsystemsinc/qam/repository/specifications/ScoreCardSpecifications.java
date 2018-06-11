@@ -20,6 +20,21 @@ public final class ScoreCardSpecifications {
 		throw new AssertionError();
 	}
 	
+	public static Specification<ScoreCard> searchById(final Integer id) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(id != null && id != 0) { 
+					final Predicate matchingById = builder.equal(root.get(ScoreCard_.id), id);
+					return matchingById;
+				} else 
+					return null;			
+			}
+		};
+	}
+	
 	// API
 	public static Specification<ScoreCard> searchByFailureReason(final String failureString) {
 		return new Specification<ScoreCard>() {

@@ -47,8 +47,8 @@ public class MacAssigmentObjectRestService {
     String radUIEndPoint;
 	
 	@RequestMapping(value = "/macAssignmentList", method = RequestMethod.POST)
-	public List<Object[]> getMacAssignmentList(@RequestBody MacAssignmentObject macAssignmentObject){
-		List<Object[]> data=null;
+	public List<String> getMacAssignmentList(@RequestBody MacAssignmentObject macAssignmentObject){
+		List<String> data=null;
 		
 		try {
 			log.debug("--> getMacAssignmentList:");

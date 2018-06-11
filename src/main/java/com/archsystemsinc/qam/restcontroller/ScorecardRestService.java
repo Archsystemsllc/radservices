@@ -46,6 +46,10 @@ public class ScorecardRestService {
 		List<ScoreCard> data=null;
 		try {
 			log.debug("--> searchScoreCard:");
+			if(scoreCard.getMacAssignmentSearchString() != null && !scoreCard.getMacAssignmentSearchString().equalsIgnoreCase("")) {
+				
+			}
+			
 			data = scoreCardService.search(scoreCard);
 			log.debug("<-- searchScoreCard");			
 			

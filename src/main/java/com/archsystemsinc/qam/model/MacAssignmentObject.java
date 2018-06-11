@@ -70,6 +70,15 @@ public class MacAssignmentObject implements Serializable {
 	@Column(name="created_method")
 	private String createdMethod;
 	
+	@Column(name="mac_id")
+	private Integer macId;
+	
+	@Column(name="jurisdiction_id")
+	private Integer jurisdictionId;
+	
+	@Column(name="program_id")
+	private Integer programId;
+	
 	public MacAssignmentObject() {
 	}
 
@@ -83,6 +92,41 @@ public class MacAssignmentObject implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+
+	public Integer getMacId() {
+		return macId;
+	}
+
+
+
+	public void setMacId(Integer macId) {
+		this.macId = macId;
+	}
+
+
+
+	public Integer getJurisdictionId() {
+		return jurisdictionId;
+	}
+
+
+
+	public void setJurisdictionId(Integer jurisdictionId) {
+		this.jurisdictionId = jurisdictionId;
+	}
+
+
+
+	public Integer getProgramId() {
+		return programId;
+	}
+
+
+
+	public void setProgramId(Integer programId) {
+		this.programId = programId;
 	}
 
 

@@ -13,8 +13,12 @@ import com.archsystemsinc.qam.model.MacAssignmentObject;
  */
 public interface MacAssignmentObjectRepository extends JpaRepository<MacAssignmentObject, Integer>, JpaSpecificationExecutor<MacAssignmentObject> {
 	
-	@Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year FROM MacAssignmentObject c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
+	/*@Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year FROM MacAssignmentObject c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 				+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate)")
-    public List<Object[]> findMonthsByMonthYearRange(@Param("toMonthYear") Integer toMonthYear);
+    public List<Object[]> findMonthsByMonthYearRange(@Param("toMonthYear") Integer toMonthYear);*/
+    
+    @Query("SELECT DISTINCT assignedMonthYear FROM MacAssignmentObject m"
+			)
+    public List<String> findMacAssignmentMonths();
     
 }

@@ -213,10 +213,25 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private ArrayList<String> macCallResultList;	
 	
+	@Transient
+	private String macAssignmentSearchString;	
+	
 	
 	public ScoreCard() {
 	}
 	
+	
+
+	public String getMacAssignmentSearchString() {
+		return macAssignmentSearchString;
+	}
+
+
+
+	public void setMacAssignmentSearchString(String macAssignmentSearchString) {
+		this.macAssignmentSearchString = macAssignmentSearchString;
+	}
+
 
 
 	public String getSystemScreenAccess() {
