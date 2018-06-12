@@ -156,6 +156,21 @@ public final class ScoreCardSpecifications {
 		};
 	}
 	
+	public static Specification<ScoreCard> searchByJurisdictionId(final Integer jurisdictionId) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(jurisdictionId != null && jurisdictionId != 0) { 
+					final Predicate matchingByMacId = builder.equal(root.get(ScoreCard_.jurId), jurisdictionId);
+					return matchingByMacId;
+				} else 
+					return null;			
+			}
+		};
+	}
+	
 	public static Specification<ScoreCard> searchByMacIdList(final ArrayList<Integer> macIdList) {
 		return new Specification<ScoreCard>() {
 			@Override
@@ -188,6 +203,21 @@ public final class ScoreCardSpecifications {
 					
 				} else 
 					return null;
+			}
+		};
+	}
+	
+	public static Specification<ScoreCard> searchByProgramId(final Integer programId) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(programId != null && programId != 0) { 
+					final Predicate matchingByProgramId = builder.equal(root.get(ScoreCard_.programId), programId);
+					return matchingByProgramId;
+				} else 
+					return null;	
 			}
 		};
 	}
