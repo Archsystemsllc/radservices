@@ -50,8 +50,8 @@ public class ReportsRestService {
 		ScoreCard scoreCardReportObject = new ScoreCard();
 		try {
 			log.debug("--> getMacJurisReport:");
-			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("")) {
-				scoreCardReportObject.setMacIdReportSearchString(reportsForm.getMacId());
+			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("") && !reportsForm.getMacId().equalsIgnoreCase("ALL")) {
+				scoreCardReportObject.setMacId(Integer.valueOf(reportsForm.getMacId()));
 			}
 			
 			if(!reportsForm.getProgramId().equalsIgnoreCase("")) {
@@ -84,8 +84,8 @@ public class ReportsRestService {
 		ScoreCard scoreCardReportObject = new ScoreCard();
 		try {
 			log.debug("--> getQaspReport:");
-			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("")) {
-				scoreCardReportObject.setMacIdReportSearchString(reportsForm.getMacId());
+			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("") && !reportsForm.getMacId().equalsIgnoreCase("ALL")) {
+				scoreCardReportObject.setMacId(Integer.valueOf(reportsForm.getMacId()));
 			}
 			
 			if(!reportsForm.getProgramId().equalsIgnoreCase("")) {
@@ -96,7 +96,7 @@ public class ReportsRestService {
 			scoreCardReportObject.setFilterToDate(reportsForm.getToDate());
 			scoreCardReportObject.setScorecardType(reportsForm.getScoreCardType());
 			scoreCardReportObject.setCallResult(reportsForm.getCallResult());
-			scoreCardReportObject.setJurIdList(reportsForm.getJurIdList());
+			scoreCardReportObject.setJurId(Integer.valueOf(reportsForm.getJurisId()));
 						
 			data = scoreCardService.search(scoreCardReportObject);
 			
