@@ -46,10 +46,12 @@ public class ReportsRestService {
 	@RequestMapping(value = "/getMacJurisReport", method = RequestMethod.POST)
 	public @ResponseBody HashMap<Integer, ScoreCard> getMacJurisReport(@RequestBody  ReportsForm reportsForm){
 		List<ScoreCard> data=null;
+		List<ScoreCard> multipleData=null;
 		HashMap <Integer, ScoreCard> resultsMap = new HashMap<Integer, ScoreCard> ();
 		ScoreCard scoreCardReportObject = new ScoreCard();
 		try {
 			log.debug("--> getMacJurisReport:");
+			boolean multipleSearch = false;
 			if(reportsForm.getMacId() !=null && !reportsForm.getMacId().equalsIgnoreCase("") && !reportsForm.getMacId().equalsIgnoreCase("ALL")) {
 				scoreCardReportObject.setMacId(Integer.valueOf(reportsForm.getMacId()));
 			}
@@ -61,13 +63,36 @@ public class ReportsRestService {
 			scoreCardReportObject.setFilterFromDate(reportsForm.getFromDate());
 			scoreCardReportObject.setFilterToDate(reportsForm.getToDate());
 			scoreCardReportObject.setScorecardType(reportsForm.getScoreCardType());
-			scoreCardReportObject.setCallResult(reportsForm.getCallResult());
+			if(reportsForm.getScoreCardType().equalsIgnoreCase("Scoreable")) {
+				if(reportsForm.getCallResult().equalsIgnoreCase("Fail")) {
+					scoreCardReportObject.setFinalScoreCardStatus(reportsForm.getCallResult());
+					scoreCardReportObject.setCmsCalibrationStatus(reportsForm.getCallResult());
+				} else if(reportsForm.getCallResult().equalsIgnoreCase("Pass")) {
+					scoreCardReportObject.setFinalScoreCardStatus(reportsForm.getCallResult());
+				} else if(reportsForm.getCallResult().equalsIgnoreCase("ALL")) {
+					scoreCardReportObject.setFinalScoreCardStatus("Fail");
+					scoreCardReportObject.setCmsCalibrationStatus("Fail");
+					multipleSearch = true;
+				}			
+			}
+
 			scoreCardReportObject.setJurIdList(reportsForm.getJurIdList());
 						
 			data = scoreCardService.search(scoreCardReportObject);
 			
 			for(ScoreCard scoreCard: data) {
 				resultsMap.put(scoreCard.getId(), scoreCard);
+			}
+			
+			if(multipleSearch && reportsForm.getScoreCardType().equalsIgnoreCase("Scoreable")) {
+				scoreCardReportObject.setFinalScoreCardStatus("Pass");
+				scoreCardReportObject.setCmsCalibrationStatus("");
+				
+				multipleData = scoreCardService.search(scoreCardReportObject);
+				
+				for(ScoreCard scoreCard: multipleData) {
+					resultsMap.put(scoreCard.getId(), scoreCard);
+				}
 			}
 			log.debug("<-- getMacJurisReport");
 		} catch (Exception e) {

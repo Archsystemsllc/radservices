@@ -57,7 +57,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(callResult != null && !callResult.equalsIgnoreCase("") && !callResult.equalsIgnoreCase("ALL")) {
-					final Predicate matchingCallResult = builder.like(root.get(ScoreCard_.callResult), callResult + "%");
+					final Predicate matchingCallResult = builder.like(root.get(ScoreCard_.callResult), "%" + callResult + "%");
 					return matchingCallResult;
 				} else 
 					return null;
@@ -90,7 +90,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(qamCalibrationStatus != null && !qamCalibrationStatus.equalsIgnoreCase("") && !qamCalibrationStatus.equalsIgnoreCase("ALL")) {
-					final Predicate matchingQamCalibrationStatus = builder.like(root.get(ScoreCard_.qamCalibrationStatus), qamCalibrationStatus + "%");
+					final Predicate matchingQamCalibrationStatus = builder.like(root.get(ScoreCard_.qamCalibrationStatus),"%" + qamCalibrationStatus + "%");
 					return matchingQamCalibrationStatus;
 				} else 
 					return null;
@@ -105,7 +105,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(cmsCalibrationStatus != null && !cmsCalibrationStatus.equalsIgnoreCase("") && !cmsCalibrationStatus.equalsIgnoreCase("ALL")) {
-					final Predicate matchingCmsCalibrationStatus = builder.like(root.get(ScoreCard_.cmsCalibrationStatus), cmsCalibrationStatus + "%");
+					final Predicate matchingCmsCalibrationStatus = builder.like(root.get(ScoreCard_.cmsCalibrationStatus),"%" + cmsCalibrationStatus + "%");
 					return matchingCmsCalibrationStatus;
 				} else 
 					return null;
@@ -119,7 +119,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(finalScoreCardStatus != null && !finalScoreCardStatus.equalsIgnoreCase("") && !finalScoreCardStatus.equalsIgnoreCase("ALL")) {
-					final Predicate matchingFinalScoreCardStatus = builder.like(root.get(ScoreCard_.finalScoreCardStatus), finalScoreCardStatus + "%");
+					final Predicate matchingFinalScoreCardStatus = builder.like(root.get(ScoreCard_.finalScoreCardStatus), "%" + finalScoreCardStatus + "%");
 					return matchingFinalScoreCardStatus;
 				} else 
 					return null;
@@ -133,7 +133,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(qamFullName != null && !qamFullName.equalsIgnoreCase("")) {
-					final Predicate matchingByQamFullName = builder.like(root.get(ScoreCard_.qamFullName), qamFullName + "%");
+					final Predicate matchingByQamFullName = builder.like(root.get(ScoreCard_.qamFullName),"%" + qamFullName + "%");
 					return matchingByQamFullName;
 				} else 
 					return null;
@@ -243,7 +243,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(scorecardType != null && !scorecardType.equalsIgnoreCase("") && !scorecardType.equalsIgnoreCase("ALL")) {
-					final Predicate matchingByScorecardType = builder.like(root.get(ScoreCard_.scorecardType), scorecardType + "%");
+					final Predicate matchingByScorecardType = builder.like(root.get(ScoreCard_.scorecardType),"%" + scorecardType + "%");
 					return matchingByScorecardType;
 				} else 
 					return null;				
