@@ -125,7 +125,8 @@ public class ReportsService {
 			.and(CsrLogSpecifications.searchByMacId(Integer.valueOf(macId)))				
 			.and(CsrLogSpecifications.searchByMacIdList(macIdList))
 			.and(CsrLogSpecifications.searchByJurisdictionNameList(jurisdictionNameList))
-			.and(CsrLogSpecifications.searchByUserId(userId))				
+			.and(CsrLogSpecifications.searchByUserId(userId))	
+			.and(CsrLogSpecifications.findByCreatedDateBetween(fromDate, toDate))	
 			;
 		
 		reportResults = csrLogRepository.findAll(specifications);

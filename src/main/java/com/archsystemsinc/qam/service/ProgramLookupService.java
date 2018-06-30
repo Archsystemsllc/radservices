@@ -30,4 +30,12 @@ public class ProgramLookupService {
 		return programLookupRepository.findAll();
 	}
 	
+	public ProgramLookup saveOrUpdateProgram(ProgramLookup programLookup) {
+		programLookup = programLookupRepository.save(programLookup);
+		return programLookup;
+	}
+	
+	public ProgramLookup findById(Integer id) {
+		return programLookupRepository.findOne(id);
+	}
 }

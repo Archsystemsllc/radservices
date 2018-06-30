@@ -30,4 +30,17 @@ public class MacLookupService {
 		return macLookupRepository.findAll();
 	}
 	
+	public MacLookup saveOrUpdateMacLookup(MacLookup macLookup) {
+		macLookup = macLookupRepository.save(macLookup);
+		return macLookup;
+	}
+	
+	public MacLookup findById(Long id) {
+		return macLookupRepository.findOne(id);
+	}
+	
+	public Long findMaxId() {
+		return macLookupRepository.findMaxId();
+	}
+	
 }

@@ -28,4 +28,13 @@ public class MacProgJurisPccMappingService {
 	public List<MacProgJurisPccMapping> findAll(){
 		return macProgJurisPccMappingRepository.findAll();
 	}	
+	
+	public MacProgJurisPccMapping saveOrUpdateMacLookup(MacProgJurisPccMapping macProgJurisPccMapping) {
+		macProgJurisPccMapping = macProgJurisPccMappingRepository.save(macProgJurisPccMapping);
+		return macProgJurisPccMapping;
+	}
+	
+	public MacProgJurisPccMapping findById(Integer id) {
+		return macProgJurisPccMappingRepository.findOne(id);
+	}
 }

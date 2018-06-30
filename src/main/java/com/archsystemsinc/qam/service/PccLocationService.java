@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.archsystemsinc.qam.model.PccLocation;
+import com.archsystemsinc.qam.model.ProgramLookup;
 import com.archsystemsinc.qam.repository.PccLocationRepository;
 
 /**
@@ -28,6 +29,15 @@ public class PccLocationService {
 	
 	public List<PccLocation> findAll(){
 		return pccLocationRepository.findAll();
+	}
+	
+	public PccLocation saveOrUpdatePccLocation(PccLocation pccLocation) {
+		pccLocation = pccLocationRepository.save(pccLocation);
+		return pccLocation;
+	}
+	
+	public PccLocation findById(Integer id) {
+		return pccLocationRepository.findOne(id);
 	}
 	
 }

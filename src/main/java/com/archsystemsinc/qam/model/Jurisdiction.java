@@ -3,17 +3,12 @@
  */
 package com.archsystemsinc.qam.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.archsystemsinc.qam.utils.DateSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * @author Abdul Nissar S
@@ -27,12 +22,24 @@ public class Jurisdiction {
 	private String jurisdictionName;	
 	private String createdBy;
 	private String updatedBy;
-		
-	@JsonSerialize(using=DateSerializer.class)
-	private Date createdDate;
 	
-	@JsonSerialize(using=DateSerializer.class)
-	private Date updateddDate;
+	
+	
+	private String createdDate;
+	
+	
+	private String updateddDate;
+	
+	private String description;	
+	
+	@Column(name = "DESCRIPTION")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +51,9 @@ public class Jurisdiction {
 		this.id = id;
 	}	
 	
+	
+	
+
 	@Column(name = "JURISDICTION_NAME")
 	public String getJurisdictionName() {
 		return jurisdictionName;
@@ -53,15 +63,7 @@ public class Jurisdiction {
 		this.jurisdictionName = jurisdictionName;
 	}
 
-	@Column(name = "CREATED_DATE")
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
+	
 	@Column(name = "CREATED_BY")
 	public String getCreatedBy() {
 		return createdBy;
@@ -80,12 +82,25 @@ public class Jurisdiction {
 		this.updatedBy = updatedBy;
 	}
 	
+	@Column(name = "CREATED_DATE")
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	
 	@Column(name = "UPDATED_DATE")
-	public Date getUpdateddDate() {
+	public String getUpdateddDate() {
 		return updateddDate;
 	}
 
-	public void setUpdateddDate(Date updateddDate) {
+	public void setUpdateddDate(String updateddDate) {
 		this.updateddDate = updateddDate;
-	}	
+	}
+	
+	
+	
+	
 }

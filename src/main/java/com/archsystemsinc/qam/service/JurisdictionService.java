@@ -28,4 +28,13 @@ public class JurisdictionService {
 	public List<Jurisdiction> findAll(){
 		return jurisdictionRepository.findAll();
 	}	
+	
+	public Jurisdiction saveOrUpdateJurisdiction(Jurisdiction jurisdiction) {
+		jurisdiction = jurisdictionRepository.save(jurisdiction);
+		return jurisdiction;
+	}
+	
+	public Jurisdiction findById(Long id) {
+		return jurisdictionRepository.findOne(id);
+	}
 }
