@@ -82,6 +82,35 @@ public final class RebuttalSpecifications {
 	}
 	
 	
+	public static Specification<Rebuttal> searchByProgramId(final Integer programId) {
+		return new Specification<Rebuttal>() {
+			@Override
+			public final Predicate toPredicate(final Root<Rebuttal> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(programId != null && programId != 0) {
+					final Predicate matchingByProgramId =  builder.equal(root.get(Rebuttal_.programId), programId);
+					return matchingByProgramId;
+				} else 
+					return null;
+			}
+		};
+	}
+	
+	public static Specification<Rebuttal> searchByPccLocationId(final Integer pccLocationId) {
+		return new Specification<Rebuttal>() {
+			@Override
+			public final Predicate toPredicate(final Root<Rebuttal> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				if(pccLocationId != null && pccLocationId != 0) {
+					final Predicate matchingByPccLocationId =  builder.equal(root.get(Rebuttal_.pccLocationId), pccLocationId);
+					return matchingByPccLocationId;
+				} else 
+					return null;
+			}
+		};
+	}
+	
+	
 	public static Specification<Rebuttal> searchByCallCategory(final String callCategory) {
 		return new Specification<Rebuttal>() {
 			@Override

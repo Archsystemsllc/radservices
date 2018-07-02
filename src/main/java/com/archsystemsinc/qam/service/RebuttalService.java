@@ -53,6 +53,8 @@ public List< Rebuttal > searchRebuttalForReport( ReportsForm reportsForm ){
 		
 		Specifications< Rebuttal > specifications = Specifications.where
 					(RebuttalSpecifications.searchByMacId(Integer.valueOf(reportsForm.getMacId())))
+							.and(RebuttalSpecifications.searchByProgramId(Integer.valueOf(reportsForm.getProgramId())))
+							.and(RebuttalSpecifications.searchByPccLocationId(Integer.valueOf(reportsForm.getPccLocationId())))
 							.and(RebuttalSpecifications.searchByJurIdList(reportsForm.getJurIdList()))
 							.and(RebuttalSpecifications.searchByRebuttalStatus(reportsForm.getRebuttalStatus()))
 							.and(RebuttalSpecifications.findByDatePostedBetween(reportsForm.getFromDate(),reportsForm.getToDate()))

@@ -11,6 +11,8 @@ public abstract class Rebuttal_ {
 	public static volatile SingularAttribute<Rebuttal, Long> id;
 	public static volatile SingularAttribute<Rebuttal, Integer> userId;
 	public static volatile SingularAttribute<Rebuttal, Integer> macId;
+	public static volatile SingularAttribute<Rebuttal, Integer> programId;
+	public static volatile SingularAttribute<Rebuttal, Integer> pccLocationId;
 	public static volatile SingularAttribute<Rebuttal, Integer> jurisId;
 	public static volatile SingularAttribute<Rebuttal, String> callCategory;
 	public static volatile SingularAttribute<Rebuttal, String> rebuttalStatus;

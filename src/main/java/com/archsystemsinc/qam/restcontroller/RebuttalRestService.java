@@ -78,6 +78,8 @@ public class RebuttalRestService {
 			
 			if (rebuttal.getId() == 0) {
 				newRebuttal = true;
+			} else {
+				
 			}
 			rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
 			

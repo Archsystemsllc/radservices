@@ -127,21 +127,24 @@ public class QamEnvironmentChangeFormRestService {
 	
 	
 	 @RequestMapping(value = "/download-document", method = RequestMethod.GET)
-	    public void downloadDocument(@RequestParam("docId") Long docId, HttpServletResponse response) throws IOException {
+	    //public HttpServletResponse  downloadDocument(@RequestParam("docId") Long docId, HttpServletResponse response) throws IOException {
+	 public HttpServletResponse  downloadDocument( HttpServletResponse response) throws IOException {
+		
 		 try {
-			 QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(docId);
+			 QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(3l);
 		 	 //UserDocument document = userDocumentService.findById(docId);
 		     response.setContentType(qamEnvironmentChangeForm.getType());
 		     response.setContentLength(qamEnvironmentChangeForm.getDocumentContent().length);
-		     response.setHeader("Content-Disposition","attachment; filename=\"" + qamEnvironmentChangeForm.getDocumentName() +"\"");
+		     response.setHeader("Content-Disposition","attachment; filename=\"" + qamEnvironmentChangeForm.getDocumentName() +".xlsx\"");
   
 			 FileCopyUtils.copy(qamEnvironmentChangeForm.getDocumentContent(), response.getOutputStream());
+			 response.getOutputStream().flush();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	  
-	       
+		 return response;
 	 }
 	 
 	 

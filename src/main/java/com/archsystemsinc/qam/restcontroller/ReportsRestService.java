@@ -173,6 +173,12 @@ public class ReportsRestService {
 			if(reportsForm.getMacId() != null && reportsForm.getMacId().equalsIgnoreCase("ALL")) {
 				reportsForm.setMacId("0");
 			}
+			if(reportsForm.getProgramId() != null && reportsForm.getProgramId().equalsIgnoreCase("ALL")) {
+				reportsForm.setProgramId("0");
+			}
+			if(reportsForm.getPccLocationId() != null && reportsForm.getPccLocationId().equalsIgnoreCase("ALL")) {
+				reportsForm.setPccLocationId("0");
+			}
 			data = rebuttalService.searchRebuttalForReport(reportsForm);
 			
 			for(Rebuttal rebuttal: data) {
