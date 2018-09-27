@@ -181,6 +181,9 @@ public class ScoreCard implements Serializable {
 	@Column(name="call_cat_sub_cat_multiselect")
 	private String callCatSubCatMsString;
 	
+	@Column(name="new_medicare_card_call_tracking")
+	private String newMedicareCardCallTracking;
+	
 	//Trainsient Variables
 	@Transient
 	private Date filterFromDate;
@@ -221,6 +224,18 @@ public class ScoreCard implements Serializable {
 	}
 	
 	
+
+	public String getNewMedicareCardCallTracking() {
+		return newMedicareCardCallTracking;
+	}
+
+
+
+	public void setNewMedicareCardCallTracking(String newMedicareCardCallTracking) {
+		this.newMedicareCardCallTracking = newMedicareCardCallTracking;
+	}
+
+
 
 	public String getMacAssignmentSearchString() {
 		return macAssignmentSearchString;

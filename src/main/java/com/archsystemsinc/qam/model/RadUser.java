@@ -139,9 +139,32 @@ public class RadUser {
 	@Transient
 	private Long ignoreCurrentUserId;
 	
+	//Failed Login Functionality Fields @09/18/18
+	@Column(name = "last_failed_login_date")
+	private Date failedLoginDate;
+	
+	@Column(name = "failed_login_attempts")
+	private Integer failedLoginAttempts;
 	
 	
 	
+	
+	public Date getFailedLoginDate() {
+		return failedLoginDate;
+	}
+
+	public void setFailedLoginDate(Date failedLoginDate) {
+		this.failedLoginDate = failedLoginDate;
+	}
+
+	public Integer getFailedLoginAttempts() {
+		return failedLoginAttempts;
+	}
+
+	public void setFailedLoginAttempts(Integer failedLoginAttempts) {
+		this.failedLoginAttempts = failedLoginAttempts;
+	}
+
 	public Long getIgnoreCurrentUserId() {
 		return ignoreCurrentUserId;
 	}

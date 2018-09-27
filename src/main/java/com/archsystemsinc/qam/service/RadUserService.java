@@ -39,6 +39,9 @@ public class RadUserService {
 	
 	@Autowired
 	private OrganizationLookupRepository organizationLookupRepository;
+	
+	public final static long SECOND_MILLIS = 1000;
+    public final static long MINUTE_MILLIS = SECOND_MILLIS*60;
 
 	/**
 	 * 
@@ -77,6 +80,26 @@ public class RadUserService {
 		log.debug("<-- listRoles");
 		return data;
 	}
+	
+
+	
+	public Boolean isUserLocked(String userName) {
+		log.debug("--> isUserLocked:" + userName);
+		RadUser radUser = radUserRepository.findByUserName(userName);
+		Date currentDate = new Date();
+		Boolean lockedFlag = false;
+		
+		int minutes = 0;
+		if(radUser != null && radUser.getFailedLoginDate() != null) {
+			minutes = (int)((currentDate.getTime()/MINUTE_MILLIS) - (radUser.getFailedLoginDate().getTime()/MINUTE_MILLIS));
+			if (radUser.getFailedLoginAttempts() != null && radUser.getFailedLoginAttempts() >= 5 && minutes <= 15) {
+				lockedFlag = true;
+			}
+		}
+		
+		log.debug("<-- isUserLocked:");
+		return lockedFlag;
+	}
 
 	/**
 	 * 
@@ -100,17 +123,9 @@ public class RadUserService {
 
 	public RadUser updateUser(RadUser radUser) {
 		log.debug("--> updateUser:" + radUser);
-		//The callee is sending encoded pwd
-		//BCryptPasswordEncoder b = new BCryptPasswordEncoder();
-		//radUser.setPassword(b.encode(radUser.getPassword()));
-		
+				
 		radUser = radUserRepository.save(radUser);
-		/*Integer count = radUserRepository.updateUserData(radUser.getPassword(),
-				radUser.getRole().getId(), radUser.getOrganizationLookup()
-						.getId(), radUser.getMacId(), radUser.getPccId(),
-				radUser.getEmailId(), radUser.getFirstName(), radUser
-						.getMiddleName(), radUser.getLastName(), radUser
-						.getId(), new Date(), radUser.getUserName());*/
+		
 		log.debug("<-- updateUser");
 		return radUser;
 	}

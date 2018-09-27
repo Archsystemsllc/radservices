@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
-import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.service.mail.MailService;
 import com.archsystemsinc.qam.utils.EmailObject;
@@ -139,6 +138,95 @@ public class UserRestService {
 		}
 		log.debug("<-- findUser");
 		return radUserReturn;
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
+
+	@RequestMapping(value = "/resetFailAttempts",method = RequestMethod.POST)
+	public @ResponseBody RadUser resetFailAttempts(@RequestBody RadUser radUser ){
+		log.debug("--> resetFailAttempts:"+radUser.getUserName());
+		List<RadUser> radUserReturnList = radUserService.search(radUser);
+		RadUser radUserReturn = null;
+		if (radUserReturnList != null && radUserReturnList.size() > 0) {
+			radUserReturn = radUserReturnList.get(0);
+			Integer failedAttempts = radUserReturn.getFailedLoginAttempts();
+			radUserReturn.setFailedLoginAttempts(null);
+			radUserReturn.setStatus(1l);
+			radUserReturn.setUpdateDate(new Date());
+			radUserReturn = radUserService.updateUser(radUserReturn);
+		}		
+		
+		log.debug("<-- resetFailAttempts");
+		return radUserReturn;
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
+
+	@RequestMapping(value = "/updateFailAttempts",method = RequestMethod.POST)
+	public @ResponseBody RadUser updateFailAttempts(@RequestBody RadUser radUser ){
+		log.debug("--> findUser:"+radUser.getUserName());
+		List<RadUser> radUserReturnList = radUserService.search(radUser);
+		RadUser radUserReturn = null;
+		if (radUserReturnList != null && radUserReturnList.size() > 0) {
+			radUserReturn = radUserReturnList.get(0);
+			Integer failedAttempts = 0;
+			if(radUserReturn.getFailedLoginAttempts() != null) {
+				failedAttempts = radUserReturn.getFailedLoginAttempts();	
+			}
+			
+			failedAttempts += 1;			
+			radUserReturn.setFailedLoginAttempts(failedAttempts);
+			radUserReturn.setFailedLoginDate(new Date());			
+			radUserReturn.setStatus(1l);
+			radUserReturn.setUpdateDate(new Date());
+			radUserReturn = radUserService.updateUser(radUserReturn);
+		}
+		log.debug("<-- findUser");
+		return radUserReturn;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
+
+	@RequestMapping(value = "/getUserAttempts",method = RequestMethod.POST)
+	public @ResponseBody RadUser getUserAttempts(@RequestBody RadUser radUser ){
+		log.debug("--> findUser:"+radUser.getUserName());
+		List<RadUser> radUserReturnList = radUserService.search(radUser);
+		RadUser radUserReturn = null;
+		if (radUserReturnList != null && radUserReturnList.size() > 0) {
+			radUserReturn = radUserReturnList.get(0);
+		}
+		log.debug("<-- findUser");
+		return radUserReturn;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
+
+	@RequestMapping(value = "/isUserLocked",method = RequestMethod.POST)
+	public @ResponseBody Boolean isUserLocked(@RequestBody RadUser radUser ){
+		log.debug("--> isUserLocked:"+radUser.getUserName());
+		
+		Boolean result = radUserService.isUserLocked(radUser.getUserName());
+		
+		log.debug("<-- isUserLocked");
+		return result;
 	}
 	
 	/**
