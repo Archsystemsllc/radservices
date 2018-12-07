@@ -85,6 +85,9 @@ public class ScoreCard implements Serializable {
 	@Column(name="jur_id")
 	private Integer jurId;
 	
+	@Column(name="qam_id")
+	private Integer qamId;
+	
 	@Column(name="mac_call_reference_number")
 	private String macCallReferenceNumber;
 
@@ -224,6 +227,18 @@ public class ScoreCard implements Serializable {
 	}
 	
 	
+
+	public Integer getQamId() {
+		return qamId;
+	}
+
+
+
+	public void setQamId(Integer qamId) {
+		this.qamId = qamId;
+	}
+
+
 
 	public String getNewMedicareCardCallTracking() {
 		return newMedicareCardCallTracking;

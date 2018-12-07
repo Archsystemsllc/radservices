@@ -3,16 +3,25 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.Rebuttal;
@@ -58,13 +67,38 @@ public class RebuttalRestService {
 		return data;
 	}		
 	
-	/*@RequestMapping(value = "/{id}/image", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@Transactional(rollbackFor = Exception.class)
-	public byte[] setImage(@PathVariable("id") Long userId,
-	        @RequestParam("file") MultipartFile file) throws IOException {
-	    // Upload logic
-	}*/
+	
+	
+	@RequestMapping(value="/uploadRebuttalFileObject", method=RequestMethod.POST)
+    public @ResponseBody Boolean handleFileUpload( 
+            @RequestParam("file") MultipartFile multiPartFile,@RequestParam("id") Integer rebuttalId){
+        
+        //Code to Test File Functionality
+		//File tempFile = new File("C:\\Temp\\Myobject.pdf");
+		OutputStream outputStream;
+		try {
+			//Code to Test File Functionality
+			//outputStream = new FileOutputStream(tempFile);
+			//IOUtils.copy(file.getInputStream(), outputStream);
+    		//outputStream.close();
+			if (!multiPartFile.getOriginalFilename().equals("")) {
+				Rebuttal rebuttal = rebuttalService.findById(rebuttalId);
+	    		rebuttal.setFileName(multiPartFile.getOriginalFilename());
+	    		rebuttal.setRebuttalFileAttachment(multiPartFile.getBytes());
+	    		rebuttalService.saveOrUpdateRebuttal(rebuttal);
+			}
+    		
+		} catch (FileNotFoundException e1) {
+			
+			e1.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+        return true;      
+    }
 	
 	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST)
 	public @ResponseBody Rebuttal saveOrUpdateRebuttal(

@@ -8,13 +8,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.archsystemsinc.qam.model.CsrLog;
 import com.archsystemsinc.qam.model.Rebuttal;
-import com.archsystemsinc.qam.model.ScoreCard;
 
 /**
  */
-public interface RebuttalRepository extends JpaRepository<Rebuttal, Long>, JpaSpecificationExecutor<Rebuttal>{	
+public interface RebuttalRepository extends JpaRepository<Rebuttal, Integer>, JpaSpecificationExecutor<Rebuttal>{	
 	
 	//AllCsrLogdReport
 	

@@ -49,7 +49,7 @@ public class RebuttalService {
 		return rebuttalRepository.findAll(specifications);
 	}
 	
-public List< Rebuttal > searchRebuttalForReport( ReportsForm reportsForm ){	
+	public List< Rebuttal > searchRebuttalForReport( ReportsForm reportsForm ){	
 		
 		Specifications< Rebuttal > specifications = Specifications.where
 					(RebuttalSpecifications.searchByMacId(Integer.valueOf(reportsForm.getMacId())))
@@ -64,6 +64,10 @@ public List< Rebuttal > searchRebuttalForReport( ReportsForm reportsForm ){
 		return rebuttalRepository.findAll(specifications);
 		
 
+	}
+	
+	public Rebuttal findById(Integer id) {
+		return rebuttalRepository.findOne(id);
 	}
 }
 

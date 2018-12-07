@@ -149,6 +149,9 @@ public class Rebuttal implements Serializable {
 	@Column(name="file_type")
 	private String fileType;
 	
+	@Column(name="qam_id")
+	private Integer qamId;
+	
 	@Transient
 	private String macName;
 	
@@ -176,6 +179,20 @@ public class Rebuttal implements Serializable {
 	
 	
 	
+
+	public Integer getQamId() {
+		return qamId;
+	}
+
+
+
+
+	public void setQamId(Integer qamId) {
+		this.qamId = qamId;
+	}
+
+
+
 
 	public ByteArrayResource getHttpFileData() {
 		return httpFileData;
