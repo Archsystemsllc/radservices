@@ -35,7 +35,9 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	  
 	      http.csrf().disable()
 	        .authorizeRequests()
+	        .antMatchers("/api/download-document").permitAll()
 	        .antMatchers("/api/**").hasRole("ADMIN")
+	        
 	        .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
 	        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
 	    }

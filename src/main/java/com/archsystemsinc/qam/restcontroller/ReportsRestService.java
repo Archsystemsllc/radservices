@@ -170,13 +170,13 @@ public class ReportsRestService {
 			/*data = reportsService.retrieveRebuttalReportData(reportsForm.getMacId(), reportsForm.getJurisId(), reportsForm.getCallCategoryType(), reportsForm.getRebuttalStatus(),
 					reportsForm.getFromDate(), reportsForm.getToDate());*/
 			
-			if(reportsForm.getMacId() != null && reportsForm.getMacId().equalsIgnoreCase("ALL")) {
+			if(reportsForm.getMacId() == null || (reportsForm.getMacId() != null && reportsForm.getMacId().equalsIgnoreCase("ALL"))) {
 				reportsForm.setMacId("0");
 			}
-			if(reportsForm.getProgramId() != null && reportsForm.getProgramId().equalsIgnoreCase("ALL")) {
+			if(reportsForm.getProgramId() == null || (reportsForm.getProgramId() != null && reportsForm.getProgramId().equalsIgnoreCase("ALL"))) {
 				reportsForm.setProgramId("0");
 			}
-			if(reportsForm.getPccLocationId() != null && reportsForm.getPccLocationId().equalsIgnoreCase("ALL")) {
+			if(reportsForm.getPccLocationId() == null || (reportsForm.getPccLocationId() != null && reportsForm.getPccLocationId().equalsIgnoreCase("ALL"))) {
 				reportsForm.setPccLocationId("0");
 			}
 			data = rebuttalService.searchRebuttalForReport(reportsForm);

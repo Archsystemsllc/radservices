@@ -44,6 +44,7 @@ public class RebuttalService {
 							.and(RebuttalSpecifications.searchByMacId(rebuttal.getMacId()))
 							.and(RebuttalSpecifications.searchByJurIdList(rebuttal.getJurisIdList()))	
 							.and(RebuttalSpecifications.findByDatePostedBetween(rebuttal.getFilterFromDate(), rebuttal.getFilterToDate()))	
+							.and(RebuttalSpecifications.searchByRebuttalStatus(rebuttal.getRebuttalStatus()))
 							.and(RebuttalSpecifications.searchByJurId(rebuttal.getJurisId()));
 															
 		return rebuttalRepository.findAll(specifications);

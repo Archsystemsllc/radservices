@@ -3,18 +3,29 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +44,7 @@ import com.archsystemsinc.qam.service.MacLookupService;
 import com.archsystemsinc.qam.service.QamEnvironmentChangeFormService;
 import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.utils.UploadResponse;
+import org.springframework.http.HttpHeaders;
 	
 	/**
  * @author Abdul Nissar Shaik
@@ -126,18 +138,18 @@ public class QamEnvironmentChangeFormRestService {
 	}	
 	
 	
-	 @RequestMapping(value = "/download-document", method = RequestMethod.GET)
+	 /*@RequestMapping(value = "/download-document")
 	    //public HttpServletResponse  downloadDocument(@RequestParam("docId") Long docId, HttpServletResponse response) throws IOException {
-	 public HttpServletResponse  downloadDocument( HttpServletResponse response) throws IOException {
+	 public HttpServletResponse  downloadDocument(@RequestParam("docId") Long docId, HttpServletResponse response) throws IOException {
 		
 		 try {
-			 QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(3l);
+			 QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(docId);
 		 	 //UserDocument document = userDocumentService.findById(docId);
 		     response.setContentType(qamEnvironmentChangeForm.getType());
 		     response.setContentLength(qamEnvironmentChangeForm.getDocumentContent().length);
 		     response.setHeader("Content-Disposition","attachment; filename=\"" + qamEnvironmentChangeForm.getDocumentName() +".xlsx\"");
-  
-			 FileCopyUtils.copy(qamEnvironmentChangeForm.getDocumentContent(), response.getOutputStream());
+		     //InputStream targetStream = new ByteArrayInputStream(qamEnvironmentChangeForm.getDocumentContent());
+		     FileCopyUtils.copy(qamEnvironmentChangeForm.getDocumentContent(), response.getOutputStream());
 			 response.getOutputStream().flush();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -145,7 +157,59 @@ public class QamEnvironmentChangeFormRestService {
 		}
 	  
 		 return response;
-	 }
+	 }*/
+	
+
+	
+    /*@RequestMapping(value = "/download-document", method = RequestMethod.POST)
+    public void downloadFile( HttpServletResponse response) {
+        try {
+			// Load file from database
+			QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(docId);
+
+				        return ResponseEntity.ok()
+			        .contentType(MediaType.parseMediaType(qamEnvironmentChangeForm.getType()))
+			        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + qamEnvironmentChangeForm.getDocumentName() + ".xlsx\"")
+			        .body(new ByteArrayResource(qamEnvironmentChangeForm.getDocumentContent()));
+			
+			 response.setContentType(qamEnvironmentChangeForm.getType());
+			 response.setContentLength(qamEnvironmentChangeForm.getDocumentContent().length);
+			 response.setHeader("Content-Disposition","attachment; filename=\"" + qamEnvironmentChangeForm.getDocumentName() +".xlsx\"");
+			 InputStream inputStream = new ByteArrayInputStream(qamEnvironmentChangeForm.getDocumentContent());
+			 // get output stream of the response
+			 OutputStream outStream = response.getOutputStream();
+			 
+			 byte[] buffer = new byte[BUFFER_SIZE];
+		        int bytesRead = -1;
+		 
+		        // write bytes read from the input stream into the output stream
+		        while ((bytesRead = inputStream.read(buffer)) != -1) {
+		            outStream.write(buffer, 0, bytesRead);
+		        }
+		 
+		        inputStream.close();
+		        outStream.close();
+			 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	 try {
+			 QamEnvironmentChangeForm qamEnvironmentChangeForm = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(3l);
+		 	 //UserDocument document = userDocumentService.findById(docId);
+		     response.setContentType(qamEnvironmentChangeForm.getType());
+		     response.setContentLength(qamEnvironmentChangeForm.getDocumentContent().length);
+		     response.setHeader("Content-Disposition","attachment; filename=\"" + qamEnvironmentChangeForm.getDocumentName() +".xlsx\"");
+		     InputStream targetStream = new ByteArrayInputStream(qamEnvironmentChangeForm.getDocumentContent());
+		     IOUtils.copy(targetStream, response.getOutputStream());
+			 response.flushBuffer();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  
+    }*/
 	 
 	 
 	 
