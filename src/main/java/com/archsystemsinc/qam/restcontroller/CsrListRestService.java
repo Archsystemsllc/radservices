@@ -120,10 +120,10 @@ public class CsrListRestService {
 	
 	
 	@RequestMapping(value = "/csrListNames", method = RequestMethod.GET)
-	public List<CsrLists> getCsrListNames(@RequestParam("term")  String csrLName,@RequestParam("macIdS") String macLookupId, @RequestParam("jurisdictionS") String jurisdiction, @RequestParam("programS") String program) {
+	public List<CsrLists> getCsrListNames(@RequestParam("term")  String nameLiteral,@RequestParam("macIdS") String macLookupId, @RequestParam("jurisdictionS") String jurisdiction, @RequestParam("programS") String program) {
 		
 		macLookupId = macLookupId.toLowerCase();
-		List<CsrLists> data = csrListService.getCsrNames(csrLName, Long.valueOf(macLookupId), jurisdiction,program);			
+		List<CsrLists> data = csrListService.getCsrNames(nameLiteral, Long.valueOf(macLookupId), jurisdiction,program);			
 		HashMap<String, CsrLists> csrListUniqMap = new HashMap<String, CsrLists> ();
 		for(CsrLists csrListTemp: data) {
 			

@@ -56,7 +56,7 @@ public class ReportsRestService {
 				scoreCardReportObject.setMacId(Integer.valueOf(reportsForm.getMacId()));
 			}
 			
-			if(!reportsForm.getProgramId().equalsIgnoreCase("")) {
+			if(reportsForm.getProgramId() != null && !reportsForm.getProgramId().equalsIgnoreCase("")) {
 				scoreCardReportObject.setProgramIdReportSearchString(reportsForm.getProgramId());
 			}		
 			
@@ -66,12 +66,12 @@ public class ReportsRestService {
 			if(reportsForm.getScoreCardType().equalsIgnoreCase("Scoreable")) {
 				if(reportsForm.getCallResult().equalsIgnoreCase("Fail")) {
 					scoreCardReportObject.setFinalScoreCardStatus(reportsForm.getCallResult());
-					scoreCardReportObject.setCmsCalibrationStatus(reportsForm.getCallResult());
+					//scoreCardReportObject.setCmsCalibrationStatus(reportsForm.getCallResult());
 				} else if(reportsForm.getCallResult().equalsIgnoreCase("Pass")) {
 					scoreCardReportObject.setFinalScoreCardStatus(reportsForm.getCallResult());
 				} else if(reportsForm.getCallResult().equalsIgnoreCase("ALL")) {
 					scoreCardReportObject.setFinalScoreCardStatus("Fail");
-					scoreCardReportObject.setCmsCalibrationStatus("Fail");
+					//scoreCardReportObject.setCmsCalibrationStatus("Fail");
 					multipleSearch = true;
 				}			
 			}
@@ -86,7 +86,7 @@ public class ReportsRestService {
 			
 			if(multipleSearch && reportsForm.getScoreCardType().equalsIgnoreCase("Scoreable")) {
 				scoreCardReportObject.setFinalScoreCardStatus("Pass");
-				scoreCardReportObject.setCmsCalibrationStatus("");
+				//scoreCardReportObject.setCmsCalibrationStatus("");
 				
 				multipleData = scoreCardService.search(scoreCardReportObject);
 				

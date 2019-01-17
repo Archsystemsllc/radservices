@@ -214,6 +214,9 @@ public class ScoreCard implements Serializable {
 	private ArrayList<Integer> jurIdList;	
 	
 	@Transient
+	private ArrayList<Integer> programIdList;	
+	
+	@Transient
 	private ArrayList<Integer> macIdList;	
 	
 	@Transient
@@ -226,7 +229,22 @@ public class ScoreCard implements Serializable {
 	public ScoreCard() {
 	}
 	
-	
+
+	public ArrayList<Integer> getProgramIdList() {
+		return programIdList;
+	}
+
+
+
+
+
+	public void setProgramIdList(ArrayList<Integer> programIdList) {
+		this.programIdList = programIdList;
+	}
+
+
+
+
 
 	public Integer getQamId() {
 		return qamId;

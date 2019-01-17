@@ -352,14 +352,14 @@ public class CsrListService {
 	}
 	
 	
-	public List<CsrLists> getCsrNames(String csrLName,Long macLookupId,String jurisdiction, String program) {
+	public List<CsrLists> getCsrNames(String nameLiteral,Long macLookupId,String jurisdiction, String program) {
 		
 		List<CsrLists> tempCsrList = null;		
 		
 		try {
 			boolean macAllFlag = false;
 			
-			tempCsrList = csrListRepository.existingCsrListByMacIdJurisProgram(csrLName,macLookupId,jurisdiction,program);
+			tempCsrList = csrListRepository.existingCsrListByMacIdJurisProgram(nameLiteral,macLookupId,jurisdiction,program);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

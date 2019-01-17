@@ -42,7 +42,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(failureString != null && !failureString.equalsIgnoreCase("")) {
-					final Predicate matchingByFailureString = builder.like(root.get(ScoreCard_.callResult), failureString );
+					final Predicate matchingByFailureString = builder.like(root.get(ScoreCard_.finalScoreCardStatus), failureString );
 					return matchingByFailureString;
 				} else 
 					return null;
@@ -57,7 +57,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(callResult != null && !callResult.equalsIgnoreCase("") && !callResult.equalsIgnoreCase("ALL")) {
-					final Predicate matchingCallResult = builder.like(root.get(ScoreCard_.callResult), "%" + callResult + "%");
+					final Predicate matchingCallResult = builder.like(root.get(ScoreCard_.finalScoreCardStatus), "%" + callResult + "%");
 					return matchingCallResult;
 				} else 
 					return null;
@@ -207,6 +207,24 @@ public final class ScoreCardSpecifications {
 		};
 	}
 	
+	public static Specification<ScoreCard> searchByProgramIdList(final ArrayList<Integer> programIdList) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(programIdList != null && programIdList.size() > 0) {
+					
+					Expression<Integer> exp = root.get(ScoreCard_.programId);
+					final Predicate matchingByProgramIdList = exp.in(programIdList);
+					return matchingByProgramIdList;
+					
+				} else 
+					return null;
+			}
+		};
+	}
+	
 	public static Specification<ScoreCard> searchByProgramId(final Integer programId) {
 		return new Specification<ScoreCard>() {
 			@Override
@@ -243,7 +261,7 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				if(scorecardType != null && !scorecardType.equalsIgnoreCase("") && !scorecardType.equalsIgnoreCase("ALL")) {
-					final Predicate matchingByScorecardType = builder.like(root.get(ScoreCard_.scorecardType),"%" + scorecardType + "%");
+					final Predicate matchingByScorecardType = builder.equal(root.get(ScoreCard_.scorecardType),scorecardType);
 					return matchingByScorecardType;
 				} else 
 					return null;				
@@ -271,17 +289,39 @@ public final class ScoreCardSpecifications {
 	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
 	 */
 	
-	public static Specification<ScoreCard> findByQamEnddateTimeBetween(final Date filterFromDate, final Date filterToDate) {
+	public static Specification<ScoreCard> findByQamStartdateTimeBetween(final Date filterFromDate, final Date filterToDate) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
-				Predicate matchingByQamEndDateTime = null;
+				Predicate matchingByQamStartdateTime = null;
 				
 				if(filterFromDate != null && filterToDate != null){					
-					matchingByQamEndDateTime = builder.between(root.get(ScoreCard_.qamEnddateTime), filterFromDate, filterToDate);
+					matchingByQamStartdateTime = builder.between(root.get(ScoreCard_.qamStartdateTime), filterFromDate, filterToDate);
 				}
-				return matchingByQamEndDateTime;							
+				return matchingByQamStartdateTime;							
+			}
+		};
+	}
+	
+	
+	
+	/*
+	 * Select the eps inbetween dates
+	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
+	 */
+	
+	public static Specification<ScoreCard> findByUptoFilterToDate(final Date filterToDate) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				Predicate matchingByQamStartdateTime = null;
+				
+				if(filterToDate != null){					
+					matchingByQamStartdateTime = builder.lessThanOrEqualTo(root.get(ScoreCard_.qamStartdateTime), filterToDate);
+				}
+				return matchingByQamStartdateTime;							
 			}
 		};
 	}

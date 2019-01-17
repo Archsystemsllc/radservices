@@ -159,6 +159,22 @@ public final class RebuttalSpecifications {
 		};
 	}
 	
+	public static Specification<Rebuttal> findUptoToDate(final Date filterToDate) {
+		return new Specification<Rebuttal>() {
+			@Override
+			public final Predicate toPredicate(final Root<Rebuttal> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				Predicate matchingUptoPostedDateTime = null;
+				
+				if(filterToDate != null){					
+					matchingUptoPostedDateTime = builder.lessThanOrEqualTo(root.get(Rebuttal_.datePosted),  filterToDate);
+				}
+				return matchingUptoPostedDateTime;							
+			}
+		};
+	}
+	
+	
 	
 	
 	
