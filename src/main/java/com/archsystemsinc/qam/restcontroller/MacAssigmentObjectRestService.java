@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.MacAssignmentObject;
 import com.archsystemsinc.qam.model.Rebuttal;
+import com.archsystemsinc.qam.sec.util.GenericConstants;
 import com.archsystemsinc.qam.service.MacAssignmentObjectService;
 import com.archsystemsinc.qam.service.RebuttalService;
 import com.archsystemsinc.qam.service.mail.MailService;

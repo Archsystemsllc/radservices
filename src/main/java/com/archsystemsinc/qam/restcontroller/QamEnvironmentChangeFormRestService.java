@@ -3,48 +3,33 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.CsrLists;
 import com.archsystemsinc.qam.model.Jurisdiction;
 import com.archsystemsinc.qam.model.MacLookup;
 import com.archsystemsinc.qam.model.QamEnvironmentChangeForm;
 import com.archsystemsinc.qam.model.RadUser;
+import com.archsystemsinc.qam.sec.util.GenericConstants;
+import com.archsystemsinc.qam.sec.util.RadServicesUtilityFunctions;
 import com.archsystemsinc.qam.service.JurisdictionService;
 import com.archsystemsinc.qam.service.MacLookupService;
 import com.archsystemsinc.qam.service.QamEnvironmentChangeFormService;
 import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.utils.UploadResponse;
-import org.springframework.http.HttpHeaders;
 	
 	/**
  * @author Abdul Nissar Shaik
@@ -67,6 +52,9 @@ public class QamEnvironmentChangeFormRestService {
 	@Autowired
 	private RadUserService radUserService;
 	
+	 @Autowired
+	 RadServicesUtilityFunctions radServicesUtilityFunctions;
+	
 	
 	@RequestMapping(value = "/uploadQamEnvForm", method = RequestMethod.POST)
 	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId,@RequestParam("jurisdictionUText") Long jurisdictionId){
@@ -74,20 +62,22 @@ public class QamEnvironmentChangeFormRestService {
 		UploadResponse response = new UploadResponse();
 		QamEnvironmentChangeForm qamEnvironmentChangeForm = new QamEnvironmentChangeForm();
 		try {
+			Date currentDateTime = new Date();
+			String currentDateString = radServicesUtilityFunctions.convertToStringFromDate(currentDateTime);
 			RadUser radUser = radUserService.findById(userId);
 			
 			qamEnvironmentChangeForm.setMacLookupId(macId);
 			qamEnvironmentChangeForm.setJurisdictionId(jurisdictionId);
 			qamEnvironmentChangeForm.setDocumentName(uploadedFile.getName());
 			qamEnvironmentChangeForm.setDescription("");
-			qamEnvironmentChangeForm.setType(uploadedFile.getContentType());
+			qamEnvironmentChangeForm.setFileType(uploadedFile.getContentType());
 			qamEnvironmentChangeForm.setDocumentContent(uploadedFile.getBytes());
 			qamEnvironmentChangeForm.setUserId(userId);
 			qamEnvironmentChangeForm.setRecordStatus(GenericConstants.RECORD_STATUS_ACTIVE);
 			qamEnvironmentChangeForm.setCreatedBy(radUser.getUserName());
-			qamEnvironmentChangeForm.setCreatedDate(new Date());
+			qamEnvironmentChangeForm.setCreatedDate(currentDateString);
 			qamEnvironmentChangeForm.setUpdatedBy(radUser.getUserName());
-			qamEnvironmentChangeForm.setUpdateddDate(new Date());
+			qamEnvironmentChangeForm.setUpdateddDate(currentDateString);
 			qamEnvironmentChangeForm = qamEnvironmentChangeFormService.createQamEnvironmentChangeForm(qamEnvironmentChangeForm);
 			response.setStatus("File Uploaded Succesfully");
 		} catch(Exception e) {
@@ -220,6 +210,18 @@ public class QamEnvironmentChangeFormRestService {
 			
 			log.debug("<-- getQamEnvFormList");
 			return finalList;
-		}	
+	}	
+	 
+	 @RequestMapping(value = "/findEnvironmentalChangeControlForm",method = RequestMethod.POST)
+		public @ResponseBody QamEnvironmentChangeForm findUser(@RequestBody QamEnvironmentChangeForm qamEnvironmentChangeForm ){
+			log.debug("--> findEnvironmentalChangeControlForm:");
+			QamEnvironmentChangeForm qamEnvironmentChangeFormTemp = null;
+			if(qamEnvironmentChangeForm.getQamEnvironmentChangeFormId() != null) {
+				qamEnvironmentChangeFormTemp = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(qamEnvironmentChangeForm.getQamEnvironmentChangeFormId());		
+			}
+			
+			return qamEnvironmentChangeFormTemp;
+		}
+		
 	
 }

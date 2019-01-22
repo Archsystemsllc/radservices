@@ -35,7 +35,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	  
 	      http.csrf().disable()
 	        .authorizeRequests()
-	        .antMatchers("/api/download-document").permitAll()
+	       // .antMatchers("/api/download-document").permitAll()
 	        .antMatchers("/api/**").hasRole("ADMIN")
 	        
 	        .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
@@ -47,9 +47,5 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 	        return new CustomBasicAuthenticationEntryPoint();
 	    }
 	     
-	    /* To allow Pre-flight [OPTIONS] request from browser */
-	    @Override
-	    public void configure(WebSecurity web) throws Exception {
-	        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-	    }
+	   
 }

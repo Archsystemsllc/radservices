@@ -45,7 +45,7 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	private String qamEnvFormstatus;
 	
 	@Column(name = "type")
-	private String type;
+	private String fileType;
 	
 	@Column(name = "document_name")
 	private String documentName;
@@ -64,13 +64,13 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	private String updatedBy;
 	
 	@Column(name = "CREATED_DATE")
-	@JsonSerialize(using=DateSerializer.class)
-	private Date createdDate;
+	
+	private String  createdDate;
 	
 	
 	@Column(name = "UPDATED_DATE")
-	@JsonSerialize(using=DateSerializer.class)
-	private Date updateddDate;
+	
+	private String updateddDate;
 	
 	@Column(name = "RECORD_STATUS")
 	private Long recordStatus;
@@ -168,22 +168,15 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	}
 
 
-
-
-
-	public String getType() {
-		return type;
+	public String getFileType() {
+		return fileType;
 	}
 
 
 
-
-
-	public void setType(String type) {
-		this.type = type;
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
 	}
-
-
 
 
 
@@ -267,35 +260,33 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 
 
 
-	public Date getCreatedDate() {
+	
+
+
+
+
+
+	public String getCreatedDate() {
 		return createdDate;
 	}
 
 
 
-
-
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 
 
 
-
-
-	public Date getUpdateddDate() {
+	public String getUpdateddDate() {
 		return updateddDate;
 	}
 
 
 
-
-
-	public void setUpdateddDate(Date updateddDate) {
+	public void setUpdateddDate(String updateddDate) {
 		this.updateddDate = updateddDate;
 	}
-
-
 
 
 

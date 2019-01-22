@@ -1,4 +1,4 @@
-package com.archsystemsinc.cmts.sec.util;
+package com.archsystemsinc.qam.sec.util;
 
 public final class GenericConstants {
 

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.ScoreCard;
+import com.archsystemsinc.qam.sec.util.GenericConstants;
 import com.archsystemsinc.qam.service.ScoreCardService;
 import com.archsystemsinc.qam.service.mail.MailService;
 import com.archsystemsinc.qam.utils.EmailObject;

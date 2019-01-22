@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.CsrLog;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.repository.CsrLogRepository;
 import com.archsystemsinc.qam.repository.specifications.CsrLogSpecifications;
+import com.archsystemsinc.qam.sec.util.GenericConstants;
 import com.archsystemsinc.qam.utils.EmailObject;
 
 /**

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.archsystemsinc.cmts.sec.util.GenericConstants;
 import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Role;
+import com.archsystemsinc.qam.sec.util.GenericConstants;
 import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.service.mail.MailService;
 import com.archsystemsinc.qam.utils.EmailObject;
