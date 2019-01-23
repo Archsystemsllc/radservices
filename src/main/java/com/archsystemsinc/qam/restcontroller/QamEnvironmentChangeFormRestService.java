@@ -57,27 +57,30 @@ public class QamEnvironmentChangeFormRestService {
 	
 	
 	@RequestMapping(value = "/uploadQamEnvForm", method = RequestMethod.POST)
-	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId,@RequestParam("jurisdictionUText") Long jurisdictionId){
+	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId
+			,@RequestParam("jurisdictionUText") Long jurisdictionId,@RequestParam("formType") String formType){
 		log.debug("--> uploadFileData:");
 		UploadResponse response = new UploadResponse();
 		QamEnvironmentChangeForm qamEnvironmentChangeForm = new QamEnvironmentChangeForm();
 		try {
 			Date currentDateTime = new Date();
 			String currentDateString = radServicesUtilityFunctions.convertToStringFromDate(currentDateTime);
+			Date finalDate = radServicesUtilityFunctions.convertToDateFromString(currentDateString);
 			RadUser radUser = radUserService.findById(userId);
 			
 			qamEnvironmentChangeForm.setMacLookupId(macId);
 			qamEnvironmentChangeForm.setJurisdictionId(jurisdictionId);
-			qamEnvironmentChangeForm.setDocumentName(uploadedFile.getName());
+			qamEnvironmentChangeForm.setDocumentName(uploadedFile.getOriginalFilename());
 			qamEnvironmentChangeForm.setDescription("");
+			qamEnvironmentChangeForm.setFormType(formType);
 			qamEnvironmentChangeForm.setFileType(uploadedFile.getContentType());
 			qamEnvironmentChangeForm.setDocumentContent(uploadedFile.getBytes());
 			qamEnvironmentChangeForm.setUserId(userId);
 			qamEnvironmentChangeForm.setRecordStatus(GenericConstants.RECORD_STATUS_ACTIVE);
 			qamEnvironmentChangeForm.setCreatedBy(radUser.getUserName());
-			qamEnvironmentChangeForm.setCreatedDate(currentDateString);
+			qamEnvironmentChangeForm.setCreatedDate(finalDate);
 			qamEnvironmentChangeForm.setUpdatedBy(radUser.getUserName());
-			qamEnvironmentChangeForm.setUpdateddDate(currentDateString);
+			qamEnvironmentChangeForm.setUpdateddDate(finalDate);
 			qamEnvironmentChangeForm = qamEnvironmentChangeFormService.createQamEnvironmentChangeForm(qamEnvironmentChangeForm);
 			response.setStatus("File Uploaded Succesfully");
 		} catch(Exception e) {

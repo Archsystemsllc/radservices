@@ -15,8 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import com.archsystemsinc.qam.utils.DateSerializer;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.archsystemsinc.qam.utils.DateSerializer;
 
 /**
  * @author Abdul Nissar S
@@ -63,14 +65,14 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	@Column(name = "UPDATED_BY")
 	private String updatedBy;
 	
-	@Column(name = "CREATED_DATE")
-	
-	private String  createdDate;
+	@Column(name = "CREATED_DATE")	
+	@JsonSerialize(using=DateSerializer.class)
+	private Date  createdDate;
 	
 	
 	@Column(name = "UPDATED_DATE")
-	
-	private String updateddDate;
+	@JsonSerialize(using=DateSerializer.class)
+	private Date updateddDate;
 	
 	@Column(name = "RECORD_STATUS")
 	private Long recordStatus;
@@ -78,8 +80,151 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 	@Column(name = "FORM_TYPE")
 	private String formType;
 	
+	@Transient
+    private String keepCurrentListCB;
+    
+	@Transient
+    private String macIdK;
+	@Transient
+    private String macIdS;
+	@Transient
+    private String macIdU;
+    
+
+	@Transient
+    private String jurisdictionK;
+	@Transient
+    private String jurisdictionS;
+	@Transient
+    private String jurisdictionU;
+	@Transient
+    private String jurisdictionUText;
+	@Transient
+    private String fromDate;
+	@Transient
+    private String toDate; 
+    
 	
-	
+
+	public String getKeepCurrentListCB() {
+		return keepCurrentListCB;
+	}
+
+
+
+	public void setKeepCurrentListCB(String keepCurrentListCB) {
+		this.keepCurrentListCB = keepCurrentListCB;
+	}
+
+
+
+	public String getMacIdK() {
+		return macIdK;
+	}
+
+
+
+	public void setMacIdK(String macIdK) {
+		this.macIdK = macIdK;
+	}
+
+
+
+	public String getMacIdS() {
+		return macIdS;
+	}
+
+
+
+	public void setMacIdS(String macIdS) {
+		this.macIdS = macIdS;
+	}
+
+
+
+	public String getMacIdU() {
+		return macIdU;
+	}
+
+
+
+	public void setMacIdU(String macIdU) {
+		this.macIdU = macIdU;
+	}
+
+
+
+	public String getJurisdictionK() {
+		return jurisdictionK;
+	}
+
+
+
+	public void setJurisdictionK(String jurisdictionK) {
+		this.jurisdictionK = jurisdictionK;
+	}
+
+
+
+	public String getJurisdictionS() {
+		return jurisdictionS;
+	}
+
+
+
+	public void setJurisdictionS(String jurisdictionS) {
+		this.jurisdictionS = jurisdictionS;
+	}
+
+
+
+	public String getJurisdictionU() {
+		return jurisdictionU;
+	}
+
+
+
+	public void setJurisdictionU(String jurisdictionU) {
+		this.jurisdictionU = jurisdictionU;
+	}
+
+
+
+	public String getJurisdictionUText() {
+		return jurisdictionUText;
+	}
+
+
+
+	public void setJurisdictionUText(String jurisdictionUText) {
+		this.jurisdictionUText = jurisdictionUText;
+	}
+
+
+
+	public String getFromDate() {
+		return fromDate;
+	}
+
+
+
+	public void setFromDate(String fromDate) {
+		this.fromDate = fromDate;
+	}
+
+
+
+	public String getToDate() {
+		return toDate;
+	}
+
+
+
+	public void setToDate(String toDate) {
+		this.toDate = toDate;
+	}
+
+
 
 	public String getFormType() {
 		return formType;
@@ -260,41 +405,35 @@ public class QamEnvironmentChangeForm implements Comparable<QamEnvironmentChange
 
 
 
-	
-
-
-
-
-
-	public String getCreatedDate() {
-		return createdDate;
-	}
-
-
-
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
-
-
-
-	public String getUpdateddDate() {
-		return updateddDate;
-	}
-
-
-
-	public void setUpdateddDate(String updateddDate) {
-		this.updateddDate = updateddDate;
-	}
-
-
-
 	public Long getRecordStatus() {
 		return recordStatus;
 	}
 
 
+	
+
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+
+	public Date getUpdateddDate() {
+		return updateddDate;
+	}
+
+
+
+	public void setUpdateddDate(Date updateddDate) {
+		this.updateddDate = updateddDate;
+	}
 
 
 

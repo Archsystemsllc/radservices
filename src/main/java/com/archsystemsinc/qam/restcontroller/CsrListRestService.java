@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -119,11 +120,12 @@ public class CsrListRestService {
 	}	
 	
 	
-	@RequestMapping(value = "/csrListNames", method = RequestMethod.GET)
-	public List<CsrLists> getCsrListNames(@RequestParam("term")  String nameLiteral,@RequestParam("macIdS") String macLookupId, @RequestParam("jurisdictionS") String jurisdiction, @RequestParam("programS") String program) {
+	@RequestMapping(value = "/csrListNames", method = RequestMethod.POST)
+	public List<CsrLists> getCsrListNames(@RequestBody CsrLists csrList) {
 		
-		macLookupId = macLookupId.toLowerCase();
-		List<CsrLists> data = csrListService.getCsrNames(nameLiteral, Long.valueOf(macLookupId), jurisdiction,program);			
+		//macLookupId = macLookupId.toLowerCase();
+		List<CsrLists> data = csrListService.getCsrNames(csrList.getSearchStringLiteral(), csrList.getMacLookupId(), 
+				csrList.getJurisdiction(),csrList.getProgram());			
 		HashMap<String, CsrLists> csrListUniqMap = new HashMap<String, CsrLists> ();
 		for(CsrLists csrListTemp: data) {
 			

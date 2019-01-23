@@ -87,6 +87,27 @@ public class CsrLists implements Comparable<CsrLists>{
 	@Transient
 	private String macName;
 	
+	@Transient
+	private String searchStringLiteral;
+	
+	
+	
+	public Date getCreatedDateYearMonth() {
+		return createdDateYearMonth;
+	}
+
+	public void setCreatedDateYearMonth(Date createdDateYearMonth) {
+		this.createdDateYearMonth = createdDateYearMonth;
+	}
+
+	public String getSearchStringLiteral() {
+		return searchStringLiteral;
+	}
+
+	public void setSearchStringLiteral(String searchStringLiteral) {
+		this.searchStringLiteral = searchStringLiteral;
+	}
+
 	public String getMacName() {
 		return macName;
 	}

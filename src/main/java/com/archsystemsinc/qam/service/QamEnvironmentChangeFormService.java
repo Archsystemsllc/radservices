@@ -4,7 +4,6 @@
 package com.archsystemsinc.qam.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -34,7 +33,7 @@ public class QamEnvironmentChangeFormService {
 		
 		try {
 			Integer yearMonth = CommonUtils.getCurrentYearMonth();
-			qamEnvironmentChangeFormRepository.markStatusDeleted(0l, data.getUserId(), yearMonth, new Date(), data.getMacLookupId(), data.getJurisdictionId());
+			//qamEnvironmentChangeFormRepository.markStatusDeleted(0l, data.getUserId(), yearMonth, new Date(), data.getMacLookupId(), data.getJurisdictionId());
 			
 			data = qamEnvironmentChangeFormRepository.save(data);
 		} catch (Exception e) {

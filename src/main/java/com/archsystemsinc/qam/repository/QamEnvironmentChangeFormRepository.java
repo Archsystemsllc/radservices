@@ -18,22 +18,22 @@ import com.archsystemsinc.qam.model.QamEnvironmentChangeForm;
 public interface QamEnvironmentChangeFormRepository extends JpaRepository<QamEnvironmentChangeForm, Long>, JpaSpecificationExecutor<QamEnvironmentChangeForm>{
 	
 		//Queries to Find Months based on CSR Lists by From Date and To Date
-		@Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
+		@Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId,documentName,formType FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 				+ "and c.macLookupId in (:macLookupIdList) and c.jurisdictionId in (:jurisdictionList) and c.recordStatus = 1 "
 				+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate),c.macLookupId,c.jurisdictionId")
 	    public List<Object[]> findMonthsByMonthYearRange(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear,@Param("macLookupIdList")ArrayList<Long> macLookupArrayList,@Param("jurisdictionList")ArrayList<Long> jurisdictionArrayList);
 	    
-	    @Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
+	    @Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId,documentName,formType FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 				+ "and c.recordStatus = 1 "
 				+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate),c.macLookupId,c.jurisdictionId")
 	    public List<Object[]> findMonthsByMonthYearRangeAll(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear);
 	    
-	    @Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
+	    @Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId,documentName,formType FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 				+ "and c.jurisdictionId in (:jurisdictionList) and c.recordStatus = 1 "
 				+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate),c.macLookupId,c.jurisdictionId")
 	    public List<Object[]> findMonthsByMonthYearRangeAllMac(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear,@Param("jurisdictionList")ArrayList<Long> jurisdictionArrayList);
 	    
-	    @Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
+	    @Query("SELECT MONTHNAME(c.createdDate) as month, YEAR(c.createdDate) as year,macLookupId,jurisdictionId,qamEnvironmentChangeFormId,documentName,formType FROM QamEnvironmentChangeForm c WHERE EXTRACT(YEAR_MONTH FROM c.createdDate) >= :fromMonthYear and EXTRACT(YEAR_MONTH FROM c.createdDate) <= :toMonthYear "
 				+ "and c.macLookupId in (:macLookupIdList) and c.recordStatus = 1 "
 				+ "GROUP BY EXTRACT(YEAR_MONTH FROM c.createdDate),c.macLookupId,c.jurisdictionId")
 	    public List<Object[]> findMonthsByMonthYearRangeAllJuris(@Param("fromMonthYear") Integer fromMonthYear, @Param("toMonthYear") Integer toMonthYear,@Param("macLookupIdList")ArrayList<Long> macLookupArrayList);
