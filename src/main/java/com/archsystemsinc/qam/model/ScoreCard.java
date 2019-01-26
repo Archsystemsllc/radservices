@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import com.archsystemsinc.qam.utils.StringToDateConverter_MMDDYYYY;
 
 
 /**
@@ -50,7 +53,8 @@ public class ScoreCard implements Serializable {
 	private String callLanguage;
 
 	@Column(name="call_monitoring_date")
-	private String callMonitoringDate;
+	@Convert(converter = StringToDateConverter_MMDDYYYY.class)
+	private Date callMonitoringDate;
 
 	@Column(name="call_result")
 	private String callResult;
@@ -735,14 +739,15 @@ public class ScoreCard implements Serializable {
 		this.customerSkillsCallFailureTime = customerSkillsCallFailureTime;
 	}
 
-
-	public String getCallMonitoringDate() {
+	public Date getCallMonitoringDate() {
 		return callMonitoringDate;
 	}
 
-	public void setCallMonitoringDate(String callMonitoringDate) {
+
+	public void setCallMonitoringDate(Date callMonitoringDate) {
 		this.callMonitoringDate = callMonitoringDate;
 	}
+
 
 	public String getLob() {
 		return lob;

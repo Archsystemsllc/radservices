@@ -161,8 +161,8 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private ArrayList<Integer> jurisIdList;
 	
-	/*@Transient
-	private MultipartFile rebuttalFileObject;*/
+	@Transient
+	private MultipartFile rebuttalFileObject;
 	
 	@Transient
 	private ByteArrayResource httpFileData;

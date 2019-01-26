@@ -46,7 +46,7 @@ public class ScoreCardService {
 		Specifications< ScoreCard > specifications = Specifications.where
 				(ScoreCardSpecifications.searchByMacId(scoreCard.getMacId()))
 				.and(ScoreCardSpecifications.searchByJurIdList(scoreCard.getJurIdList()))	
-				.and(ScoreCardSpecifications.findByQamStartdateTimeBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
+				.and(ScoreCardSpecifications.findByCallMonitoringDateBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
 				.and(ScoreCardSpecifications.searchByFinalScoreCardStatus(GenericConstants.FAIL_STRING))
 			;
 		return scoreCardRepository.findAll(specifications);
@@ -65,8 +65,8 @@ public class ScoreCardService {
 				.and(ScoreCardSpecifications.searchByProgramIdList(scoreCard.getProgramIdList()))
 				.and(ScoreCardSpecifications.searchByProgramId(scoreCard.getProgramIdReportSearchString()))
 				.and(ScoreCardSpecifications.searchByUserId(scoreCard.getUserId()))
-				.and(ScoreCardSpecifications.findByQamStartdateTimeBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
-				.and(ScoreCardSpecifications.findByUptoFilterToDate(scoreCard.getFilterToDate()))
+				.and(ScoreCardSpecifications.findByCallMonitoringDateBetween(scoreCard.getFilterFromDate(), scoreCard.getFilterToDate()))
+				//.and(ScoreCardSpecifications.findByUptoFilterToDate(scoreCard.getFilterToDate()))
 				.and(ScoreCardSpecifications.searchByCallResultList(scoreCard.getMacCallResultList()))
 				.and(ScoreCardSpecifications.searchByQamCalibrationStatus(scoreCard.getQamCalibrationStatus()))
 				.and(ScoreCardSpecifications.searchByCmsCalibrationStatus(scoreCard.getCmsCalibrationStatus()))

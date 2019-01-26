@@ -2,6 +2,7 @@ package com.archsystemsinc.qam.repository.specifications;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.archsystemsinc.qam.model.RadUser_;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.model.ScoreCard_;
 
@@ -289,7 +291,7 @@ public final class ScoreCardSpecifications {
 	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
 	 */
 	
-	public static Specification<ScoreCard> findByQamStartdateTimeBetween(final Date filterFromDate, final Date filterToDate) {
+	/*public static Specification<ScoreCard> findByQamStartdateTimeBetween(final Date filterFromDate, final Date filterToDate) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
@@ -302,6 +304,34 @@ public final class ScoreCardSpecifications {
 				return matchingByQamStartdateTime;							
 			}
 		};
+	}*/
+	
+	/*
+	 * Select the eps inbetween dates
+	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
+	 */
+	
+	public static Specification<ScoreCard> findByCallMonitoringDateBetween(final Date filterFromDate, final Date filterToDate) {
+		return new Specification<ScoreCard>() {
+			@Override
+			public final Predicate toPredicate(final Root<ScoreCard> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				Predicate matchingByQamStartdateTime = null;
+				final List<Predicate> matchingByQamMonitoringDates = new ArrayList<>();
+				
+				if(filterFromDate != null && filterToDate != null){			
+					Expression<Date> dateStringExpr = builder.function("STR_TO_DATE", Date.class, root.get(ScoreCard_.callMonitoringDate), builder.literal("%m/%d/%Y"));
+					//matchingByQamStartdateTime = builder.between(dateStringExpr, filterFromDate, filterToDate);
+					Predicate startPredicate = builder.greaterThanOrEqualTo(dateStringExpr, filterFromDate);
+					Predicate endPredicate = builder.lessThanOrEqualTo(dateStringExpr, filterToDate);
+					matchingByQamMonitoringDates.add(startPredicate);
+					matchingByQamMonitoringDates.add(endPredicate);
+				}
+				
+				return builder.and(matchingByQamMonitoringDates.toArray(new Predicate[matchingByQamMonitoringDates.size()]));
+				//return matchingByQamStartdateTime;				
+			}
+		};
 	}
 	
 	
@@ -311,7 +341,7 @@ public final class ScoreCardSpecifications {
 	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
 	 */
 	
-	public static Specification<ScoreCard> findByUptoFilterToDate(final Date filterToDate) {
+	/*public static Specification<ScoreCard> findByUptoFilterToDate(final Date filterToDate) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
@@ -324,5 +354,5 @@ public final class ScoreCardSpecifications {
 				return matchingByQamStartdateTime;							
 			}
 		};
-	}
+	}*/
 }

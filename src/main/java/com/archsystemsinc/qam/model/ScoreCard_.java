@@ -24,4 +24,5 @@ public abstract class ScoreCard_ {
 	public static volatile SingularAttribute<ScoreCard, String> qamCalibrationStatus;
 	public static volatile SingularAttribute<ScoreCard, String> cmsCalibrationStatus;
 	public static volatile SingularAttribute<ScoreCard, String> finalScoreCardStatus;
+	public static volatile SingularAttribute<ScoreCard, Date> callMonitoringDate;
 }

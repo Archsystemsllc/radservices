@@ -27,4 +27,8 @@ public final class GenericConstants {
 	public static final Long RECORD_STATUS_ACTIVE = 1l;
 	public static final Long RECORD_STATUS_INACTIVE = 0l;
 	
+	
+	public static final String DATE_TYPE_FULL = "FULL_DATE";
+	public static final String DATE_TYPE_ONLY_DATE = "ONLY_DATE";
+	
 }
