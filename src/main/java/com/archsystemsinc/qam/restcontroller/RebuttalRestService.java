@@ -19,6 +19,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
@@ -79,11 +80,40 @@ public class RebuttalRestService {
 			e.printStackTrace();
 		}
 		return data;
-	}		
+	}	
+	
+	@RequestMapping(value="/uploadRebuttalFileObject", method=RequestMethod.POST,
+		    consumes = {"multipart/form-data"})
+    public  @ResponseBody String handleFileUpload( 
+    		@RequestParam("rebuttalFileObject") MultipartFile multipartFile,@RequestParam("rebuttalId") Integer rebuttalId){
+		UploadResponse response = new UploadResponse();
+        //Code to Test File Functionality
+		//File tempFile = new File("C:\\Temp\\Myobject.pdf");
+		OutputStream outputStream;
+		//String fileName ="";
+		//Integer rebuttalId = 1;
+		String filename=multipartFile.getOriginalFilename();
+		String name = multipartFile.getName();
+		try {
+		
+			Rebuttal rebuttal = rebuttalService.findById(rebuttalId);
+			rebuttal.setFileType(multipartFile.getContentType());
+    		rebuttal.setFileName(multipartFile.getOriginalFilename());
+    		rebuttal.setRebuttalFileAttachment(multipartFile.getBytes());
+    		rebuttalService.saveOrUpdateRebuttal(rebuttal);
+    		
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+			return null;
+		} 
+        return null;      
+    }
 	
 	
 	
-	@RequestMapping(value="/uploadRebuttalFileObject", method=RequestMethod.POST)
+	/*Method that worked directly from JSP
+	 * @RequestMapping(value="/uploadRebuttalFileObject", method=RequestMethod.POST)
     public UploadResponse handleFileUpload( 
             @RequestParam("rebuttalFileObject") MultipartFile multiPartFile,@RequestParam("id") Integer rebuttalId){
 		UploadResponse response = new UploadResponse();
@@ -113,7 +143,7 @@ public class RebuttalRestService {
 			return null;
 		}
         return null;      
-    }
+    }*/
 	
 	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST)
 	public @ResponseBody Rebuttal saveOrUpdateRebuttal(

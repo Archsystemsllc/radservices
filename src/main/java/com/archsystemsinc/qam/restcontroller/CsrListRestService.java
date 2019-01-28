@@ -6,7 +6,6 @@ package com.archsystemsinc.qam.restcontroller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,15 +36,15 @@ public class CsrListRestService {
 	@Autowired
 	private CsrListService csrListService;
 	
-	@RequestMapping(value = "/keepCurrentList", method = RequestMethod.GET)
-	public UploadResponse keepCurrentList(@RequestParam("userId") Long userId,@RequestParam("macIdK") Long macId,@RequestParam("jurisdictionK") String jurisdiction){
+	@RequestMapping(value = "/keepCurrentList", method = RequestMethod.POST)
+	public UploadResponse keepCurrentList(@RequestBody CsrLists csrList){
 		log.debug("--> keepCurrentList:");
 		UploadResponse response = new UploadResponse();
 		String keepCurrentList = "true";
 		String statusString = "";
 		
 		try {
-			statusString = csrListService.uploadFileData(null,userId,keepCurrentList,macId, jurisdiction.substring(1,jurisdiction.length()-1));
+			statusString = csrListService.uploadFileData(null,csrList.getUserId(),keepCurrentList,csrList.getMacLookupId(), csrList.getJurisdiction());
 			if(statusString.equalsIgnoreCase("")) {
 				response.setStatus("SUCCESS");
 			} else {
@@ -62,7 +61,8 @@ public class CsrListRestService {
 		return response;
 	}
 	
-	@RequestMapping(value = "/uploadCsrList", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadCsrList", method = RequestMethod.POST,
+		    consumes = {"multipart/form-data"})
 	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId,@RequestParam("jurisdictionUText") String jurisdictionList){
 		log.debug("--> uploadFileData:");
 		UploadResponse response = new UploadResponse();
@@ -82,10 +82,11 @@ public class CsrListRestService {
 	@Autowired
 	private MacLookupService macLookupService;
 	
-	@RequestMapping(value = "/csrList", method = RequestMethod.GET)
-	public List<CsrLists> getCsrList(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
+	@RequestMapping(value = "/csrList", method = RequestMethod.POST)
+	public List<CsrLists> getCsrList(@RequestBody CsrLists csrList){
 		log.debug("--> getCsrList:");
-		List<CsrLists> data = csrListService.getCsrList(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
+		List<CsrLists> data = csrListService.getCsrList(csrList.getCsrSearchFromDate(), csrList.getCsrSearchToDate(), 
+				csrList.getMacIdString(), csrList.getJurisdiction());
 		
 		if(data!=null || data.size()>0) {
 			Collections.sort(data);
@@ -107,11 +108,12 @@ public class CsrListRestService {
 		return finalList;
 	}	
 	
-	@RequestMapping(value = "/csrListMonths", method = RequestMethod.GET)
-	public List<Object[]> getCsrListMonths(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
+	@RequestMapping(value = "/csrListMonths", method = RequestMethod.POST)
+	public List<Object[]> getCsrListMonths(@RequestBody CsrLists csrList){
 		log.debug("--> getCsrListMonths:");
 		
-		List<Object[]> data = csrListService.getCsrListMonths(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
+		List<Object[]> data = csrListService.getCsrListMonths(csrList.getCsrSearchFromDate(), csrList.getCsrSearchToDate(), 
+				csrList.getMacIdString(), csrList.getJurisdiction());
 		if(data == null || data.size() == 0) {
 			data = new ArrayList();
 		}

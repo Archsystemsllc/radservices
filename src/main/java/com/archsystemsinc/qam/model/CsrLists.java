@@ -90,8 +90,42 @@ public class CsrLists implements Comparable<CsrLists>{
 	@Transient
 	private String searchStringLiteral;
 	
+	@Transient
+	private String csrSearchFromDate;
+	
+	@Transient
+	private String csrSearchToDate;
+	
+	@Transient
+	private String macIdString;
 	
 	
+	
+	
+	public String getMacIdString() {
+		return macIdString;
+	}
+
+	public void setMacIdString(String macIdString) {
+		this.macIdString = macIdString;
+	}
+
+	public String getCsrSearchFromDate() {
+		return csrSearchFromDate;
+	}
+
+	public void setCsrSearchFromDate(String csrSearchFromDate) {
+		this.csrSearchFromDate = csrSearchFromDate;
+	}
+
+	public String getCsrSearchToDate() {
+		return csrSearchToDate;
+	}
+
+	public void setCsrSearchToDate(String csrSearchToDate) {
+		this.csrSearchToDate = csrSearchToDate;
+	}
+
 	public Date getCreatedDateYearMonth() {
 		return createdDateYearMonth;
 	}
