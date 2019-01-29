@@ -56,7 +56,8 @@ public class QamEnvironmentChangeFormRestService {
 	 RadServicesUtilityFunctions radServicesUtilityFunctions;
 	
 	
-	@RequestMapping(value = "/uploadQamEnvForm", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadQamEnvForm", method = RequestMethod.POST,
+		    consumes = {"multipart/form-data"})
 	public UploadResponse uploadFileData(@RequestParam("file") MultipartFile uploadedFile,@RequestParam("userId") Long userId,@RequestParam("macIdU") Long macId
 			,@RequestParam("jurisdictionUText") Long jurisdictionId,@RequestParam("formType") String formType){
 		log.debug("--> uploadFileData:");
@@ -95,12 +96,13 @@ public class QamEnvironmentChangeFormRestService {
 	
 	
 	
-	@RequestMapping(value = "/qamEnvListMonths", method = RequestMethod.GET)
-	public List<Object[]> getQamEnvListMonths(@RequestParam("fromDate") String from, @RequestParam("toDate") String to, @RequestParam("macIdS") String macLookupIdList, @RequestParam("jurisdictionS") String jurisdictionList){
+	@RequestMapping(value = "/qamEnvListMonths", method = RequestMethod.POST)
+	public List<Object[]> getQamEnvListMonths(@RequestBody QamEnvironmentChangeForm qamEnvironmentChangeForm){
 		log.debug("--> getQamEnvListMonths:");
 		List<Object[] > finalDataSet = null;
 		
-		List<Object[] > data = qamEnvironmentChangeFormService.getQamListMonths(from, to, macLookupIdList.substring(1,macLookupIdList.length()-1), jurisdictionList.substring(1,jurisdictionList.length()-1));
+		List<Object[] > data = qamEnvironmentChangeFormService.getQamListMonths(qamEnvironmentChangeForm.getFromDate(), qamEnvironmentChangeForm.getToDate(), 
+				qamEnvironmentChangeForm.getMacIdS(), qamEnvironmentChangeForm.getJurisdictionS());
 		if(data == null || data.size() == 0) {
 			data = new ArrayList();
 		} else {
@@ -128,7 +130,22 @@ public class QamEnvironmentChangeFormRestService {
 		}
 		log.debug("<-- getQamEnvListMonths");
 		return finalDataSet;
-	}	
+	}
+	
+	
+	@RequestMapping(value = "/download-document" , method = RequestMethod.POST)   
+	public QamEnvironmentChangeForm  downloadDocument(@RequestBody QamEnvironmentChangeForm qamEnvironmentChangeForm)  {
+		QamEnvironmentChangeForm qamEnvironmentChangeFormReturn = null;
+		 try {
+			 qamEnvironmentChangeFormReturn = qamEnvironmentChangeFormService.getQamEnvironmentChangeForm(qamEnvironmentChangeForm.getUserId());
+		 	 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  
+		return qamEnvironmentChangeFormReturn;
+ }
 	
 	
 	 /*@RequestMapping(value = "/download-document")
