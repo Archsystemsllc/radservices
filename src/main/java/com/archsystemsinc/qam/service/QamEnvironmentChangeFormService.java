@@ -97,7 +97,7 @@ public class QamEnvironmentChangeFormService {
 				
 				for(String jurisdictionString: jurisdictionStringList) {
 					jurisdictionString=jurisdictionString.substring(1,jurisdictionString.length()-1);
-					if(jurisdictionString.equalsIgnoreCase("Select ALL")) {
+					if(jurisdictionString.equalsIgnoreCase("ALL")) {
 						jurisdictionAllFlag = true;
 						break;
 					} else {

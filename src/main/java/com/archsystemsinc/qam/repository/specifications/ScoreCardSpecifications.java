@@ -12,7 +12,6 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.archsystemsinc.qam.model.RadUser_;
 import com.archsystemsinc.qam.model.ScoreCard;
 import com.archsystemsinc.qam.model.ScoreCard_;
 
@@ -291,20 +290,20 @@ public final class ScoreCardSpecifications {
 	 * @query SELECT * FROM cb_cmts_prod.eps where created_date between '2015-05-01' AND '2015-05-06' ;
 	 */
 	
-	/*public static Specification<ScoreCard> findByQamStartdateTimeBetween(final Date filterFromDate, final Date filterToDate) {
+	public static Specification<ScoreCard> findByQamStartdateTimeBetween(final Date filterFromDateForQamStartDateTime, final Date filterFromDateForQamEndDateTime) {
 		return new Specification<ScoreCard>() {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				Predicate matchingByQamStartdateTime = null;
 				
-				if(filterFromDate != null && filterToDate != null){					
-					matchingByQamStartdateTime = builder.between(root.get(ScoreCard_.qamStartdateTime), filterFromDate, filterToDate);
+				if(filterFromDateForQamStartDateTime != null && filterFromDateForQamEndDateTime != null){					
+					matchingByQamStartdateTime = builder.between(root.get(ScoreCard_.qamStartdateTime), filterFromDateForQamStartDateTime, filterFromDateForQamEndDateTime);
 				}
 				return matchingByQamStartdateTime;							
 			}
 		};
-	}*/
+	}
 	
 	/*
 	 * Select the eps inbetween dates
@@ -316,20 +315,20 @@ public final class ScoreCardSpecifications {
 			@Override
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
-				Predicate matchingByQamStartdateTime = null;
-				final List<Predicate> matchingByQamMonitoringDates = new ArrayList<>();
 				
+				final List<Predicate> matchingByQamMonitoringDates = new ArrayList<>();
+				Predicate matchingByQamMonitoringdate = null;
 				if(filterFromDate != null && filterToDate != null){			
 					Expression<Date> dateStringExpr = builder.function("STR_TO_DATE", Date.class, root.get(ScoreCard_.callMonitoringDate), builder.literal("%m/%d/%Y"));
-					//matchingByQamStartdateTime = builder.between(dateStringExpr, filterFromDate, filterToDate);
-					Predicate startPredicate = builder.greaterThanOrEqualTo(dateStringExpr, filterFromDate);
+					matchingByQamMonitoringdate = builder.between(dateStringExpr, filterFromDate, filterToDate);
+					/*Predicate startPredicate = builder.greaterThanOrEqualTo(dateStringExpr, filterFromDate);
 					Predicate endPredicate = builder.lessThanOrEqualTo(dateStringExpr, filterToDate);
 					matchingByQamMonitoringDates.add(startPredicate);
-					matchingByQamMonitoringDates.add(endPredicate);
+					matchingByQamMonitoringDates.add(endPredicate);*/
 				}
 				
-				return builder.and(matchingByQamMonitoringDates.toArray(new Predicate[matchingByQamMonitoringDates.size()]));
-				//return matchingByQamStartdateTime;				
+				//return builder.and(matchingByQamMonitoringDates.toArray(new Predicate[matchingByQamMonitoringDates.size()]));
+				return matchingByQamMonitoringdate;				
 			}
 		};
 	}

@@ -229,10 +229,52 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private String macAssignmentSearchString;	
 	
+	@Transient
+	private Date filterFromDateForQamStartDateTime;
+	
+	@Transient
+	private Date filterToDateForQamStartDateTime;	
+	
 	
 	public ScoreCard() {
 	}
+
 	
+
+
+	public Date getFilterFromDateForQamStartDateTime() {
+		return filterFromDateForQamStartDateTime;
+	}
+
+
+
+
+	public void setFilterFromDateForQamStartDateTime(Date filterFromDateForQamStartDateTime) {
+		this.filterFromDateForQamStartDateTime = filterFromDateForQamStartDateTime;
+	}
+
+
+
+
+	public Date getFilterToDateForQamStartDateTime() {
+		return filterToDateForQamStartDateTime;
+	}
+
+
+
+
+
+
+
+	public void setFilterToDateForQamStartDateTime(Date filterToDateForQamStartDateTime) {
+		this.filterToDateForQamStartDateTime = filterToDateForQamStartDateTime;
+	}
+
+
+
+
+
+
 
 	public ArrayList<Integer> getProgramIdList() {
 		return programIdList;
