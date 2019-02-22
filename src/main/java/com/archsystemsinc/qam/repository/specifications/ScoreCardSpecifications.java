@@ -1,9 +1,12 @@
 package com.archsystemsinc.qam.repository.specifications;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -316,11 +319,12 @@ public final class ScoreCardSpecifications {
 			public final Predicate toPredicate(final Root<ScoreCard> root,
 					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
 				
-				final List<Predicate> matchingByQamMonitoringDates = new ArrayList<>();
+				//final List<Predicate> matchingByQamMonitoringDates = new ArrayList<>();
 				Predicate matchingByQamMonitoringdate = null;
-				if(filterFromDate != null && filterToDate != null){			
-					Expression<Date> dateStringExpr = builder.function("STR_TO_DATE", Date.class, root.get(ScoreCard_.callMonitoringDate), builder.literal("%m/%d/%Y"));
-					matchingByQamMonitoringdate = builder.between(dateStringExpr, filterFromDate, filterToDate);
+				if(filterFromDate != null && filterToDate != null){		
+					matchingByQamMonitoringdate = builder.between(root.get(ScoreCard_.callMonitoringDate), filterFromDate, filterToDate);
+					//Expression<Date> dateStringExpr = builder.function("STR_TO_DATE", Date.class, root.get(ScoreCard_.callMonitoringDate), builder.literal("%m/%d/%Y"));
+					//matchingByQamMonitoringdate = builder.between(dateStringExpr, filterFromDate, filterToDate);
 					/*Predicate startPredicate = builder.greaterThanOrEqualTo(dateStringExpr, filterFromDate);
 					Predicate endPredicate = builder.lessThanOrEqualTo(dateStringExpr, filterToDate);
 					matchingByQamMonitoringDates.add(startPredicate);

@@ -3,12 +3,21 @@
  */
 package com.archsystemsinc.qam.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import com.archsystemsinc.qam.sec.util.GenericConstants;
+
 
 /**
  * @author AbdulNissar
@@ -68,6 +77,99 @@ public class CommonUtils {
 		log.debug("isUploadCompliance-year: "+temp);
 		return new Integer(temp);
 		
+	}
+	
+	public static String convertToStringFromLocalDate(LocalDate dateValue) {				
+		
+		String dateValueString = "";
+		if(dateValue!=null) {
+			
+				 DateTimeFormatter dateFormatter1 = DateTimeFormatter
+				            .ofPattern("MM/dd/yyyy");
+				dateValueString = dateValue.format(dateFormatter1);
+		
+			return dateValueString;
+		} else return null;
+		
+	}	
+	
+	public static LocalDate convertToLocalDateFromString(String dataString) {
+		try {
+			LocalDate  returnDateValue = null;
+					
+			returnDateValue = LocalDate.parse(dataString,DateTimeFormatter.ofPattern("MM/dd/yyyy"));			
+			
+			return returnDateValue;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}	
+	
+	private static final SimpleDateFormat usEstDateFormatFullDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+	
+	private static final SimpleDateFormat usEstDateFormatOnlyDate = new SimpleDateFormat("MM/dd/yyyy");
+	
+	private static final SimpleDateFormat usEstDateFormatMonthYearReportDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
+	
+	public static LocalDate convertToLocalDateFromDateObject(Date dateObject) {
+		try {
+			
+			ZoneId defaultZoneId = ZoneId.systemDefault();
+	       
+	        //1. Convert Date -> Instant
+	        Instant instant = dateObject.toInstant();	       
+
+	        //2. Instant + system default time zone + toLocalDate() = LocalDate
+	        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+			
+			return localDate;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}	
+	
+	public static String convertToStringFromDate(Date dateValue, String dateType) {				
+		
+		String dateValueString = "";
+		if(dateValue!=null) {
+			if(dateType.equalsIgnoreCase(GenericConstants.DATE_TYPE_FULL)) {
+				//usEstDateFormatFullDate.setTimeZone(tzInAmerica);
+				dateValueString = usEstDateFormatFullDate.format(dateValue);
+			} else if (dateType.equalsIgnoreCase(GenericConstants.DATE_TYPE_ONLY_DATE)) {
+				//usEstDateFormatOnlyDate.setTimeZone(tzInAmerica);
+				dateValueString = usEstDateFormatOnlyDate.format(dateValue);
+			}
+			
+			return dateValueString;
+		} else return null;
+		
+	}
+
+	
+	public static Date convertToDateFromString(String dataString, String dateType) {
+		try {
+			Date returnDateValue = null;
+			
+			if(dateType.equalsIgnoreCase(GenericConstants.DATE_TYPE_FULL)) {
+				//usEstDateFormatFullDate.setTimeZone(tzInAmerica);
+				returnDateValue = usEstDateFormatFullDate.parse(dataString);				
+			} else if (dateType.equalsIgnoreCase(GenericConstants.DATE_TYPE_ONLY_DATE)) {				
+				//usEstDateFormatOnlyDate.setTimeZone(tzInAmerica);
+				returnDateValue = usEstDateFormatOnlyDate.parse(dataString);			
+			}
+			return returnDateValue;
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

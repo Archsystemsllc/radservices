@@ -1,11 +1,11 @@
 package com.archsystemsinc.qam.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import com.archsystemsinc.qam.utils.StringToDateConverter_MMDDYYYY;
 
 
 /**
@@ -50,10 +48,10 @@ public class ScoreCard implements Serializable {
 	private Date callFailureTime;
 
 	@Column(name="call_language")
-	private String callLanguage;
+	private String callLanguage;	
 
-	@Column(name="call_monitoring_date")
-	@Convert(converter = StringToDateConverter_MMDDYYYY.class)
+	@Column(name="call_monitoring_date_2")	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date callMonitoringDate;
 
 	@Column(name="call_result")
@@ -104,15 +102,15 @@ public class ScoreCard implements Serializable {
 	@Column(name="system_screen_access")
 	private String systemScreenAccess;
 	
-	@Column(name="qam_enddate_time_2")
-	//@Convert(converter = StringToDateConverter.class)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="qam_enddate_time_2")	
 	private Date qamEnddateTime;
 
 	@Column(name="qam_full_name")
 	private String qamFullName;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="qam_startdate_time_2")
-	//@Convert(converter = StringToDateConverter.class)
 	private Date qamStartdateTime;
 
 	@Column(name="scorecard_comments")
@@ -169,8 +167,7 @@ public class ScoreCard implements Serializable {
 	private Date cmsCalibrationUpdateDateTime;
 	
 	@Column(name="scorecard_status_update_datetime")
-	private Date scoreCardStatusUpdateDateTime;
-	
+	private Date scoreCardStatusUpdateDateTime;	
 	
 	
 	@Column(name="final_scorecard_status")
@@ -193,9 +190,11 @@ public class ScoreCard implements Serializable {
 	
 	//Trainsient Variables
 	@Transient
+	//@Convert(converter = LocalDateAttributeConverter.class)
 	private Date filterFromDate;
 	
 	@Transient
+	//@Convert(converter = LocalDateAttributeConverter.class)
 	private Date filterToDate;
 	
 	@Transient
@@ -235,11 +234,52 @@ public class ScoreCard implements Serializable {
 	@Transient
 	private Date filterToDateForQamStartDateTime;	
 	
+	@Transient
+	private String callMonitoringDateString;
 	
-	public ScoreCard() {
-	}
+	@Transient
+	private String filterFromDateString;
+	
+	@Transient
+	private String filterToDateString;	
 
 	
+	
+	public ScoreCard() {
+	}	
+
+
+	public String getCallMonitoringDateString() {
+		return callMonitoringDateString;
+	}
+
+
+
+
+	public void setCallMonitoringDateString(String callMonitoringDateString) {
+		this.callMonitoringDateString = callMonitoringDateString;
+	}
+
+
+	
+	public String getFilterFromDateString() {
+		return filterFromDateString;
+	}
+
+
+	public void setFilterFromDateString(String filterFromDateString) {
+		this.filterFromDateString = filterFromDateString;
+	}
+
+
+	public String getFilterToDateString() {
+		return filterToDateString;
+	}
+
+
+	public void setFilterToDateString(String filterToDateString) {
+		this.filterToDateString = filterToDateString;
+	}
 
 
 	public Date getFilterFromDateForQamStartDateTime() {
@@ -648,8 +688,7 @@ public class ScoreCard implements Serializable {
 	public void setQamStartdateTime(Date qamStartdateTime) {
 		this.qamStartdateTime = qamStartdateTime;
 	}
-
-
+	
 
 
 	public Date getFilterFromDate() {

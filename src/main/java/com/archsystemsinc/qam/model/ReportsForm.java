@@ -1,5 +1,6 @@
 package com.archsystemsinc.qam.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,7 +23,7 @@ public class ReportsForm {
 	private Date fromDate;
 
 	private Date toDate;
-
+	
 	private String scoreCardType;
 	
     private String compliance;
@@ -34,6 +35,14 @@ public class ReportsForm {
     private String macName;
     
     private String jurisdictionName;
+    
+    private String programName;
+    
+    private String pccLocationName;
+    
+    private String fromDateString;
+    
+    private String toDateString;
     
     private String complianceReportType;
     
@@ -47,7 +56,95 @@ public class ReportsForm {
     
     private ArrayList<Integer> macIdList;
     
+    private String jurisdictionNameValues;
     
+    private String[] jurisdictionIds;
+    
+    private boolean reasonReportFlag;
+    
+    private String fromDateStringMonthYear;
+    
+    private String toDateStringMonthYear;
+    
+/*    private LocalDate localFromDate;
+
+	private LocalDate localToDate;*/
+    
+	
+	
+	public String getProgramName() {
+		return programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
+
+	public String getPccLocationName() {
+		return pccLocationName;
+	}
+
+	public void setPccLocationName(String pccLocationName) {
+		this.pccLocationName = pccLocationName;
+	}
+
+	public String getFromDateString() {
+		return fromDateString;
+	}
+
+	public void setFromDateString(String fromDateString) {
+		this.fromDateString = fromDateString;
+	}
+
+	public String getToDateString() {
+		return toDateString;
+	}
+
+	public void setToDateString(String toDateString) {
+		this.toDateString = toDateString;
+	}
+
+	public String getJurisdictionNameValues() {
+		return jurisdictionNameValues;
+	}
+
+	public void setJurisdictionNameValues(String jurisdictionNameValues) {
+		this.jurisdictionNameValues = jurisdictionNameValues;
+	}
+
+	public String[] getJurisdictionIds() {
+		return jurisdictionIds;
+	}
+
+	public void setJurisdictionIds(String[] jurisdictionIds) {
+		this.jurisdictionIds = jurisdictionIds;
+	}
+
+	public boolean isReasonReportFlag() {
+		return reasonReportFlag;
+	}
+
+	public void setReasonReportFlag(boolean reasonReportFlag) {
+		this.reasonReportFlag = reasonReportFlag;
+	}
+
+	public String getFromDateStringMonthYear() {
+		return fromDateStringMonthYear;
+	}
+
+	public void setFromDateStringMonthYear(String fromDateStringMonthYear) {
+		this.fromDateStringMonthYear = fromDateStringMonthYear;
+	}
+
+	public String getToDateStringMonthYear() {
+		return toDateStringMonthYear;
+	}
+
+	public void setToDateStringMonthYear(String toDateStringMonthYear) {
+		this.toDateStringMonthYear = toDateStringMonthYear;
+	}
+
+	
 
 	public ArrayList<String> getJurisdictionNameList() {
 		return jurisdictionNameList;

@@ -20,9 +20,11 @@ import com.archsystemsinc.qam.model.CsrLog;
 import com.archsystemsinc.qam.model.Rebuttal;
 import com.archsystemsinc.qam.model.ReportsForm;
 import com.archsystemsinc.qam.model.ScoreCard;
+import com.archsystemsinc.qam.sec.util.GenericConstants;
 import com.archsystemsinc.qam.service.RebuttalService;
 import com.archsystemsinc.qam.service.ReportsService;
 import com.archsystemsinc.qam.service.ScoreCardService;
+import com.archsystemsinc.qam.utils.CommonUtils;
 	
 	/**
  * @author Abdul Nissar Shaik
@@ -60,8 +62,8 @@ public class ReportsRestService {
 				scoreCardReportObject.setProgramIdReportSearchString(reportsForm.getProgramId());
 			}		
 			
-			scoreCardReportObject.setFilterFromDate(reportsForm.getFromDate());
-			scoreCardReportObject.setFilterToDate(reportsForm.getToDate());
+			scoreCardReportObject.setFilterFromDate(CommonUtils.convertToDateFromString(reportsForm.getFromDateString(),GenericConstants.DATE_TYPE_FULL));
+			scoreCardReportObject.setFilterToDate(CommonUtils.convertToDateFromString(reportsForm.getToDateString(),GenericConstants.DATE_TYPE_FULL));
 			scoreCardReportObject.setScorecardType(reportsForm.getScoreCardType());
 			if(reportsForm.getScoreCardType().equalsIgnoreCase("Scoreable")) {
 				if(reportsForm.getCallResult().equalsIgnoreCase("Fail")) {
@@ -81,7 +83,12 @@ public class ReportsRestService {
 			data = scoreCardService.search(scoreCardReportObject);
 			
 			for(ScoreCard scoreCard: data) {
+				//scoreCard.setCallMonitoringDate(scoreCard.getCallMonitoringDate().plusDays(1));
+				String callMonitoringDateString = CommonUtils.convertToStringFromDate(scoreCard.getCallMonitoringDate(), GenericConstants.DATE_TYPE_ONLY_DATE);
+				scoreCard.setCallMonitoringDateString(callMonitoringDateString);
+				scoreCard.setCallMonitoringDate(null);
 				resultsMap.put(scoreCard.getId(), scoreCard);
+				
 			}
 			
 			if(multipleSearch && reportsForm.getScoreCardType().equalsIgnoreCase("Scoreable")) {
@@ -91,6 +98,10 @@ public class ReportsRestService {
 				multipleData = scoreCardService.search(scoreCardReportObject);
 				
 				for(ScoreCard scoreCard: multipleData) {
+					//scoreCard.setCallMonitoringDate(scoreCard.getCallMonitoringDate().plusDays(1));
+					String callMonitoringDateString = CommonUtils.convertToStringFromDate(scoreCard.getCallMonitoringDate(), GenericConstants.DATE_TYPE_ONLY_DATE);
+					scoreCard.setCallMonitoringDateString(callMonitoringDateString);
+					scoreCard.setCallMonitoringDate(null);
 					resultsMap.put(scoreCard.getId(), scoreCard);
 				}
 			}
@@ -126,7 +137,12 @@ public class ReportsRestService {
 			data = scoreCardService.search(scoreCardReportObject);
 			
 			for(ScoreCard scoreCard: data) {
+				//scoreCard.setCallMonitoringDate(scoreCard.getCallMonitoringDate().plusDays(1));
+				String callMonitoringDateString = CommonUtils.convertToStringFromDate(scoreCard.getCallMonitoringDate(), GenericConstants.DATE_TYPE_ONLY_DATE);
+				scoreCard.setCallMonitoringDateString(callMonitoringDateString);
+				scoreCard.setCallMonitoringDate(null);
 				resultsMap.put(scoreCard.getId(), scoreCard);
+				
 			}
 			log.debug("<-- getQaspReport");
 		} catch (Exception e) {
@@ -145,6 +161,16 @@ public class ReportsRestService {
 			log.debug("--> getComplianceReportData:");
 			if(reportsForm.getUserId() !=null) {
 				userId = Long.valueOf(reportsForm.getUserId());
+			}
+			if(reportsForm.getFromDateString() != null && !reportsForm.getFromDateString().equalsIgnoreCase("")) {
+				Date fromDate = CommonUtils.convertToDateFromString(reportsForm.getFromDateString(), GenericConstants.DATE_TYPE_FULL);
+				
+				reportsForm.setFromDate(fromDate);
+			}
+			if(reportsForm.getToDateString() != null && !reportsForm.getToDateString().equalsIgnoreCase("")) {
+				Date toDate = CommonUtils.convertToDateFromString(reportsForm.getToDateString(), GenericConstants.DATE_TYPE_FULL);
+				
+				reportsForm.setToDate(toDate);
 			}
 			 
 			data = reportsService.retrieveComplianceReport(reportsForm.getMacId(), reportsForm.getJurisdictionName(), reportsForm.getComplianceReportType(),
@@ -178,6 +204,16 @@ public class ReportsRestService {
 			}
 			if(reportsForm.getPccLocationId() == null || (reportsForm.getPccLocationId() != null && reportsForm.getPccLocationId().equalsIgnoreCase("ALL"))) {
 				reportsForm.setPccLocationId("0");
+			}
+			if(reportsForm.getFromDateString() != null && !reportsForm.getFromDateString().equalsIgnoreCase("")) {
+				Date fromDate = CommonUtils.convertToDateFromString(reportsForm.getFromDateString(), GenericConstants.DATE_TYPE_FULL);
+				
+				reportsForm.setFromDate(fromDate);
+			}
+			if(reportsForm.getToDateString() != null && !reportsForm.getToDateString().equalsIgnoreCase("")) {
+				Date toDate = CommonUtils.convertToDateFromString(reportsForm.getToDateString(), GenericConstants.DATE_TYPE_FULL);
+				
+				reportsForm.setToDate(toDate);
 			}
 			data = rebuttalService.searchRebuttalForReport(reportsForm);
 			
