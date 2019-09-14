@@ -26,7 +26,6 @@ public class PccLocationService {
 	@Autowired
 	private PccLocationRepository pccLocationRepository;
 	
-	
 	public List<PccLocation> findAll(){
 		return pccLocationRepository.findAll();
 	}
