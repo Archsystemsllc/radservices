@@ -22,16 +22,19 @@ public class SpringWebInitializer extends AbstractAnnotationConfigDispatcherServ
     	//String activeProfile = System.getProperty("spring.profiles.active",	"local");
     	
     	//AWS Development Environment
-    	//String activeProfile = System.getProperty("spring.profiles.active",	"development");
+    	String activeProfile = System.getProperty("spring.profiles.active",	"development");
     	
     	//AWS UAT Environment
 		//String activeProfile = System.getProperty("spring.profiles.active", "uat");																																																																																																																																																																																																																																																																		
    
     	//AWS Prod Environment
     	//String activeProfile = System.getProperty("spring.profiles.active", "prod");
+		
+		//AWS CMS QA Environment
+    	//String activeProfile = System.getProperty("spring.profiles.active", "aws_qa");
     	
     	//AWS CMS Prod Environment
-    	String activeProfile = System.getProperty("spring.profiles.active", "cmsprod");
+    	//String activeProfile = System.getProperty("spring.profiles.active", "cmsprod");
     	
    		String propertiesFilename = "application-" + activeProfile	+ ".properties";
    		System.out.println("propertiesFilename:" + propertiesFilename);

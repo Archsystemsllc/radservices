@@ -24,8 +24,7 @@ public class CategoryLookupService {
 	private static final Logger log = Logger.getLogger(CategoryLookupService.class);
 	@Autowired
 	private CategoryLookupRepository categoryLookupRepository;
-	
-	
+		
 	public List<CategoryLookup> findAll(){
 		return categoryLookupRepository.findAll();
 	}

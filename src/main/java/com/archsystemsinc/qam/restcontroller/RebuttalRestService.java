@@ -3,42 +3,25 @@
  */
 package com.archsystemsinc.qam.restcontroller;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.archsystemsinc.qam.model.RadUser;
 import com.archsystemsinc.qam.model.Rebuttal;
+import com.archsystemsinc.qam.model.Role;
 import com.archsystemsinc.qam.sec.util.GenericConstants;
+import com.archsystemsinc.qam.service.RadUserService;
 import com.archsystemsinc.qam.service.RebuttalService;
 import com.archsystemsinc.qam.service.mail.MailService;
 import com.archsystemsinc.qam.utils.EmailObject;
@@ -66,6 +49,9 @@ public class RebuttalRestService {
 	@Value("${radui.endpoint}")
     String radUIEndPoint;
 	
+	@Autowired
+	private RadUserService radUserService;
+	
 	@RequestMapping(value = "/rebuttallist", method = RequestMethod.POST)
 	public List<Rebuttal> getRebuttalList(@RequestBody Rebuttal rebuttal){
 		List<Rebuttal> data=null;
@@ -86,6 +72,7 @@ public class RebuttalRestService {
 		    consumes = {"multipart/form-data"})
     public  @ResponseBody String handleFileUpload( 
     		@RequestParam("rebuttalFileObject") MultipartFile multipartFile,@RequestParam("rebuttalId") Integer rebuttalId){
+		log.debug("--> uploadRebuttalFileObject:");		
 		UploadResponse response = new UploadResponse();
         //Code to Test File Functionality
 		//File tempFile = new File("C:\\Temp\\Myobject.pdf");
@@ -107,10 +94,102 @@ public class RebuttalRestService {
 			e1.printStackTrace();
 			return null;
 		} 
+		log.debug("<-- uploadRebuttalFileObject:");		
         return null;      
-    }
+    }	
 	
 	
+	private String getEmailSendList( boolean newRebuttalFlag) {
+		StringBuffer sendToEmailList = new StringBuffer();
+		RadUser radUser = new RadUser();
+		
+		Role role = new Role();
+		//Set Quality Manager 
+		role.setId(2l);
+		radUser.setRole(role);
+		List<RadUser> qualityManagers = radUserService.search(radUser);
+		for(RadUser eachUser:qualityManagers) {
+			sendToEmailList.append(eachUser.getUserName()+",");
+			//sendToEmailList.append("sheiknissu4@gmail.com"+",");
+		}
+		
+		//Set Administrators
+		role.setId(1l);
+		radUser.setRole(role);
+		List<RadUser> administrators = radUserService.search(radUser);
+		for(RadUser eachUser:administrators) {
+			sendToEmailList.append(eachUser.getUserName()+",");
+			//sendToEmailList.append("nissar.msis@gmail.com"+",");
+		}
+		
+		//Set Administrators
+		role.setId(5l);
+		radUser.setRole(role);
+		List<RadUser> qualityMonitors = radUserService.search(radUser);
+		for(RadUser eachUser:qualityMonitors) {
+			sendToEmailList.append(eachUser.getUserName()+",");
+			//sendToEmailList.append("ashaik@archsystemsinc.com"+",");
+		}
+		
+		
+		return sendToEmailList.toString();
+	}
+	
+	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST)
+	public @ResponseBody Rebuttal saveOrUpdateRebuttal(
+			@RequestBody  Rebuttal rebuttal){
+		log.debug("--> saveOrUpdateRebuttal:");		
+		
+		Rebuttal rebuttalResult = null;
+		boolean newRebuttal = false;
+		
+		try {
+			
+			String roleType = rebuttal.getRoleType();
+			
+			if (rebuttal.getId() == 0) {
+				newRebuttal = true;
+				rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
+			} else {
+				Rebuttal existingRebuttal = rebuttalService.findById(rebuttal.getId());
+				if(existingRebuttal.getFileName() !=null && !existingRebuttal.getFileName().equalsIgnoreCase("")) {
+					rebuttal.setFileName(existingRebuttal.getFileName());
+					rebuttal.setFileType(existingRebuttal.getFileType());
+					rebuttal.setRebuttalFileAttachment(existingRebuttal.getRebuttalFileAttachment());
+				}
+				rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
+			}
+			
+			
+			EmailObject emailObject = new EmailObject();
+			
+			if(newRebuttal) {				
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_RB_CREATE);		
+				
+			} else if(roleType.equalsIgnoreCase("MAC User")) {				
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_RB_UPDATE_MU);					
+				
+			} else {
+				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_RB_UPDATE_CRAD);					
+			}
+			
+			String sendToEmailList = getEmailSendList(newRebuttal);			
+			emailObject.setToEmail(rebuttalResult.getCreatedBy());
+			emailObject.setFromEmail(fromEmail);			
+			emailObject.setToBccEmail(sendToEmailList);
+			emailObject.setMacName(rebuttal.getMacName());
+			emailObject.setJurisidctionName(rebuttal.getJurisName());
+			emailObject.setLink(radUIEndPoint);
+			mailService.sendEmail(emailObject);
+			
+		} catch (Exception e) {
+			log.error("Error while uploading data",e);
+			return rebuttalResult;
+			
+		}
+		log.debug("<-- saveOrUpdateRebuttal");
+		return rebuttalResult;
+	}	
 	
 	/*Method that worked directly from JSP
 	 * @RequestMapping(value="/uploadRebuttalFileObject", method=RequestMethod.POST)
@@ -145,57 +224,6 @@ public class RebuttalRestService {
         return null;      
     }*/
 	
-	@RequestMapping(value = "/saveOrUpdateRebuttal", method = RequestMethod.POST)
-	public @ResponseBody Rebuttal saveOrUpdateRebuttal(
-			@RequestBody  Rebuttal rebuttal){
-		log.debug("--> saveOrUpdateRebuttal:");		
-		//Rebuttal rebuttal = new Rebuttal();
-		Rebuttal rebuttalResult = null;
-		boolean newRebuttal = false;
-		
-		try {
-			
-			if (rebuttal.getId() == 0) {
-				newRebuttal = true;
-			} else {
-				
-			}
-			rebuttalResult = rebuttalService.saveOrUpdateRebuttal(rebuttal);
-			
-			if(newRebuttal) {
-				EmailObject emailObject;
-				
-				emailObject = new EmailObject();
-				emailObject.setFromEmail(fromEmail);
-				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_SC_CREATE);
-				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
-				emailObject.setMacName(rebuttal.getMacName());
-				emailObject.setJurisidctionName(rebuttal.getJurisName());
-				emailObject.setLink(radUIEndPoint);
-				mailService.sendEmail(emailObject);
-				
-			} else {
-				
-				EmailObject emailObject;
-				
-				emailObject = new EmailObject();
-				emailObject.setFromEmail(fromEmail);
-				emailObject.setEmailType(GenericConstants.EMAIL_TYPE_RB_UPDATE);
-				emailObject.setToEmail("nissar.msis@gmail.com,sheiknissu4@gmail.com");
-				emailObject.setMacName(rebuttal.getMacName());
-				emailObject.setJurisidctionName(rebuttal.getJurisName());
-				emailObject.setLink(radUIEndPoint);
-				mailService.sendEmail(emailObject);
-			}
-			
-		} catch (Exception e) {
-			log.error("Error while uploading data",e);
-			return rebuttalResult;
-			
-		}
-		log.debug("<-- saveOrUpdateRebuttal");
-		return rebuttalResult;
-	}	
 	
 	/*@RequestMapping(value = "/download-rebuttal-document" , method = RequestMethod.POST)
     public HttpServletResponse  downloadDocument(@RequestParam("id") Integer rebuttalId, HttpServletResponse response) throws IOException {

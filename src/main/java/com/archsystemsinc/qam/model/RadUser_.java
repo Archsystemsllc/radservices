@@ -13,4 +13,5 @@ public abstract class RadUser_ {
 	public static volatile SingularAttribute<RadUser, Role> role;
 	public static volatile SingularAttribute<RadUser, String> lastName;
 	public static volatile SingularAttribute<RadUser, OrganizationLookup> organizationLookup;
+	public static volatile SingularAttribute<RadUser, Long> status;
 }

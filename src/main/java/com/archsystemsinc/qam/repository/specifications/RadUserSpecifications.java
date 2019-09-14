@@ -22,6 +22,21 @@ public final class RadUserSpecifications {
 		throw new AssertionError();
 	}
 	
+	public static Specification<RadUser> searchByStatus(final Long status) {
+		return new Specification<RadUser>() {
+			@Override
+			public final Predicate toPredicate(final Root<RadUser> root,
+					final CriteriaQuery<?> query, final CriteriaBuilder builder) {
+				
+				if(status != null && status != 0) { 
+					final Predicate matchingByStatus = builder.equal(root.get(RadUser_.status), status);
+					return matchingByStatus;
+				} else 
+					return null;			
+			}
+		};
+	}
+	
 	// API
 	
 	public static Specification<RadUser> searchById(final Long id) {

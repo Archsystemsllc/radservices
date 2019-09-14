@@ -173,12 +173,29 @@ public class Rebuttal implements Serializable {
 	@Transient
 	private Date filterToDate;
 	
+	@Transient
+	private String roleType;
+	
 
 	public Rebuttal() {
 	}
 	
 	
 	
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+
+
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
+
+
 
 	public Integer getQamId() {
 		return qamId;

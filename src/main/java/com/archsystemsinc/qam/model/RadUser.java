@@ -146,9 +146,18 @@ public class RadUser {
 	@Column(name = "failed_login_attempts")
 	private Integer failedLoginAttempts;
 	
+	@Column(name = "last_password_change_date")
+	private Date passwordChangeDate;
 	
 	
-	
+	public Date getPasswordChangeDate() {
+		return passwordChangeDate;
+	}
+
+	public void setPasswordChangeDate(Date passwordChangeDate) {
+		this.passwordChangeDate = passwordChangeDate;
+	}
+
 	public Date getFailedLoginDate() {
 		return failedLoginDate;
 	}

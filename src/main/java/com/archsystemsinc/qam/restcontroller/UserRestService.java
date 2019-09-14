@@ -156,7 +156,6 @@ public class UserRestService {
 			radUserReturn = radUserReturnList.get(0);
 			Integer failedAttempts = radUserReturn.getFailedLoginAttempts();
 			radUserReturn.setFailedLoginAttempts(null);
-			radUserReturn.setStatus(1l);
 			radUserReturn.setUpdateDate(new Date());
 			radUserReturn = radUserService.updateUser(radUserReturn);
 		}		

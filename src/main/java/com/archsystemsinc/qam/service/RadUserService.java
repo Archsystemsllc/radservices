@@ -62,6 +62,7 @@ public class RadUserService {
 		
 		Specifications< RadUser > specifications = Specifications.where
 					(RadUserSpecifications.searchById(radUser.getId()))
+				.and(RadUserSpecifications.searchByStatus(radUser.getStatus()))
 				.and(RadUserSpecifications.searchByUserName(radUser.getUserName()))				
 				.and(RadUserSpecifications.searchByMacId(radUser.getMacId()))
 				.and(RadUserSpecifications.searchByJurIdList(radUser.getJurIdList()))				

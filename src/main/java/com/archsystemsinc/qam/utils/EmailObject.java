@@ -6,6 +6,8 @@ public class EmailObject  {
 	
 	private String toEmail;
 	
+	private String toBccEmail;
+	
 	private String macName;
 	
 	private String jurisidctionName;
@@ -24,7 +26,53 @@ public class EmailObject  {
 	
 	private String role;
 	
+	private String dateCreated;
 	
+	private String pccLocation;
+	
+	private String reportingPeriod;
+	
+	private String rebttalResult;	
+	
+	public String getToBccEmail() {
+		return toBccEmail;
+	}
+
+	public void setToBccEmail(String toBccEmail) {
+		this.toBccEmail = toBccEmail;
+	}
+
+	public String getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(String dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public String getPccLocation() {
+		return pccLocation;
+	}
+
+	public void setPccLocation(String pccLocation) {
+		this.pccLocation = pccLocation;
+	}
+
+	public String getReportingPeriod() {
+		return reportingPeriod;
+	}
+
+	public void setReportingPeriod(String reportingPeriod) {
+		this.reportingPeriod = reportingPeriod;
+	}
+
+	public String getRebttalResult() {
+		return rebttalResult;
+	}
+
+	public void setRebttalResult(String rebttalResult) {
+		this.rebttalResult = rebttalResult;
+	}
 
 	public String getUsername() {
 		return username;
